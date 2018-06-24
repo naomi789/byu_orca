@@ -21,20 +21,18 @@ def makePieChart(men, women, question):
     plt.pyplot.pie(keys, explode=None, labels=None, colors=None)
 
 
-def gender_graphing(people):
+def gender_graphing(question, type_likert, people):
     men = []
     women = []
     other = []
 
-    desired_var = 'confidence_graduate_gpa'
-
     for person in people:
         if getattr(person, 'gender') == 'Male':
-            men.append(getattr(person, desired_var))
+            men.append(getattr(person, question))
         elif getattr(person, 'gender') == 'Female':
-            women.append(getattr(person, desired_var))
+            women.append(getattr(person, question))
         elif getattr(person, 'gender') == 'Other' or getattr(person, 'gender') == 'Prefer not to say':
-            other.append(getattr(person, desired_var))
+            other.append(getattr(person, question))
         else:
             print("error: " + str(getattr(person, 'gender')))
 
@@ -113,9 +111,11 @@ def anotherBarGraph(question, men, other_prefer_not, women):
 
     fig, ax = plt.subplots()
     rects1 = ax.bar(ind - width / 2, men_means, width,
-                    color='SkyBlue', label='Men')
+                    color='cornflowerblue', label='Men')
     rects2 = ax.bar(ind + width / 2, women_means, width,
-                    color='IndianRed', label='Women')
+                    color='hotpink', label='Women')
+    # rects3 = ax.bar(ind + width / 2, other_prefer_not, width,
+    #                 color='lime', label='other_p_not')
 
     # Add some text for labels, title and custom x-axis tick labels, etc.
     ax.set_ylabel('Scores')

@@ -6,8 +6,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from answer_type import graph_string, graph_int, graph_double, graph_likert, graph_list
 from constants import question_shorthand, question_string, answer_type, agreement, comfort, certainty, frequency, frequency_class, frequency_TA
-from graph_func import gender_graphing, makeBoxWhisker, values_per, makeBarGraph, anotherBarGraph
+from graph_func import ques_to_answer, gender_graphing, makeBoxWhisker, values_per, makeBarGraph, anotherBarGraph
 import pprint
+
 
 plt.style.use('seaborn-deep')
 
@@ -44,24 +45,25 @@ def parse_data(data):
     return all_students
 
 
-def pick_graphing_style(ques_text_ans):
+def pick_graphing_style(ques_text_ans, people):
     # decide what we're looking at
     focus_var = ['gender'] # ['gender', 'gradu_year', 'cs_not_major']  # maybe GPA, too?
     likert_questions = ['certainty', 'agreement', 'frequency', 'frequency_TA', 'frequency_class', 'comfort']
-    
+
     for var in focus_var:
         #  actually pick how to graph it
         for question in question_shorthand:
-            if ques_text_ans[question] == 'string':
-                graph_string(question, var)
-            elif ques_text_ans[question] == 'int':
-                graph_int(question, var)
-            elif ques_text_ans[question] == 'double':
-                graph_double(question, var)
-            elif ques_text_ans[question] == 'list':
-                graph_list(question, var)
-            elif ques_text_ans[question]in likert_questions:
-                graph_likert(question, var, ques_text_ans[question])
+            # if ques_text_ans[question] == 'string':
+            #     graph_string(question, var, people)
+            # elif ques_text_ans[question] == 'int':
+            #     graph_int(question, var, people)
+            # elif ques_text_ans[question] == 'double':
+            #     graph_double(question, var, people)
+            # elif ques_text_ans[question] == 'list':
+            #     graph_list(question, var, people)
+            # el
+            if ques_text_ans[question] in likert_questions:
+                graph_likert(question, var, ques_text_ans[question], people)
 
 
 
@@ -73,8 +75,9 @@ data = data[2:]  # deletes the question text and shorthand from the dataset
 
 people = parse_data(data)
 
-# pick_graphing_style(ques_ans)
-gender_graphing(people)
+ques_ans = ques_to_answer()
+pick_graphing_style(ques_ans, people)
+
 
 #  xvalueQuesText = ['\n'.join(wrap(l, 18)) for l in xvalueQuesText]
 # ^^ if things are too long
