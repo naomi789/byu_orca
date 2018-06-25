@@ -95,26 +95,30 @@ agreement = ['Strongly agree',
              'Neither agree nor disagree',
              'Somewhat disagree',
              'Disagree',
-             'Strongly disagree']
+             'Strongly disagree',
+             '']
 
-frequency = ['Never', 'Once or twice a semester', 'Once a month', 'Once a week', 'Daily']
+frequency = ['Never', 'Once or twice a semester', 'Once a month', 'Once a week', 'Daily', '']
 
 frequency_TA = ['Never, my classes do not have help session', 'Never, I don\'t go to help sessions',
                 'Once or twice a semester',
                 'Once a month',
                 'Once a week',
-                'Daily']
+                'Daily',
+                '']
 
 frequency_class = ['Never, because I never go to class', 'Never, but I do attend class', 'Once or twice a semester',
-                   'Once a month', 'Once a week', 'Daily']
+                   'Once a month', 'Once a week', 'Daily', '']
 
 comfort = ['Extremely comfortable', 'Moderately comfortable',
            'Slightly comfortable', 'Neither comfortable nor uncomfortable',
            'Slightly uncomfortable',
            'Moderately uncomfortable',
-           'Extremely uncomfortable']
+           'Extremely uncomfortable',
+           '']
 
 certainty = ['Definitely yes', 'Probably yes',
              'Might or might not',
              'Probably not',
-             'Definitely not']
+             'Definitely not',
+             '']
