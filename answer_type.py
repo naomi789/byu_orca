@@ -20,4 +20,4 @@ def graph_likert(question, var, type_likert, people):
     if var == 'gender':
         gender_graphing(question, type_likert, people)
     #  elif #
-    print("graph list" + type_likert)
+    print("question type is: " + type_likert)

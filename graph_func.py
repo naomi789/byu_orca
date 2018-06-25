@@ -37,19 +37,16 @@ def gender_graphing(question, type_likert, people):
             print("error: " + str(getattr(person, 'gender')))
 
     #  returns dict, sorted. Key = choices, value = count
-    men_graphable, other_graphable, women_graphable = values_per(men, other, women)
+    men_graphable, other_graphable, women_graphable = values_per(men, other, women, type_likert)
 
     #  decide and call preferred graph here
-    anotherBarGraph('confidence_graduate_gpa', men_graphable, other_graphable, women_graphable)
+    anotherBarGraph(question, men_graphable, other_graphable, women_graphable)
 
 
-def values_per(men, other_prefer_not, women):
-    # men_graphable = defaultdict(set)
-    # women_graphable = defaultdict(set)
-    # other_graphable = defaultdict(set)
-    men_graphable = dict.fromkeys(agreement, 0)
-    other_graphable = dict.fromkeys(agreement, 0)
-    women_graphable = dict.fromkeys(agreement, 0)
+def values_per(men, other_prefer_not, women, type_likert):
+    men_graphable = dict.fromkeys(sorted_answers(type_likert), 0)
+    other_graphable = dict.fromkeys(sorted_answers(type_likert), 0)
+    women_graphable = dict.fromkeys(sorted_answers(type_likert), 0)
     #
     for answer in men:
         if men_graphable.__contains__(answer):
@@ -101,6 +98,8 @@ def anotherBarGraph(question, men, other_prefer_not, women):
     women_means = women.values()
     # men_means = (20, 35, 30, 35, 27)
     # women_means = (25, 32, 34, 20, 25)
+    print('question is: ' + question)
+    print('answers are: ' + str(x_values))
     print(men.values())
     print(women.values())
     # men_means = men.values()
