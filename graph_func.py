@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from constants import question_shorthand, question_string, answer_type, agreement, comfort, certainty, frequency, \
-    frequency_class, frequency_TA
+    frequency_class, frequency_TA, color_options
 from itertools import zip_longest
 from textwrap import wrap
 
@@ -132,5 +132,19 @@ def pie_chart(question, men, other_prefer_not, women):
         temp_vals = len(men_vals)
         temp_x = len(x_values)
         print('HELP')
-    plt.pie(men_vals, explode=None, labels=x_values, colors=None)
+
+    fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(8, 4))
+    pie_1 = axes[0].pie(men_vals, explode=None, labels=x_values, colors=color_options)
+    axes[0].set_title('Male')
+    # Make both axes equal, so that the chart is round
+    axes[0].axis('equal')
+    pie_2 = axes[1].pie(women_vals, explode=None, labels=x_values, colors=color_options)
+    axes[1].set_title('Female')
+    axes[1].axis('equal')
+
+    plt.subplots_adjust(wspace=1)
+
+    ques_to_question = dict(zip_longest(question_shorthand, question_string[:len(question_shorthand)]))
+    longhand = ques_to_question[question]
+    plt.suptitle(longhand + '\n')
     plt.savefig('results/pie_chart/' + question + '.pdf')
