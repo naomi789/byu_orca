@@ -1,4 +1,4 @@
-from graph_func import gender_graphing, makeBoxWhisker, values_per_gender, makeBarGraph, anotherBarGraph
+from graph_func import gender_graphing
 
 def graph_string(question, var, people):
     print("graph string axis")

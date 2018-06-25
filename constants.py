@@ -22,7 +22,7 @@ question_shorthand = ['duration_seconds', 'Location_Latitude', 'LocationLongitud
 
 answer_type = ["int", "double", "double", "string", "string", "string", "string", "string", "string", "double",
                "string", "string", "string", "list", "list", "string", "list", "list", "agreement", "comfort",
-               "frequency_class", "frequency", "list", "frequency", "list", "frequency", "frequency", "frequency",
+               "frequency_class", "frequency_class", "list", "frequency", "list", "frequency", "frequency", "frequency",
                "agreement", "agreement", "agreement", "frequency", "frequency", "list", "string", "list", "bool",
                "list", "frequency", "frequency", "frequency", "agreement", "certainty", "certainty", "frequency",
                "list", "certainty", "certainty", "certainty", "list", "agreement", "frequency", "list", "frequency",

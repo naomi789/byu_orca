@@ -6,7 +6,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from answer_type import graph_string, graph_int, graph_double, graph_likert, graph_list
 from constants import question_shorthand, question_string, answer_type, agreement, comfort, certainty, frequency, frequency_class, frequency_TA
-from graph_func import ques_to_answer, gender_graphing, makeBoxWhisker, values_per_gender, makeBarGraph, anotherBarGraph
+from graph_func import ques_to_answer, gender_graphing, makeBoxWhisker, values_per_gender, bar_graph
 import pprint
 
 
