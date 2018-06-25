@@ -1,4 +1,4 @@
-from graph_func import gender_graphing, makeBoxWhisker, values_per, makeBarGraph, anotherBarGraph
+from graph_func import gender_graphing, makeBoxWhisker, values_per_gender, makeBarGraph, anotherBarGraph
 
 def graph_string(question, var, people):
     print("graph string axis")
@@ -20,4 +20,4 @@ def graph_likert(question, var, type_likert, people):
     if var == 'gender':
         gender_graphing(question, type_likert, people)
     #  elif #
-    print("question type is: " + type_likert)
+    # print("question type is: " + type_likert)

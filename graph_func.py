@@ -37,13 +37,13 @@ def gender_graphing(question, type_likert, people):
             print("error: " + str(getattr(person, 'gender')))
 
     #  returns dict, sorted. Key = choices, value = count
-    men_graphable, other_graphable, women_graphable = values_per(men, other, women, type_likert)
+    men_graphable, other_graphable, women_graphable = values_per_gender(men, other, women, type_likert)
 
     #  decide and call preferred graph here
     anotherBarGraph(question, men_graphable, other_graphable, women_graphable)
 
 
-def values_per(men, other_prefer_not, women, type_likert):
+def values_per_gender(men, other_prefer_not, women, type_likert):
     men_graphable = dict.fromkeys(sorted_answers(type_likert), 0)
     other_graphable = dict.fromkeys(sorted_answers(type_likert), 0)
     women_graphable = dict.fromkeys(sorted_answers(type_likert), 0)
@@ -94,24 +94,16 @@ def ques_to_answer():
 def anotherBarGraph(question, men, other_prefer_not, women):
     ques_ans = ques_to_answer()
     x_values = sorted_answers(ques_ans[question])  # possible answers
-    men_means = men.values()
-    women_means = women.values()
-    # men_means = (20, 35, 30, 35, 27)
-    # women_means = (25, 32, 34, 20, 25)
-    print('question is: ' + question)
-    print('answers are: ' + str(x_values))
-    print(men.values())
-    print(women.values())
-    # men_means = men.values()
-    # women_means = women.values()
+    men_vals = men.values()
+    women_vals = women.values()
 
-    ind = np.arange(len(men_means))  # the x locations for the groups
+    ind = np.arange(len(men_vals))  # the x locations for the groups
     width = 0.35  # the width of the bars
 
     fig, ax = plt.subplots()
-    rects1 = ax.bar(ind - width / 2, men_means, width,
+    rects1 = ax.bar(ind - width / 2, men_vals, width,
                     color='cornflowerblue', label='Men')
-    rects2 = ax.bar(ind + width / 2, women_means, width,
+    rects2 = ax.bar(ind + width / 2, women_vals, width,
                     color='hotpink', label='Women')
     # rects3 = ax.bar(ind + width / 2, other_prefer_not, width,
     #                 color='lime', label='other_p_not')
