@@ -2,11 +2,14 @@ import numpy as np
 import matplotlib.pyplot as plt
 from constants import question_shorthand, question_string, answer_type, agreement, comfort, certainty, frequency, \
     frequency_class, frequency_TA, color_options
+from list_constants import responsibilities, professor_encouragement, meetings_clubs, percentage, scholarships, yes_no, \
+    involvement, appearance_comments, sexism_response, student_groups_standards, majors_minors, graduation_year, \
+    extracurriculars, encouragement, barriers, likert_question_answer_types, list_question_answer_types
 from itertools import zip_longest
 from textwrap import wrap
 
 
-def gender_graphing(question, type_likert, people):
+def gender_graphing(question, options, people):
     men = []
     women = []
     other = []
@@ -22,46 +25,71 @@ def gender_graphing(question, type_likert, people):
             print("error: " + str(getattr(person, 'gender')))
 
     #  returns dict, sorted. Key = choices, value = count
-    men_graphable, other_graphable, women_graphable = values_per_gender(men, other, women, type_likert)
+    men_graphable, other_graphable, women_graphable = values_per_gender(men, other, women, options)
 
     #  decide and call preferred graph here
     bar_graph(question, men_graphable, other_graphable, women_graphable)
     pie_chart(question, men_graphable, other_graphable, women_graphable)
 
 
-def values_per_gender(men, other_prefer_not, women, type_likert):
-    men_graphable = dict.fromkeys(sorted_answers(type_likert), 0)
-    other_graphable = dict.fromkeys(sorted_answers(type_likert), 0)
-    women_graphable = dict.fromkeys(sorted_answers(type_likert), 0)
-    #
-    for answer in men:
-        if men_graphable.__contains__(answer):
-            men_graphable[answer] += 1
-        else:
-            men_graphable[answer] = 1
-    for answer in women:
-        if women_graphable.__contains__(answer):
-            women_graphable[answer] += 1
-        else:
-            women_graphable[answer] = 1
-    for answer in other_prefer_not:
-        if other_graphable.__contains__(answer):
-            other_graphable[answer] += 1
-        else:
-            other_graphable[answer] = 1
+def filter_for_gender(unsorted_one_gender_answers, answer_count_dictionary):
+    for answer in unsorted_one_gender_answers:
+        answer_count_dictionary[answer] += 1
+    return answer_count_dictionary
+
+
+def deconstruct_answers_filter(unsorted_one_gender_answers, answer_count_dictionary):
+    for all_selected in unsorted_one_gender_answers:
+        # answer_count_dictionary[all_selected] += 1
+        # split answer on comma here
+        temp = all_selected.split(',')
+
+        # for each_answer in x:
+        #     answer_count_dictionary[each_answer] += 1
+    return answer_count_dictionary
+
+
+def values_per_gender(men, other_prefer_not, women, options):
+    men_graphable = dict.fromkeys(sorted_answers(options), 0)
+    other_graphable = dict.fromkeys(sorted_answers(options), 0)
+    women_graphable = dict.fromkeys(sorted_answers(options), 0)
+
+    if options in likert_question_answer_types:
+        men_graphable = filter_for_gender(men, men_graphable)
+        women_graphable = filter_for_gender(women, women_graphable)
+        other_graphable = filter_for_gender(other_prefer_not, other_graphable)
+    elif options in list_question_answer_types:
+        men_graphable = deconstruct_answers_filter(men, men_graphable)
+        women_graphable = deconstruct_answers_filter(women, women_graphable)
+        other_graphable = deconstruct_answers_filter(other_prefer_not, other_graphable)
     return men_graphable, other_graphable, women_graphable
 
 
-def sorted_answers(type):
+def sorted_answers(question_options):
     switcher = {
         'agreement': agreement,
         'frequency': frequency,
         'frequency_TA': frequency_TA,
         'frequency_class': frequency_class,
         'comfort': comfort,
-        'certainty': certainty
+        'certainty': certainty,
+        'majors_minors': majors_minors,
+        'graduation_year': graduation_year,
+        'extracurriculars': extracurriculars,
+        'encouragement': encouragement,
+        'barriers': barriers,
+        'responsibilities': responsibilities,
+        'professor_encouragement': professor_encouragement,
+        'meetings_clubs': meetings_clubs,
+        'percentage': percentage,
+        'scholarships': scholarships,
+        'yes_no': yes_no,
+        'involvement': involvement,
+        'appearance_comments': appearance_comments,
+        'sexism_response': sexism_response,
+        'student_groups_standards': student_groups_standards
     }
-    return switcher.get(type, 'other_answer_types')
+    return switcher.get(question_options, 'other_answer_types')
 
 
 def ques_to_answer():
@@ -94,19 +122,25 @@ def bar_graph(question, men, other_prefer_not, women):
     ax.set_ylabel('Scores')
 
     #  todo I need help wrapping my long strings to short ones
-    print(question)
     ques_to_question = dict(zip_longest(question_shorthand, question_string[:len(question_shorthand)]))
     longhand = ques_to_question[question]
-    print(longhand)
     title = ['\n'.join(wrap(l, 18)) for l in longhand]
-    print(title)
+    # print(question)
+    # print(longhand)
+    # print(title)
     ax.set_title(question)  # eventually switch that to longhand
 
     ax.set_xticks(np.arange(len(x_values)))  # ind)
     ax.set_xticklabels(x_values)
     ax.legend()
 
-    plt.savefig('results/by_gender/bar_graph/' + question + '.pdf')
+    if ques_ans[question] in list_question_answer_types:
+        file_destination = 'results/by_gender/bar_graph/select_all/' + question + '.pdf'
+    elif ques_ans[question] in likert_question_answer_types:
+        file_destination = 'results/by_gender/bar_graph/mult_choice/' + question + '.pdf'
+    else:
+        file_destination = 'results/by_gender/bar_graph/error/' + question + '.pdf'
+    plt.savefig(file_destination)
 
 
 def makeBoxWhisker(question, men, other_prefer_not, women):
@@ -147,4 +181,14 @@ def pie_chart(question, men, other_prefer_not, women):
     ques_to_question = dict(zip_longest(question_shorthand, question_string[:len(question_shorthand)]))
     longhand = ques_to_question[question]
     plt.suptitle(longhand + '\n')
-    plt.savefig('results/pie_chart/' + question + '.pdf')
+
+    temp = ques_ans[question]
+    other_temp = list_question_answer_types
+    if ques_ans[question] in list_question_answer_types:
+        file_destination = 'results/by_gender/pie_chart/select_all/' + question + '.pdf'
+    elif ques_ans[question] in likert_question_answer_types:
+        file_destination = 'results/by_gender/pie_chart/mult_choice/' + question + '.pdf'
+    else:
+        file_destination = 'results/by_gender/pie_chart/error/' + question + '.pdf'
+    plt.savefig(file_destination)
+

@@ -21,11 +21,11 @@ question_shorthand = ['duration_seconds', 'Location_Latitude', 'LocationLongitud
                       'describe_positive_experience', 'describe_negative_experience', 'suggestion_improve_institution']
 
 answer_type = ["int", "double", "double", "string", "string", "string", "string", "string", "string", "double",
-               "string", "string", "string", "list", "list", "string", "list", "list", "agreement", "comfort",
-               "frequency_class", "frequency_class", "list", "frequency", "list", "frequency_TA", "frequency", "frequency",
-               "agreement", "agreement", "agreement", "frequency", "frequency", "list", "string", "list", "bool",
-               "list", "frequency", "frequency", "frequency", "certainty", "certainty", "certainty", "frequency",
-               "list", "certainty", "certainty", "certainty", "list", "agreement", "frequency", "list", "frequency",
+               "string", "string", "string", "extracurriculars", "encouragement", "string", "barriers", "string", "agreement", "comfort",
+               "frequency_class", "frequency_class", "responsibilities", "frequency", "professor_encouragement", "frequency_TA", "frequency", "frequency",
+               "agreement", "agreement", "agreement", "frequency", "frequency", "meetings_clubs", "percentage", "scholarships", "yes_no",
+               "involvement", "frequency", "frequency", "frequency", "certainty", "certainty", "certainty", "frequency",
+               "appearance_comments", "certainty", "certainty", "certainty", "sexism_response", "agreement", "frequency", "student_groups_standards", "frequency",
                "agreement", "agreement", "agreement", "agreement", "agreement", "agreement", "string", "string",
                "string"]
 
