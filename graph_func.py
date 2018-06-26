@@ -42,10 +42,11 @@ def deconstruct_answers_filter(unsorted_one_gender_answers, answer_count_diction
     for all_selected in unsorted_one_gender_answers:
         # answer_count_dictionary[all_selected] += 1
         # split answer on comma here
-        temp = all_selected.split(',')
-
-        # for each_answer in x:
-        #     answer_count_dictionary[each_answer] += 1
+        # split_all_selected = all_selected.split(',')
+        split_all_selected = [split_all_selected.strip() for split_all_selected in all_selected.split(',')]
+        # [x.strip() for x in my_string.split(',')]
+        for each_answer in split_all_selected:
+            answer_count_dictionary[each_answer] += 1
     return answer_count_dictionary
 
 

@@ -55,7 +55,7 @@ def pick_graphing_style(ques_text_ans, people):
             # elif ques_text_ans[question] == 'double':
             #     graph_double(question, focus_var, people)
             # el
-            if ques_text_ans[question] in (list_question_answer_types or likert_question_answer_types): 
+            if ques_text_ans[question] in (list_question_answer_types or likert_question_answer_types):
                 mult_choice(question, focus_var, ques_text_ans[question], people)
 
 
