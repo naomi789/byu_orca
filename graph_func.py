@@ -101,6 +101,14 @@ def ques_to_answer():
 def bar_graph(question, men, other_prefer_not, women):
     ques_ans = ques_to_answer()
     x_values = sorted_answers(ques_ans[question])  # possible answers
+
+    if ques_ans[question] in list_question_answer_types:
+        file_destination = 'results/by_gender/bar_graph/select_all/' + question + '.pdf'
+    elif ques_ans[question] in likert_question_answer_types:
+        file_destination = 'results/by_gender/bar_graph/mult_choice/' + question + '.pdf'
+    else:
+        file_destination = 'results/by_gender/bar_graph/error/' + question + '.pdf'
+
     men_vals = men.values()
     women_vals = women.values()
 
@@ -126,14 +134,9 @@ def bar_graph(question, men, other_prefer_not, women):
 
     ax.set_xticks(np.arange(len(x_values)))
     ax.set_xticklabels(x_values)
-    ax.legend()
+    ax.legend()  #
 
-    if ques_ans[question] in list_question_answer_types:
-        file_destination = 'results/by_gender/bar_graph/select_all/' + question + '.pdf'
-    elif ques_ans[question] in likert_question_answer_types:
-        file_destination = 'results/by_gender/bar_graph/mult_choice/' + question + '.pdf'
-    else:
-        file_destination = 'results/by_gender/bar_graph/error/' + question + '.pdf'
+
     plt.savefig(file_destination)
 
 

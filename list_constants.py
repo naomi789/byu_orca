@@ -67,7 +67,6 @@ student_groups_standards = ['Male students', 'Female students', 'Non-binary stud
 likert_question_answer_types = ['certainty', 'agreement', 'frequency', 'frequency_TA', 'frequency_class', 'comfort', '']
 
 list_question_answer_types = ['responsibilities', 'professor_encouragement', 'meetings_clubs', 'percentage',
-                              'scholarships',
-                              'yes_no', 'involvement', 'appearance_comments', 'sexism_response',
-                              'student_groups_standards',
-                              'majors_minors', 'graduation_year', 'extracurriculars', 'encouragement', 'barriers', '']
+                              'scholarships', 'yes_no', 'involvement', 'appearance_comments', 'sexism_response',
+                              'student_groups_standards', 'majors_minors', 'graduation_year', 'extracurriculars',
+                              'encouragement', 'barriers', '']

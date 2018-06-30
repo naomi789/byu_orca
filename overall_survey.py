@@ -46,15 +46,21 @@ def pick_graphing_style(ques_text_ans, people):
 
     for focus_var in possible_focus_var:
         for question in question_shorthand:
-            # if ques_text_ans[question] == 'string':
-            #     graph_string(question, focus_var, people)
-            # elif ques_text_ans[question] == 'int':
-            #     graph_int(question, focus_var, people)
-            # elif ques_text_ans[question] == 'double':
-            #     graph_double(question, focus_var, people)
-            # el
-            if ques_text_ans[question] in (list_question_answer_types or likert_question_answer_types):
+            answer_type = ques_text_ans[question]
+            if ques_text_ans[question] == 'string':
+                graph_string(question, focus_var, people)
+            elif ques_text_ans[question] == 'int':
+                graph_int(question, focus_var, people)
+            elif ques_text_ans[question] == 'double':
+                graph_double(question, focus_var, people)
+            # likert_question_answer_types = ['certainty', 'agreement', 'frequency', 'frequency_TA', 'frequency_class', 'comfort', '']
+            elif answer_type in likert_question_answer_types:
                 mult_choice(question, focus_var, ques_text_ans[question], people)
+            elif answer_type in list_question_answer_types:
+                mult_choice(question, focus_var, ques_text_ans[question], people)
+            else:
+                store = likert_question_answer_types
+                print("question: " + question + " ques_text_ans[question]: " + answer_type)
 
 
 data = run_overall()
