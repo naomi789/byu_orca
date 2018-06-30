@@ -42,11 +42,9 @@ def parse_data(data):
 
 
 def pick_graphing_style(ques_text_ans, people):
-    # decide what we're looking at
     possible_focus_var = ['gender']  # ['gender', 'gradu_year', 'cs_not_major']  # maybe GPA, too?
 
     for focus_var in possible_focus_var:
-        #  actually pick how to graph it
         for question in question_shorthand:
             # if ques_text_ans[question] == 'string':
             #     graph_string(question, focus_var, people)
@@ -67,8 +65,3 @@ people = parse_data(data)
 
 ques_ans = ques_to_answer()
 pick_graphing_style(ques_ans, people)
-
-#  xvalueQuesText = ['\n'.join(wrap(l, 18)) for l in xvalueQuesText]
-# ^^ if things are too long
-# https://github.com/byuhci/vat_analyzer/blob/master/subjectiveAnswers.py
-# options = defaultdict(set)  # holds no duplicates

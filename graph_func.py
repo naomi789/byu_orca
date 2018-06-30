@@ -40,11 +40,7 @@ def filter_for_gender(unsorted_one_gender_answers, answer_count_dictionary):
 
 def deconstruct_answers_filter(unsorted_one_gender_answers, answer_count_dictionary):
     for all_selected in unsorted_one_gender_answers:
-        # answer_count_dictionary[all_selected] += 1
-        # split answer on comma here
-        # split_all_selected = all_selected.split(',')
         split_all_selected = [split_all_selected.strip() for split_all_selected in all_selected.split(',')]
-        # [x.strip() for x in my_string.split(',')]
         for each_answer in split_all_selected:
             answer_count_dictionary[each_answer] += 1
     return answer_count_dictionary
@@ -128,7 +124,7 @@ def bar_graph(question, men, other_prefer_not, women):
     title = '\n'.join(longhand[i:i+60] for i in range(0, len(longhand), 60))
     ax.set_title(title)
 
-    ax.set_xticks(np.arange(len(x_values)))  # ind)
+    ax.set_xticks(np.arange(len(x_values)))
     ax.set_xticklabels(x_values)
     ax.legend()
 
@@ -152,10 +148,15 @@ def makeBoxWhisker(question, men, other_prefer_not, women):
 
 
 def pie_chart(question, men, other_prefer_not, women):
-    #  clear the plot bc something is getting really mixed up
-
     ques_ans = ques_to_answer()
     x_values = sorted_answers(ques_ans[question])  # possible answers
+
+    if ques_ans[question] in list_question_answer_types:
+        file_destination = 'results/by_gender/pie_chart/select_all/' + question + '.pdf'
+    elif ques_ans[question] in likert_question_answer_types:
+        file_destination = 'results/by_gender/pie_chart/mult_choice/' + question + '.pdf'
+    else:
+        file_destination = 'results/by_gender/pie_chart/error/' + question + '.pdf'
 
     men_vals = men.values()
     women_vals = women.values()
@@ -166,11 +167,11 @@ def pie_chart(question, men, other_prefer_not, women):
         print('HELP')
 
     fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(8, 4))
-    pie_1 = axes[0].pie(men_vals, explode=None, labels=x_values, colors=color_options)
+    pie_1 = axes[0].pie(men_vals, explode=None, labels=x_values, colors=color_options, autopct='%1.1f%%')
     axes[0].set_title('Male')
     # Make both axes equal, so that the chart is round
     axes[0].axis('equal')
-    pie_2 = axes[1].pie(women_vals, explode=None, labels=x_values, colors=color_options)
+    pie_2 = axes[1].pie(women_vals, explode=None, labels=x_values, colors=color_options, autopct='%1.1f%%') #  textprops='none'
     axes[1].set_title('Female')
     axes[1].axis('equal')
 
@@ -181,13 +182,7 @@ def pie_chart(question, men, other_prefer_not, women):
     title = '\n'.join(longhand[i:i+60] for i in range(0, len(longhand), 60))
     plt.suptitle(title)
 
-    temp = ques_ans[question]
-    other_temp = list_question_answer_types
-    if ques_ans[question] in list_question_answer_types:
-        file_destination = 'results/by_gender/pie_chart/select_all/' + question + '.pdf'
-    elif ques_ans[question] in likert_question_answer_types:
-        file_destination = 'results/by_gender/pie_chart/mult_choice/' + question + '.pdf'
-    else:
-        file_destination = 'results/by_gender/pie_chart/error/' + question + '.pdf'
+    # plt.legend(color_options, x_values, title="Legend", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
+
     plt.savefig(file_destination)
 
