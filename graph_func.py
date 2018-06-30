@@ -7,6 +7,8 @@ from list_constants import responsibilities, professor_encouragement, meetings_c
     extracurriculars, encouragement, barriers, likert_question_answer_types, list_question_answer_types
 from itertools import zip_longest
 from textwrap import wrap
+import scipy.stats
+from scipy.stats import mannwhitneyu
 
 
 def gender_graphing(question, options, people):
@@ -30,6 +32,21 @@ def gender_graphing(question, options, people):
     #  decide and call preferred graph here
     bar_graph(question, men_graphable, other_graphable, women_graphable)
     pie_chart(question, men_graphable, other_graphable, women_graphable)
+
+    ques_ans = ques_to_answer()
+    answer_type = ques_ans[question]
+    if answer_type in likert_question_answer_types:
+        f = open('results/stats/' + question + '.txt', 'w')
+
+        # TODO: get all of these lists of strings into actual numbers
+        f.write("men, wilcoxon: " + str(scipy.stats.wilcoxon(men)))
+        f.write("women, wilcoxon: " + str(scipy.stats.wilcoxon(women)))
+        f.write("mann whitney men v. women: " + str(mannwhitneyu(men, women)))
+        # f.write(anova()) # https://plot.ly/python/anova/
+        f.write("ttest related men v. women: " + str(scipy.stats.ttest_rel(men, women)))
+        f.write("ttest independent men v. women: " + str(scipy.stats.ttest_ind(men, women)))
+
+        f.close()
 
 
 def filter_for_gender(unsorted_one_gender_answers, answer_count_dictionary):
@@ -129,13 +146,12 @@ def bar_graph(question, men, other_prefer_not, women):
     #  todo I need help wrapping my long strings to short ones
     ques_to_question = dict(zip_longest(question_shorthand, question_string[:len(question_shorthand)]))
     longhand = ques_to_question[question]
-    title = '\n'.join(longhand[i:i+60] for i in range(0, len(longhand), 60))
+    title = '\n'.join(longhand[i:i + 60] for i in range(0, len(longhand), 60))
     ax.set_title(title)
 
     ax.set_xticks(np.arange(len(x_values)))
     ax.set_xticklabels(x_values)
     ax.legend()  #
-
 
     plt.savefig(file_destination)
 
@@ -179,7 +195,7 @@ def pie_chart(question, men, other_prefer_not, women):
     axes[0].set_title('Male')
     # Make both axes equal, so that the chart is round
     axes[0].axis('equal')
-    pie_2 = axes[1].pie(women_vals, explode=None, labels=None, colors=color_options, autopct='%1.1f%%') #
+    pie_2 = axes[1].pie(women_vals, explode=None, labels=None, colors=color_options, autopct='%1.1f%%')  #
     axes[1].set_title('Female')
     axes[1].axis('equal')
 
@@ -187,10 +203,9 @@ def pie_chart(question, men, other_prefer_not, women):
 
     ques_to_question = dict(zip_longest(question_shorthand, question_string[:len(question_shorthand)]))
     longhand = ques_to_question[question]
-    title = '\n'.join(longhand[i:i+60] for i in range(0, len(longhand), 60))
+    title = '\n'.join(longhand[i:i + 60] for i in range(0, len(longhand), 60))
     plt.suptitle(title)
 
     plt.legend(wedges, x_values, title="Legend", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
 
     plt.savefig(file_destination)
-
