@@ -125,11 +125,8 @@ def bar_graph(question, men, other_prefer_not, women):
     #  todo I need help wrapping my long strings to short ones
     ques_to_question = dict(zip_longest(question_shorthand, question_string[:len(question_shorthand)]))
     longhand = ques_to_question[question]
-    title = ['\n'.join(wrap(l, 18)) for l in longhand]
-    # print(question)
-    # print(longhand)
-    # print(title)
-    ax.set_title(question)  # eventually switch that to longhand
+    title = '\n'.join(longhand[i:i+60] for i in range(0, len(longhand), 60))
+    ax.set_title(title)
 
     ax.set_xticks(np.arange(len(x_values)))  # ind)
     ax.set_xticklabels(x_values)
@@ -181,7 +178,8 @@ def pie_chart(question, men, other_prefer_not, women):
 
     ques_to_question = dict(zip_longest(question_shorthand, question_string[:len(question_shorthand)]))
     longhand = ques_to_question[question]
-    plt.suptitle(longhand + '\n')
+    title = '\n'.join(longhand[i:i+60] for i in range(0, len(longhand), 60))
+    plt.suptitle(title)
 
     temp = ques_ans[question]
     other_temp = list_question_answer_types
