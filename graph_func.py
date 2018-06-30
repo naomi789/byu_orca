@@ -168,8 +168,13 @@ def pie_chart(question, men, other_prefer_not, women):
         temp_vals = len(men_vals)
         temp_x = len(x_values)
         print('HELP')
-
+    # num_plots = len(x_values)
     fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(8, 4))
+    # colormap = plt.cm.gist_ncar
+    # plt.gca().set_color_cycle([colormap(i) for i in np.linspace(0, 0.9, num_plots)])
+
+    # below should have a better answer than the commented out code
+    # https: // stackoverflow.com / questions / 8389636 / creating - over - 20 - unique - legend - colors - using - matplotlib
     wedges, texts, autotexts = axes[0].pie(men_vals, explode=None, labels=None, colors=color_options, autopct='%1.1f%%')
     axes[0].set_title('Male')
     # Make both axes equal, so that the chart is round
