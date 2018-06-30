@@ -170,11 +170,11 @@ def pie_chart(question, men, other_prefer_not, women):
         print('HELP')
 
     fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(8, 4))
-    wedges, texts, autotexts = axes[0].pie(men_vals, explode=None, labels=x_values, colors=color_options, autopct='%1.1f%%')
+    wedges, texts, autotexts = axes[0].pie(men_vals, explode=None, labels=None, colors=color_options, autopct='%1.1f%%')
     axes[0].set_title('Male')
     # Make both axes equal, so that the chart is round
     axes[0].axis('equal')
-    pie_2 = axes[1].pie(women_vals, explode=None, labels=x_values, colors=color_options, autopct='%1.1f%%') #  textprops='none'
+    pie_2 = axes[1].pie(women_vals, explode=None, labels=None, colors=color_options, autopct='%1.1f%%') #
     axes[1].set_title('Female')
     axes[1].axis('equal')
 
