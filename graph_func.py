@@ -170,7 +170,7 @@ def pie_chart(question, men, other_prefer_not, women):
         print('HELP')
 
     fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(8, 4))
-    pie_1 = axes[0].pie(men_vals, explode=None, labels=x_values, colors=color_options, autopct='%1.1f%%')
+    wedges, texts, autotexts = axes[0].pie(men_vals, explode=None, labels=x_values, colors=color_options, autopct='%1.1f%%')
     axes[0].set_title('Male')
     # Make both axes equal, so that the chart is round
     axes[0].axis('equal')
@@ -185,7 +185,7 @@ def pie_chart(question, men, other_prefer_not, women):
     title = '\n'.join(longhand[i:i+60] for i in range(0, len(longhand), 60))
     plt.suptitle(title)
 
-    # plt.legend(color_options, x_values, title="Legend", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
+    plt.legend(wedges, x_values, title="Legend", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
 
     plt.savefig(file_destination)
 
