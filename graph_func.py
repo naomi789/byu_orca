@@ -183,26 +183,39 @@ def bar_graph(question, men, other_prefer_not, women, count_men_responses, count
     plt.savefig(file_destination)
 
 
+def calc_percent(options_to_answers, total_responses):
+    ordered_list = []
+    for key in options_to_answers.keys():
+        ordered_list.append(int(options_to_answers[key])/total_responses)
+    return ordered_list
+
 def percent_per_factor(question, men, other_gender, women, count_men_responses, count_other_gender_responses, count_women_responses):
     plt.figure()
     plt.suptitle(question)
-    possible_answers = np.arange(len(men.keys()))
 
-    # fig, axes = plt.subplots(nrows=2, ncols=1, figsize=(8.5, 11))  # sharey=True
     plt.rcdefaults()
-    fig, axes = plt.subplots()
-    # Example data
-    people = ('Tom', 'Dick', 'Harry', 'Slim', 'Jim')
-    y_pos = np.arange(len(people))
-    performance = 3 + 10 * np.random.rand(len(people))
-    error = np.random.rand(len(people))
+    fig, axes = plt.subplots(nrows=2, ncols=1, figsize=(8.5, 11))
+    possible_answers = men.keys()
+    y_pos = np.arange(len(possible_answers))
 
-    axes.barh(y_pos, performance, xerr=error, align='center',
-            color='green', ecolor='black')
+    axes[0].set_yticks(y_pos)
+    axes[0].set_yticklabels(possible_answers)
 
-    # axes[0].barh(possible_answers, men, align='center', color='green', ecolor='black')
-    # axes[1].barh(possible_answers, women, align='center', color='green', ecolor='black')
+    male_performance = calc_percent(men, count_men_responses)
+    female_performance = calc_percent(women, count_women_responses)
 
+    axes[0].barh(y_pos, male_performance, align='center', color='deepskyblue', tick_label=possible_answers)
+    axes[0].set_yticks(y_pos)
+    axes[0].set_yticklabels(possible_answers)
+    axes[0].set_xlim(0, 1)
+
+
+    axes[1].barh(y_pos, female_performance, align='center', color='hotpink', tick_label=possible_answers)
+    axes[1].set_yticks(y_pos)
+    axes[1].set_yticklabels(possible_answers)
+    axes[1].set_xlim(0, 1)
+
+    plt.tight_layout()
     plt.savefig('results/by_gender/percent_per_factor/' + question + '.pdf')
 
 
