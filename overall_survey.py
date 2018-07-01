@@ -43,12 +43,12 @@ def parse_data(data):
 
 
 def pick_graphing_style(ques_text_ans, people):
-    possible_focus_var = ['gender']  # ['gender', 'gradu_year', 'cs_not_major']  # maybe GPA, too?
+    possible_focus_var = ['university_program', 'university_graduation_year', 'university_major']   # 'gender',  # maybe GPA, too?
 
-    counter = 1
     for focus_var in possible_focus_var:
+        counter = 1
         for question in question_shorthand:
-            print("analyzing question number: " + str(counter))
+            print("focus_var: " + focus_var + " question number: " + str(counter))
             counter += 1
             answer_type = ques_text_ans[question]
             if question in ['describe_positive_experience', 'describe_negative_experience', 'suggestion_improve_institution']:

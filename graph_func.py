@@ -36,7 +36,7 @@ def gender_graphing(question, options, people, answer_type):
         percent_per_factor(question, men_graphable, other_graphable, women_graphable, len(men), len(other), len(women))
 
     elif answer_type in likert_question_answer_types:
-        f = open('results/by_gender/likert_stats/' + question + '.txt', 'w')
+        f = open('results/gender/likert_stats/' + question + '.txt', 'w')
         men_countable = convert_into_numbers(men_graphable)
         women_countable = convert_into_numbers(women_graphable)
 
@@ -143,15 +143,7 @@ def ques_to_answer():
 
 
 def bar_graph(question, men, other_prefer_not, women, count_men_responses, count_women_responses, count_other_gender_responses):
-    ques_ans = ques_to_answer()
-    x_values = sorted_answers(ques_ans[question])  # possible answers
-
-    if ques_ans[question] in list_question_answer_types:
-        file_destination = 'results/by_gender/bar_graph/select_all/' + question + '.pdf'
-    elif ques_ans[question] in likert_question_answer_types:
-        file_destination = 'results/by_gender/bar_graph/mult_choice/' + question + '.pdf'
-    else:
-        file_destination = 'results/by_gender/bar_graph/error/' + question + '.pdf'
+    file_destination, x_values = get_file_location(question)
 
     men_vals = men.values()
     women_vals = women.values()
@@ -216,10 +208,10 @@ def percent_per_factor(question, men, other_gender, women, count_men_responses, 
     axes[1].set_xlim(0, 1)
 
     plt.tight_layout()
-    plt.savefig('results/by_gender/percent_per_factor/' + question + '.pdf')
+    plt.savefig('results/gender/percent_per_factor/' + question + '.pdf')
 
 
-def make_box_and_whisker(question, men, women):
+def make_box_and_whisker(question, men, women, focus_var):
     plt.figure()
     plt.suptitle(question)  # ques_to_question['confidence_graduate_gpa'] + str(datetime.now().time()))
 
@@ -231,7 +223,7 @@ def make_box_and_whisker(question, men, women):
     axes[1].boxplot(women)
     axes[1].set_title('women')
 
-    plt.savefig('results/by_gender/box_and_whisker/' + question + '.pdf')
+    plt.savefig('results/' + focus_var + '/box_and_whisker/' + question + '.pdf')
 
 
 def get_file_location(question):
@@ -239,11 +231,11 @@ def get_file_location(question):
     x_values = sorted_answers(ques_ans[question])  # possible answers
 
     if ques_ans[question] in list_question_answer_types:
-        file_destination = 'results/by_gender/pie_chart/select_all/' + question + '.pdf'
+        file_destination = 'results/gender/pie_chart/select_all/' + question + '.pdf'
     elif ques_ans[question] in likert_question_answer_types:
-        file_destination = 'results/by_gender/pie_chart/mult_choice/' + question + '.pdf'
+        file_destination = 'results/gender/pie_chart/mult_choice/' + question + '.pdf'
     else:
-        file_destination = 'results/by_gender/pie_chart/error/' + question + '.pdf'
+        file_destination = 'results/gender/pie_chart/error/' + question + '.pdf'
 
     return file_destination, x_values
 
