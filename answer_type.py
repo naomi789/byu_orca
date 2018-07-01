@@ -1,6 +1,9 @@
 from graph_func import gender_graphing
 # from overall_survey import ques_to_question
 from collections import defaultdict
+from scipy.stats import mannwhitneyu
+# import statsmodels.api as sm
+
 
 
 def graph_string(question, people):
@@ -33,27 +36,57 @@ def long_text(question, people):
 
 
 def graph_num(question, focus_var, people):
-    # tbh the only question we care about in this function is university_gpa_TEXT
+    if question != 'university_gpa_TEXT':
+        return
+
     f = open('results/numbers/' + question + '.txt', 'w')
     f.write("question: " + question + '\n\n')
+    if focus_var == 'gender':
+        men = []
+        women = []
+        other_prefer_not = []
 
-    different_responses = []
+        for person in people:
+            value = getattr(person, question)
+            gender = getattr(person, 'gender')
+            if value == "":
+                continue
+            elif value.isdigit() and int(value) < 5:
+                if gender == 'Male':
+                    men.append(int(value))
+                elif gender == 'Female':
+                    women.append(int(value))
 
-    for person in people:
-        value = getattr(person, question)
-        if value == "":
-            pass
-        elif value.isdigit() and int(value) < 5:
-            different_responses.append(int(value))
-        elif value.replace('.', '', 1).isdigit() and float(value) < 5:
-            different_responses.append(float(value))
+            elif value.replace('.', '', 1).isdigit() and float(value) < 5:
+                if gender == 'Male':
+                    men.append(float(value))
+                elif gender == 'Female':
+                    women.append(float(value))
+            else:
+                other_prefer_not.append(value)
 
-    different_responses.sort()
+        men.sort()
+        women.sort()
 
-    for response in different_responses:
-        f.write(str(response))
-        f.write('\n')
-    f.close()
+        f = open('results/numbers/' + question + '.txt', 'w')
+        f.write("question: " + question + '\n\n')
+
+        f.write("men: " + str(men) + '\n')
+        f.write("women: " + str(women) + '\n\n')
+
+        f.write("avg male GPA: " + str(sum(men)/len(men)) + '\n')
+        f.write("avg female GPA: " + str(sum(women)/len(women)) + '\n')
+
+
+        f.write("mann whitney men v. women: " + str(mannwhitneyu(men, women)) + '\n')
+        # no ttests because unequal numbers of men and women
+
+        # anova tests take a bit more work
+        # moore_lm = ols('conformity ~ C(fcategory, Sum)*C(partner_status, Sum)', data=data).fit()
+        # table = sm.stats.anova_lm(moore_lm, typ=2)  # Type 2 ANOVA DataFrame
+        # f.write("ANOVA: " + str(table))
+
+        f.close()
 
 
 def mult_choice(question, focus_var, options, people):
