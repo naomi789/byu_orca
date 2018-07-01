@@ -35,18 +35,46 @@ def gender_graphing(question, options, people):
 
     ques_ans = ques_to_answer()
     answer_type = ques_ans[question]
+
     if answer_type in likert_question_answer_types:
-        f = open('results/stats/' + question + '.txt', 'w')
+        f = open('results/likert_stats/' + question + '.txt', 'w')
+        men_countable = convert_into_numbers(men_graphable)
+        women_countable = convert_into_numbers(women_graphable)
+
+        f.write("question: " + question + '\n')
+        # f.write("men: " + str(men_countable) + '\n')
+        f.write("dict: " + str(men_graphable) + '\n')
+        # f.write("women: " + str(women_countable) + '\n')
+        f.write("dict: " + str(women_graphable) + '\n')
+        f.write('\n')
 
         # TODO: get all of these lists of strings into actual numbers
-        f.write("men, wilcoxon: " + str(scipy.stats.wilcoxon(men)))
-        f.write("women, wilcoxon: " + str(scipy.stats.wilcoxon(women)))
-        f.write("mann whitney men v. women: " + str(mannwhitneyu(men, women)))
+        f.write("men, wilcoxon: " + str(scipy.stats.wilcoxon(men_countable)) + '\n')
+        f.write("women, wilcoxon: " + str(scipy.stats.wilcoxon(women_countable)) + '\n')
+        f.write('\n')
+
+        f.write("mann whitney men v. women: " + str(mannwhitneyu(men_countable, women_countable)) + '\n')
+        f.write('\n')
+
         # f.write(anova()) # https://plot.ly/python/anova/
-        f.write("ttest related men v. women: " + str(scipy.stats.ttest_rel(men, women)))
-        f.write("ttest independent men v. women: " + str(scipy.stats.ttest_ind(men, women)))
+        # f.write('\n')
+
+        # f.write("ttest related men v. women: " + str(scipy.stats.ttest_rel(men_countable, women_countable)) + '\n')
+        # f.write("ttest independent men v. women: " + str(scipy.stats.ttest_ind(men_countable, women_countable)) + '\n')
+        f.write('\n')
 
         f.close()
+
+
+def convert_into_numbers(option_and_count_dict):
+    responses_as_numbers = []
+    counter = 1
+    for key in option_and_count_dict.keys():
+        if key != "":
+            for num in range(0, option_and_count_dict[key]):
+                responses_as_numbers.append(counter)
+        counter = counter + 1
+    return responses_as_numbers
 
 
 def filter_for_gender(unsorted_one_gender_answers, answer_count_dictionary):
