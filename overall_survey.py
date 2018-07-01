@@ -5,11 +5,12 @@ from datetime import datetime
 import numpy as np
 import matplotlib.pyplot as plt
 from answer_type import mult_choice, graph_string, graph_int, graph_double
-from constants import question_shorthand, question_string, answer_type, agreement, comfort, certainty, frequency, \
-    frequency_class, frequency_TA
+from constants import question_shorthand, question_string
+    # , answer_type, agreement, comfort, certainty, frequency, frequency_class, frequency_TA
 from list_constants import likert_question_answer_types, list_question_answer_types
-from graph_func import ques_to_answer, gender_graphing, makeBoxWhisker, values_per_gender, bar_graph
-import pprint
+from graph_func import ques_to_answer\
+    # , gender_graphing, makeBoxWhisker, values_per_gender, bar_graph
+    # import pprint
 
 plt.style.use('seaborn-deep')
 
@@ -48,7 +49,7 @@ def pick_graphing_style(ques_text_ans, people):
         for question in question_shorthand:
             answer_type = ques_text_ans[question]
             if ques_text_ans[question] == 'string':
-                graph_string(question, focus_var, people)
+                graph_string(question, people)
             elif ques_text_ans[question] == 'int':
                 graph_int(question, focus_var, people)
             elif ques_text_ans[question] == 'double':
