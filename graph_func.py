@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from constants import question_shorthand, question_string, answer_type, agreement, comfort, certainty, frequency, \
-    frequency_class, frequency_TA, color_options
+    frequency_class, frequency_TA, color_options, long_colors
 from list_constants import responsibilities, professor_encouragement, meetings_clubs, percentage, scholarships, yes_no, \
     involvement, appearance_comments, sexism_response, student_groups_standards, majors_minors, graduation_year, \
     extracurriculars, encouragement, barriers, likert_question_answer_types, list_question_answer_types
@@ -199,7 +199,7 @@ def make_box_and_whisker(question, men, women):
     plt.savefig('results/by_gender/box_and_whisker/' + question + '.pdf')
 
 
-def pie_chart(question, men, other_prefer_not, women):
+def get_file_location(question):
     ques_ans = ques_to_answer()
     x_values = sorted_answers(ques_ans[question])  # possible answers
 
@@ -210,28 +210,29 @@ def pie_chart(question, men, other_prefer_not, women):
     else:
         file_destination = 'results/by_gender/pie_chart/error/' + question + '.pdf'
 
+    return file_destination, x_values
+
+
+def pie_chart(question, men, other_prefer_not, women):
+    file_destination, x_values = get_file_location(question)
+
     men_vals = men.values()
     women_vals = women.values()
 
-    if len(men_vals) != len(x_values):
-        temp_vals = len(men_vals)
-        temp_x = len(x_values)
-        print('HELP')
     num_plots = len(x_values)
-    fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(8, 4))
-    colormap = plt.cm.gist_ncar
+    fig, axes = plt.subplots(nrows=1, ncols=2)  # figsize=(8, 4))
 
-    plt.gca().set_color_cycle([colormap(i) for i in np.linspace(0, 0.9, num_plots)])
-
+    # colormap = plt.cm.gist_ncar # .set_prop_cycle
+    # plt.gca().set_color_cycle([colormap(i) for i in np.linspace(0, 0.9, num_plots)])
     # below should have a better answer than the commented out code
     # https: // stackoverflow.com / questions / 8389636 / creating - over - 20 - unique - legend - colors - using - matplotlib
-    wedges, texts, autotexts = axes[0].pie(men_vals, explode=None, labels=None, colors=color_options, autopct='%1.1f%%')
     axes[0].set_title('Male')
-    # Make both axes equal, so that the chart is round
     axes[0].axis('equal')
-    pie_2 = axes[1].pie(women_vals, explode=None, labels=None, colors=color_options, autopct='%1.1f%%')  #
+    wedges, texts, autotexts = axes[0].pie(men_vals, explode=None, labels=None, autopct='%1.1f%%', colors=long_colors) # colors=color_options,
+
     axes[1].set_title('Female')
     axes[1].axis('equal')
+    pie_2 = axes[1].pie(women_vals, explode=None, labels=None, autopct='%1.1f%%', colors=long_colors) # colors=color_options,
 
     plt.subplots_adjust(wspace=1)
 
@@ -240,6 +241,6 @@ def pie_chart(question, men, other_prefer_not, women):
     title = '\n'.join(longhand[i:i + 60] for i in range(0, len(longhand), 60))
     plt.suptitle(title)
 
-    plt.legend(wedges, x_values, title="Legend", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
+    plt.legend(wedges, x_values, title="Legend", loc="bottom", bbox_to_anchor=(1, 0, 0.5, 1))  # lower right # best # center right
 
     plt.savefig(file_destination)
