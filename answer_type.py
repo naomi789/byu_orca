@@ -1,4 +1,4 @@
-from graph_func import gender_graphing
+from graph_func import gender_graphing, make_box_and_whisker
 # from overall_survey import ques_to_question
 from collections import defaultdict
 from scipy.stats import mannwhitneyu
@@ -7,7 +7,7 @@ from scipy.stats import mannwhitneyu
 
 
 def graph_string(question, people):
-    f = open('results/strings/' + question + '.txt', 'w')
+    f = open('results/by_gender/strings/' + question + '.txt', 'w')
     # ques_to_question = ques_to_question()
     f.write("question: " + question + '\n\n')
     string_value = defaultdict(int)
@@ -23,7 +23,7 @@ def graph_string(question, people):
 
 
 def long_text(question, people):
-    f = open('results/strings/' + question + '.txt', 'w')
+    f = open('results/by_gender/strings/' + question + '.txt', 'w')
     f.write("question: " + question + '\n\n')
     for person in people:
         value = getattr(person, question)
@@ -39,7 +39,7 @@ def graph_num(question, focus_var, people):
     if question != 'university_gpa_TEXT':
         return
 
-    f = open('results/numbers/' + question + '.txt', 'w')
+    f = open('results/by_gender/numbers/' + question + '.txt', 'w')
     f.write("question: " + question + '\n\n')
     if focus_var == 'gender':
         men = []
@@ -68,7 +68,7 @@ def graph_num(question, focus_var, people):
         men.sort()
         women.sort()
 
-        f = open('results/numbers/' + question + '.txt', 'w')
+        f = open('results/by_gender/numbers/' + question + '.txt', 'w')
         f.write("question: " + question + '\n\n')
 
         f.write("men: " + str(men) + '\n')
@@ -87,7 +87,7 @@ def graph_num(question, focus_var, people):
         # f.write("ANOVA: " + str(table))
 
         f.close()
-
+        make_box_and_whisker(question, men, women)
 
 def mult_choice(question, focus_var, options, people):
     if focus_var == 'gender':

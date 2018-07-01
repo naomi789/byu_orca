@@ -37,7 +37,7 @@ def gender_graphing(question, options, people):
     answer_type = ques_ans[question]
 
     if answer_type in likert_question_answer_types:
-        f = open('results/likert_stats/' + question + '.txt', 'w')
+        f = open('results/by_gender/likert_stats/' + question + '.txt', 'w')
         men_countable = convert_into_numbers(men_graphable)
         women_countable = convert_into_numbers(women_graphable)
 
@@ -184,14 +184,19 @@ def bar_graph(question, men, other_prefer_not, women):
     plt.savefig(file_destination)
 
 
-def makeBoxWhisker(question, men, other_prefer_not, women):
+def make_box_and_whisker(question, men, women):
     plt.figure()
-    # plt.title(ques_to_question['confidence_graduate_gpa'] + str(datetime.now().time()))
-    # plt.xlabel('gender')
-    # plt.ylabel('answers')
-    # trash_numbers = [1, 3, 4, 5, 6, 7, 8, 0, 4, 3, 2, 1]
-    # plt.boxplot(trash_numbers, 0, 'gD')
-    plt.savefig('results/trash/trash.pdf')
+    plt.suptitle(question)  # ques_to_question['confidence_graduate_gpa'] + str(datetime.now().time()))
+
+    fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(6, 6), sharey=True)
+
+    axes[0].boxplot(men)
+    axes[0].set_title('men')
+
+    axes[1].boxplot(women)
+    axes[1].set_title('women')
+
+    plt.savefig('results/by_gender/box_and_whisker/' + question + '.pdf')
 
 
 def pie_chart(question, men, other_prefer_not, women):
@@ -212,10 +217,11 @@ def pie_chart(question, men, other_prefer_not, women):
         temp_vals = len(men_vals)
         temp_x = len(x_values)
         print('HELP')
-    # num_plots = len(x_values)
+    num_plots = len(x_values)
     fig, axes = plt.subplots(nrows=1, ncols=2, figsize=(8, 4))
-    # colormap = plt.cm.gist_ncar
-    # plt.gca().set_color_cycle([colormap(i) for i in np.linspace(0, 0.9, num_plots)])
+    colormap = plt.cm.gist_ncar
+
+    plt.gca().set_color_cycle([colormap(i) for i in np.linspace(0, 0.9, num_plots)])
 
     # below should have a better answer than the commented out code
     # https: // stackoverflow.com / questions / 8389636 / creating - over - 20 - unique - legend - colors - using - matplotlib
