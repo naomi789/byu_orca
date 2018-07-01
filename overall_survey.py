@@ -4,7 +4,7 @@ from itertools import zip_longest
 from datetime import datetime
 import numpy as np
 import matplotlib.pyplot as plt
-from answer_type import mult_choice, graph_string, graph_int, graph_double
+from answer_type import mult_choice, graph_string, graph_num, long_text
 from constants import question_shorthand, question_string
     # , answer_type, agreement, comfort, certainty, frequency, frequency_class, frequency_TA
 from list_constants import likert_question_answer_types, list_question_answer_types
@@ -45,22 +45,24 @@ def parse_data(data):
 def pick_graphing_style(ques_text_ans, people):
     possible_focus_var = ['gender']  # ['gender', 'gradu_year', 'cs_not_major']  # maybe GPA, too?
 
+    counter = 1
     for focus_var in possible_focus_var:
         for question in question_shorthand:
+            print("analyzing question number: " + str(counter))
+            counter += 1
             answer_type = ques_text_ans[question]
-            if ques_text_ans[question] == 'string':
+            if question in ['describe_positive_experience', 'describe_negative_experience', 'suggestion_improve_institution']:
+                long_text(question, people)
+            elif ques_text_ans[question] == 'string':
                 graph_string(question, people)
-            elif ques_text_ans[question] == 'int':
-                graph_int(question, focus_var, people)
-            elif ques_text_ans[question] == 'double':
-                graph_double(question, focus_var, people)
-            # likert_question_answer_types = ['certainty', 'agreement', 'frequency', 'frequency_TA', 'frequency_class', 'comfort', '']
+            elif ques_text_ans[question] == 'int' or ques_text_ans[question] == 'double':
+                graph_num(question, focus_var, people)
+                temp = 'trash'
             elif answer_type in likert_question_answer_types:
                 mult_choice(question, focus_var, ques_text_ans[question], people)
             elif answer_type in list_question_answer_types:
                 mult_choice(question, focus_var, ques_text_ans[question], people)
             else:
-                store = likert_question_answer_types
                 print("question: " + question + " ques_text_ans[question]: " + answer_type)
 
 
