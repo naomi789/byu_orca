@@ -59,9 +59,9 @@ def pick_graphing_style(ques_text_ans, people):
                 graph_num(question, focus_var, people)
                 temp = 'trash'
             elif answer_type in likert_question_answer_types:
-                mult_choice(question, focus_var, ques_text_ans[question], people)
+                mult_choice(question, focus_var, ques_text_ans[question], people, answer_type)
             elif answer_type in list_question_answer_types:
-                mult_choice(question, focus_var, ques_text_ans[question], people)
+                mult_choice(question, focus_var, ques_text_ans[question], people, answer_type)
             else:
                 print("question: " + question + " ques_text_ans[question]: " + answer_type)
 

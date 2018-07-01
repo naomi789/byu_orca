@@ -11,7 +11,7 @@ import scipy.stats
 from scipy.stats import mannwhitneyu
 
 
-def gender_graphing(question, options, people):
+def gender_graphing(question, options, people, answer_type):
     men = []
     women = []
     other = []
@@ -26,17 +26,16 @@ def gender_graphing(question, options, people):
         else:
             print("error: " + str(getattr(person, 'gender')))
 
-    #  returns dict, sorted. Key = choices, value = count
     men_graphable, other_graphable, women_graphable = values_per_gender(men, other, women, options)
 
     #  decide and call preferred graph here
-    bar_graph(question, men_graphable, other_graphable, women_graphable)
-    pie_chart(question, men_graphable, other_graphable, women_graphable)
+    bar_graph(question, men_graphable, other_graphable, women_graphable, len(men), len(women), len(other))
+    pie_chart(question, men_graphable, other_graphable, women_graphable, len(men), len(women), len(other))
 
-    ques_ans = ques_to_answer()
-    answer_type = ques_ans[question]
+    if answer_type in list_question_answer_types:
+        percent_per_factor(question, men_graphable, other_graphable, women_graphable, len(men), len(other), len(women))
 
-    if answer_type in likert_question_answer_types:
+    elif answer_type in likert_question_answer_types:
         f = open('results/by_gender/likert_stats/' + question + '.txt', 'w')
         men_countable = convert_into_numbers(men_graphable)
         women_countable = convert_into_numbers(women_graphable)
@@ -143,7 +142,7 @@ def ques_to_answer():
     return translate_questions
 
 
-def bar_graph(question, men, other_prefer_not, women):
+def bar_graph(question, men, other_prefer_not, women, count_men_responses, count_women_responses, count_other_gender_responses):
     ques_ans = ques_to_answer()
     x_values = sorted_answers(ques_ans[question])  # possible answers
 
@@ -184,6 +183,29 @@ def bar_graph(question, men, other_prefer_not, women):
     plt.savefig(file_destination)
 
 
+def percent_per_factor(question, men, other_gender, women, count_men_responses, count_other_gender_responses, count_women_responses):
+    plt.figure()
+    plt.suptitle(question)
+    possible_answers = np.arange(len(men.keys()))
+
+    # fig, axes = plt.subplots(nrows=2, ncols=1, figsize=(8.5, 11))  # sharey=True
+    plt.rcdefaults()
+    fig, axes = plt.subplots()
+    # Example data
+    people = ('Tom', 'Dick', 'Harry', 'Slim', 'Jim')
+    y_pos = np.arange(len(people))
+    performance = 3 + 10 * np.random.rand(len(people))
+    error = np.random.rand(len(people))
+
+    axes.barh(y_pos, performance, xerr=error, align='center',
+            color='green', ecolor='black')
+
+    # axes[0].barh(possible_answers, men, align='center', color='green', ecolor='black')
+    # axes[1].barh(possible_answers, women, align='center', color='green', ecolor='black')
+
+    plt.savefig('results/by_gender/percent_per_factor/' + question + '.pdf')
+
+
 def make_box_and_whisker(question, men, women):
     plt.figure()
     plt.suptitle(question)  # ques_to_question['confidence_graduate_gpa'] + str(datetime.now().time()))
@@ -213,7 +235,7 @@ def get_file_location(question):
     return file_destination, x_values
 
 
-def pie_chart(question, men, other_prefer_not, women):
+def pie_chart(question, men, other_prefer_not, women, count_men_responses, count_women_responses, count_other_gender_responses):
     file_destination, x_values = get_file_location(question)
 
     men_vals = men.values()
@@ -226,11 +248,11 @@ def pie_chart(question, men, other_prefer_not, women):
     # plt.gca().set_color_cycle([colormap(i) for i in np.linspace(0, 0.9, num_plots)])
     # below should have a better answer than the commented out code
     # https: // stackoverflow.com / questions / 8389636 / creating - over - 20 - unique - legend - colors - using - matplotlib
-    axes[0].set_title('Male')
+    axes[0].set_title('Male ' + str(count_men_responses))
     axes[0].axis('equal')
     wedges, texts, autotexts = axes[0].pie(men_vals, explode=None, labels=None, autopct='%1.1f%%', colors=long_colors) # colors=color_options,
 
-    axes[1].set_title('Female')
+    axes[1].set_title('Female ' + str(count_women_responses))
     axes[1].axis('equal')
     pie_2 = axes[1].pie(women_vals, explode=None, labels=None, autopct='%1.1f%%', colors=long_colors) # colors=color_options,
 
@@ -241,6 +263,6 @@ def pie_chart(question, men, other_prefer_not, women):
     title = '\n'.join(longhand[i:i + 60] for i in range(0, len(longhand), 60))
     plt.suptitle(title)
 
-    plt.legend(wedges, x_values, title="Legend", loc="bottom", bbox_to_anchor=(1, 0, 0.5, 1))  # lower right # best # center right
+    plt.legend(wedges, x_values, title="Legend", loc="lower center", bbox_to_anchor=(1, 0, 0.5, 1))  # lower right # best # center right
 
     plt.savefig(file_destination)

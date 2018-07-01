@@ -89,7 +89,7 @@ def graph_num(question, focus_var, people):
         f.close()
         make_box_and_whisker(question, men, women)
 
-def mult_choice(question, focus_var, options, people):
+def mult_choice(question, focus_var, options, people, answer_type):
     if focus_var == 'gender':
-        gender_graphing(question, options, people)
+        gender_graphing(question, options, people, answer_type)
     #  elif # think about graduation date, major, age, etc
