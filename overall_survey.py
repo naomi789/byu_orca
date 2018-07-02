@@ -9,7 +9,7 @@ from constants import question_shorthand, question_string
     # , answer_type, agreement, comfort, certainty, frequency, frequency_class, frequency_TA
 from list_constants import likert_question_answer_types, list_question_answer_types
 from graph_func import ques_to_answer\
-    # , gender_graphing, makeBoxWhisker, values_per_gender, bar_graph
+    # , gender_graphing, makeBoxWhisker, values_per_a_and_b, bar_graph
     # import pprint
 
 plt.style.use('seaborn-deep')
@@ -43,7 +43,7 @@ def parse_data(data):
 
 
 def pick_graphing_style(ques_text_ans, people):
-    possible_focus_var = ['university_program', 'university_graduation_year', 'university_major']   # 'gender',  # maybe GPA, too?
+    possible_focus_var = ['university_program', 'university_graduation_year', 'university_major', 'gender']   # 'gender',  # maybe GPA, too?
 
     for focus_var in possible_focus_var:
         counter = 1

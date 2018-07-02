@@ -1,9 +1,10 @@
-from graph_func import gender_graphing, make_box_and_whisker
+from graph_func import filter_and_graph, make_box_and_whisker
 # from overall_survey import ques_to_question
 from collections import defaultdict
 from scipy.stats import mannwhitneyu
-# import statsmodels.api as sm
 
+
+# import statsmodels.api as sm
 
 
 def graph_string(question, people):
@@ -95,12 +96,11 @@ def gender_graph_num(question, people, focus_var, a, b):
     f.write("focus_var: " + focus_var + '\n')
     f.write("question: " + question + '\n\n')
 
-    f.write("option_a: " + str(option_a) + '\n')
-    f.write("option_b: " + str(option_b) + '\n\n')
+    f.write("option_a: " + a + ": " + str(option_a) + '\n')
+    f.write("option_b: " + b + ": " + str(option_b) + '\n\n')
 
-    f.write("avg " + a + " GPA: " + str(sum(option_a)/len(option_a)) + '\n')
-    f.write("avg " + b + " GPA: " + str(sum(option_b)/len(option_b)) + '\n')
-
+    f.write("avg " + a + " GPA: " + str(sum(option_a) / len(option_a)) + '\n')
+    f.write("avg " + b + " GPA: " + str(sum(option_b) / len(option_b)) + '\n')
 
     f.write("mann whitney option_a v. option_b: " + str(mannwhitneyu(option_a, option_b)) + '\n')
     # no ttests because unequal numbers of option_a and option_b
@@ -111,9 +111,18 @@ def gender_graph_num(question, people, focus_var, a, b):
     # f.write("ANOVA: " + str(table))
 
     f.close()
-    make_box_and_whisker(question, option_a, option_b, focus_var)
+    make_box_and_whisker(question, option_a, option_b, focus_var, a, b)
+
 
 def mult_choice(question, focus_var, options, people, answer_type):
     if focus_var == 'gender':
-        gender_graphing(question, options, people, answer_type)
-    #  elif # think about graduation date, major, age, etc
+        filter_and_graph(question, options, people, answer_type, focus_var, 'Male', 'Female')
+
+    elif focus_var == 'university_program':
+        filter_and_graph(question, options, people, answer_type, focus_var, 'Undergraduate', 'Not undergrads')
+
+    elif focus_var == 'university_major':
+        filter_and_graph(question, options, people, answer_type, focus_var, 'Computer Science', 'Not CS majors')
+
+    elif focus_var == 'university_graduation_year':
+        pass
