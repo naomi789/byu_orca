@@ -197,11 +197,13 @@ def likert_percents(question, focus_var, option_a, option_b, count_option_a_resp
     for bar in all_bars:
 
         # print(type(bar))
-        print(used_bars)
+        # print(used_bars)
         plt.bar(ind, bar, width=.8, label=key, color=color_options[counter], bottom=used_bars) # temp
         used_bars = [x + y for x, y in zip(used_bars, bar)]
 
         counter += 1
+
+
 
     plt.xticks(ind, comparing_bar_a_b)
     plt.ylim(ymax=1)
