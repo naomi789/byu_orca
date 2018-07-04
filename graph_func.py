@@ -31,7 +31,10 @@ def filter_and_graph(question, options, people, answer_type, focus_var, a, b):
     pie_chart(question, focus_var, option_a_graphable, option_b_graphable, len(option_a), len(option_b), a, b)
 
     if answer_type in list_question_answer_types:
-        percent_per_factor(question, focus_var, option_a_graphable, option_b_graphable, len(option_a), len(option_b), a, b)
+        percent_per_factor(question, focus_var, option_a_graphable, option_b_graphable, len(option_a), len(option_b), a,
+                           b)
+    elif answer_type in likert_question_answer_types:
+        likert_percents(question, focus_var, option_a_graphable, option_b_graphable, len(option_a), len(option_b), a, b)
 
     elif answer_type in likert_question_answer_types:
         f = open('results/' + focus_var + '/likert_stats/' + question + '.txt', 'w')
@@ -175,7 +178,42 @@ def calc_percent(options_to_answers, total_responses):
     return ordered_list
 
 
-def percent_per_factor(question, focus_var, option_a, option_b, count_option_a_responses, count_option_b_responses, a, b):
+def likert_percents(question, focus_var, option_a, option_b, count_option_a_responses, count_option_b_responses, a, b):
+    plt.figure()
+    plt.suptitle('question: ' + question + '\n' + 'focus_var: ' + focus_var + '\n' + a + '(' + str(
+        count_option_a_responses) + ') and ' + b + '(' + str(count_option_b_responses) + ')')
+
+    comparing_bar_a_b = [a, b]
+    ind = [x for x, _ in enumerate(comparing_bar_a_b)]
+
+    assert(option_a.keys() == option_b.keys())
+    all_bars = []
+    for key in option_a.keys():
+        one_pair_of__responses = np.array([option_a[key]/count_option_a_responses, option_b[key]/count_option_b_responses])
+        all_bars.append(one_pair_of__responses)
+
+    counter = 0
+    used_bars = [0, 0]
+    for bar in all_bars:
+
+        # print(type(bar))
+        print(used_bars)
+        plt.bar(ind, bar, width=.8, label=key, color=color_options[counter], bottom=used_bars) # temp
+        used_bars = [x + y for x, y in zip(used_bars, bar)]
+
+        counter += 1
+
+    plt.xticks(ind, comparing_bar_a_b)
+    plt.ylim(ymax=1)
+    plt.ylabel("Count of Likert Responses")
+    plt.xlabel("Options A, B, etc")
+    plt.legend(loc="upper right")
+
+    plt.savefig('results/' + focus_var + '/likert_percents/' + question + '.pdf')
+
+
+def percent_per_factor(question, focus_var, option_a, option_b, count_option_a_responses, count_option_b_responses, a,
+                       b):
     plt.figure()
     plt.suptitle(question)
 
