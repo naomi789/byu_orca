@@ -27,8 +27,8 @@ def filter_and_graph(question, options, people, answer_type, focus_var, a, b):
     option_a_graphable, option_b_graphable = values_per_a_and_b(option_a, option_b, options)
 
     #  decide and call preferred graph here
-    bar_graph(question, focus_var, option_a_graphable, option_b_graphable, len(option_a), len(option_b), a, b)
-    pie_chart(question, focus_var, option_a_graphable, option_b_graphable, len(option_a), len(option_b), a, b)
+    #bar_graph(question, focus_var, option_a_graphable, option_b_graphable, len(option_a), len(option_b), a, b)
+    #pie_chart(question, focus_var, option_a_graphable, option_b_graphable, len(option_a), len(option_b), a, b)
 
     if answer_type in list_question_answer_types:
         percent_per_factor(question, focus_var, option_a_graphable, option_b_graphable, len(option_a), len(option_b), a,
