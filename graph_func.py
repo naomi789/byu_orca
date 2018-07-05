@@ -34,7 +34,7 @@ def filter_and_graph(question, options, people, answer_type, focus_var, a, b):
         percent_per_factor(question, focus_var, option_a_graphable, option_b_graphable, len(option_a), len(option_b), a,
                            b)
     elif answer_type in likert_question_answer_types:
-        likert_percents(question, focus_var, option_a_graphable, option_b_graphable, len(option_a), len(option_b), a, b)
+        likert_percents(question, focus_var, [option_a_graphable, option_b_graphable], [len(option_a), len(option_b)], [a, b])
 
     elif answer_type in likert_question_answer_types:
         f = open('results/' + focus_var + '/likert_stats/' + question + '.txt', 'w')
@@ -178,34 +178,38 @@ def calc_percent(options_to_answers, total_responses):
     return ordered_list
 
 
-def likert_percents(question, focus_var, option_a, option_b, count_option_a_responses, count_option_b_responses, a, b):
+def likert_percents(question, focus_var, option_values, option_counts, options):
     plt.figure()
-    plt.suptitle('question: ' + question + '\n' + 'focus_var: ' + focus_var + '\n' + a + '(' + str(
-        count_option_a_responses) + ') and ' + b + '(' + str(count_option_b_responses) + ')')
+    plt.suptitle('question: ' + question + '\n' + 'focus_var: ' + focus_var)
 
-    comparing_bar_a_b = [a, b]
-    ind = [x for x, _ in enumerate(comparing_bar_a_b)]
+    ind = [x for x, _ in enumerate(option_values)]
 
-    assert(option_a.keys() == option_b.keys())
+    possible_responses=option_values[0].keys()
+    for option in option_values:
+            assert(option.keys() == possible_responses)
+
     all_bars = []
-    for key in option_a.keys():
-        one_pair_of__responses = np.array([option_a[key]/count_option_a_responses, option_b[key]/count_option_b_responses])
-        all_bars.append(one_pair_of__responses)
+
+    foo=list(zip(option_values, option_counts))
+    for response in possible_responses:
+        set_of_responses=[]
+        for bar in foo:
+            set_of_responses.append(bar[0][response] / bar[1])
+
+        all_bars.append(set_of_responses)
 
     counter = 0
     used_bars = [0, 0]
-    for bar in all_bars:
 
-        # print(type(bar))
-        # print(used_bars)
-        plt.bar(ind, bar, width=.8, label=key, color=color_options[counter], bottom=used_bars) # temp
-        used_bars = [x + y for x, y in zip(used_bars, bar)]
+    foo=list(zip(all_bars, possible_responses))
+    for bar in foo:
+        #import pdb; pdb.set_trace()
+        plt.bar(ind, bar[0], width=.8, label=bar[1], color=color_options[counter], bottom=used_bars) # temp
+        used_bars = [x + y for x, y in zip(used_bars, bar[0])]
 
         counter += 1
 
-
-
-    plt.xticks(ind, comparing_bar_a_b)
+    plt.xticks(ind, options)
     plt.ylim(ymax=1)
     plt.ylabel("Percent of Likert Responses")
     plt.legend(loc="upper right")
