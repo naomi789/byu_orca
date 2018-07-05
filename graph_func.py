@@ -178,38 +178,37 @@ def calc_percent(options_to_answers, total_responses):
     return ordered_list
 
 
-def likert_percents(question, focus_var, option_values, option_counts, options):
+def likert_percents(question, focus_var, category_values, category_counts, category_names):
     plt.figure()
     plt.suptitle('question: ' + question + '\n' + 'focus_var: ' + focus_var)
 
-    ind = [x for x, _ in enumerate(option_values)]
+    ind = [x for x, _ in enumerate(category_values)]
 
-    possible_responses=option_values[0].keys()
-    for option in option_values:
-            assert(option.keys() == possible_responses)
+    possible_responses=category_values[0].keys()
+    for category in category_values:
+            assert(category.keys() == possible_responses)
 
     all_bars = []
 
-    foo=list(zip(option_values, option_counts))
+    categories=list(zip(category_values, category_counts))
     for response in possible_responses:
         set_of_responses=[]
-        for bar in foo:
-            set_of_responses.append(bar[0][response] / bar[1])
+        for category in categories:
+            set_of_responses.append(category[0][response] / category[1])
 
         all_bars.append(set_of_responses)
 
     counter = 0
     used_bars = [0, 0]
 
-    foo=list(zip(all_bars, possible_responses))
-    for bar in foo:
-        #import pdb; pdb.set_trace()
-        plt.bar(ind, bar[0], width=.8, label=bar[1], color=color_options[counter], bottom=used_bars) # temp
-        used_bars = [x + y for x, y in zip(used_bars, bar[0])]
+    responses=list(zip(all_bars, possible_responses))
+    for response in responses:
+        plt.bar(ind, response[0], width=.8, label=response[1], color=color_options[counter], bottom=used_bars) # temp
+        used_bars = [x + y for x, y in zip(used_bars, response[0])]
 
         counter += 1
 
-    plt.xticks(ind, options)
+    plt.xticks(ind, category_names)
     plt.ylim(ymax=1)
     plt.ylabel("Percent of Likert Responses")
     plt.legend(loc="upper right")
