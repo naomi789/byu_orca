@@ -12,19 +12,31 @@ import scipy.stats
 from scipy.stats import mannwhitneyu
 
 
-def filter_and_graph(question, options, people, answer_type, focus_var, a, b):
-    option_a = []
-    option_b = []
+def filter_and_graph(question, options, people, answer_type, focus_var, category_names):
+    a=category_names[0]
+    b=category_names[1]
 
+    num_categories = len(category_names)
+    categorized_responses = np.empty([num_categories, 0]).tolist()
     for person in people:
-        if getattr(person, focus_var) == "":
+        focus_var_person = getattr(person, focus_var)
+        if focus_var_person == "":
             continue
-        elif getattr(person, focus_var) == a:
-            option_a.append(getattr(person, question))
-        else:  # elif getattr(person, focus_var).substring[:4] == 'Not ':
-            option_b.append(getattr(person, question))
+        if focus_var == "university_graduation_year":
+            for category in zip(category_names, categorized_responses):
+                if focus_var_person == category[0]:
+                    category[1].append(getattr(person, question))
+        else:
+            if focus_var_person == a:
+                categorized_responses[0].append(getattr(person, question))
+            else:  # elif focus_var_person[:4] == 'Not ':
+                categorized_responses[1].append(getattr(person, question))
+    option_a=categorized_responses[0]
+    option_b=categorized_responses[1]
 
-    option_a_graphable, option_b_graphable = values_per_a_and_b(option_a, option_b, options)
+    graphable_options = values(categorized_responses, options)
+    option_a_graphable = graphable_options[0]
+    option_b_graphable = graphable_options[1]
 
     #  decide and call preferred graph here
     #bar_graph(question, focus_var, option_a_graphable, option_b_graphable, len(option_a), len(option_b), a, b)
@@ -34,7 +46,8 @@ def filter_and_graph(question, options, people, answer_type, focus_var, a, b):
         percent_per_factor(question, focus_var, option_a_graphable, option_b_graphable, len(option_a), len(option_b), a,
                            b)
     elif answer_type in likert_question_answer_types:
-        likert_percents(question, focus_var, [option_a_graphable, option_b_graphable], [len(option_a), len(option_b)], [a, b])
+        category_counts=list(map(len, categorized_responses))
+        likert_percents(question, focus_var, graphable_options, category_counts, category_names)
 
     elif answer_type in likert_question_answer_types:
         f = open('results/' + focus_var + '/likert_stats/' + question + '.txt', 'w')
@@ -89,19 +102,29 @@ def deconstruct_answers_filter(unsorted_one_gender_answers, answer_count_diction
     return answer_count_dictionary
 
 
-def values_per_a_and_b(option_a, option_b, options):
-    option_a_graphable = dict.fromkeys(sorted_answers(options), 0)
-    option_b_graphable = dict.fromkeys(sorted_answers(options), 0)
+#def values_per_a_and_b(option_a, option_b, options):
+#    option_a_graphable = dict.fromkeys(sorted_answers(options), 0)
+#    option_b_graphable = dict.fromkeys(sorted_answers(options), 0)
+#
+#    if options in likert_question_answer_types:
+#        option_a_graphable = filter_for_a_and_b(option_a, option_a_graphable)
+#        option_b_graphable = filter_for_a_and_b(option_b, option_b_graphable)
+#    elif options in list_question_answer_types:
+#        option_a_graphable = deconstruct_answers_filter(option_a, option_a_graphable)
+#        option_b_graphable = deconstruct_answers_filter(option_b, option_b_graphable)
+#
+#    return option_a_graphable, option_b_graphable
+
+def values(option_list, options):
+    foo = [dict.fromkeys(sorted_answers(options), 0) for _ in option_list]
+    bar = zip(option_list, foo)
 
     if options in likert_question_answer_types:
-        option_a_graphable = filter_for_a_and_b(option_a, option_a_graphable)
-        option_b_graphable = filter_for_a_and_b(option_b, option_b_graphable)
+        ret = map(lambda x: filter_for_a_and_b(x[0], x[1]), bar)
     elif options in list_question_answer_types:
-        option_a_graphable = deconstruct_answers_filter(option_a, option_a_graphable)
-        option_b_graphable = deconstruct_answers_filter(option_b, option_b_graphable)
+        ret = map(lambda x: deconstruct_answers_filter(x[0], x[1]), bar)
 
-    return option_a_graphable, option_b_graphable
-
+    return list(ret)
 
 def sorted_answers(question_options):
     switcher = {
@@ -174,17 +197,24 @@ def bar_graph(question, focus_var, option_a, option_b, count_option_a_responses,
 def calc_percent(options_to_answers, total_responses):
     ordered_list = []
     for key in options_to_answers.keys():
-        ordered_list.append(int(options_to_answers[key]) / total_responses)
+        if total_responses == 0:
+            ordered_list.append(0)
+        else:
+            ordered_list.append(int(options_to_answers[key]) / total_responses)
     return ordered_list
 
 
 def likert_percents(question, focus_var, category_values, category_counts, category_names):
+    num_categories=len(category_values)
+    assert(num_categories == len(category_values) and
+           num_categories == len(category_counts) and
+           num_categories == len(category_names))
     plt.figure()
     title='question: ' + question + '\n'
     title+= 'focus_var: ' + focus_var + '\n'
     categories=list(zip(category_counts, category_names))
     for category in categories:
-        title+=category[1] + ' (' + str(category[0]) + ')\n'
+        title+=str(category[1]) + ' (' + str(category[0]) + ')\n'
     plt.suptitle(title)
 
     ind = [x for x, _ in enumerate(category_values)]
@@ -199,12 +229,15 @@ def likert_percents(question, focus_var, category_values, category_counts, categ
     for response in possible_responses:
         set_of_responses=[]
         for category in categories:
-            set_of_responses.append(category[0][response] / category[1])
+            if category[1] == 0:
+                set_of_responses.append(0)
+            else:
+                set_of_responses.append(category[0][response] / category[1])
 
         all_bars.append(set_of_responses)
 
     counter = 0
-    used_bars = [0, 0]
+    used_bars = [0 for _ in range(num_categories)]
 
     responses=list(zip(all_bars, possible_responses))
     for response in responses:

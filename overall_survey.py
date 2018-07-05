@@ -43,7 +43,7 @@ def parse_data(data):
 
 
 def pick_graphing_style(ques_text_ans, people):
-    possible_focus_var = ['university_program', 'university_graduation_year', 'university_major', 'gender']   # 'gender',  # maybe GPA, too?
+    possible_focus_var = ['university_graduation_year']   # 'gender',  # maybe GPA, too?
 
     for focus_var in possible_focus_var:
         counter = 1

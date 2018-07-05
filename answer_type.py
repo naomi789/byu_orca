@@ -116,13 +116,13 @@ def gender_graph_num(question, people, focus_var, a, b):
 
 def mult_choice(question, focus_var, options, people, answer_type):
     if focus_var == 'gender':
-        filter_and_graph(question, options, people, answer_type, focus_var, 'Male', 'Female')
+        filter_and_graph(question, options, people, answer_type, focus_var, ['Male', 'Female'])
 
     elif focus_var == 'university_program':
-        filter_and_graph(question, options, people, answer_type, focus_var, 'Undergraduate', 'Not undergrads')
+        filter_and_graph(question, options, people, answer_type, focus_var, ['Undergraduate', 'Not undergrads'])
 
     elif focus_var == 'university_major':
-        filter_and_graph(question, options, people, answer_type, focus_var, 'Computer Science', 'Not CS majors')
+        filter_and_graph(question, options, people, answer_type, focus_var, ['Computer Science', 'Not CS majors'])
 
     elif focus_var == 'university_graduation_year':
-        pass
+        filter_and_graph(question, options, people, answer_type, focus_var, ['2018', '2019', '2020', '2021 or later'])
