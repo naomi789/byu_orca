@@ -207,8 +207,7 @@ def likert_percents(question, focus_var, option_a, option_b, count_option_a_resp
 
     plt.xticks(ind, comparing_bar_a_b)
     plt.ylim(ymax=1)
-    plt.ylabel("Count of Likert Responses")
-    plt.xlabel("Options A, B, etc")
+    plt.ylabel("Percent of Likert Responses")
     plt.legend(loc="upper right")
 
     plt.savefig('results/' + focus_var + '/likert_percents/' + question + '.pdf')
