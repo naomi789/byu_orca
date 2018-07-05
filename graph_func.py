@@ -180,7 +180,12 @@ def calc_percent(options_to_answers, total_responses):
 
 def likert_percents(question, focus_var, category_values, category_counts, category_names):
     plt.figure()
-    plt.suptitle('question: ' + question + '\n' + 'focus_var: ' + focus_var)
+    title='question: ' + question + '\n'
+    title+= 'focus_var: ' + focus_var + '\n'
+    categories=list(zip(category_counts, category_names))
+    for category in categories:
+        title+=category[1] + ' (' + str(category[0]) + ')\n'
+    plt.suptitle(title)
 
     ind = [x for x, _ in enumerate(category_values)]
 
