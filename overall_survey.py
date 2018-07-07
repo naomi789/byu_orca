@@ -66,7 +66,7 @@ def pick_graphing_style(ques_text_ans, people):
                 print("question: " + question + " ques_text_ans[question]: " + answer_type)
 
 
-data = run_overall('ORCA_overall_CS_edited.csv')
+data = run_overall('raw_overall_survey/ORCA_overall_CS_edited.csv')
 ques_to_question = ques_to_question()
 data = data[2:]  # deletes the question text and shorthand from the dataset
 
