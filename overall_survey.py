@@ -17,8 +17,8 @@ plt.style.use('seaborn-deep')
 Person = namedtuple('Person', question_shorthand)
 
 
-def run_overall():
-    with open('ORCA_overall_CS_edited.csv', 'r') as file:
+def run_overall(file_name):
+    with open(file_name, 'r') as file:
         return list(csv.reader(file, delimiter=','))
 
 
@@ -32,7 +32,7 @@ def ques_to_question():
         return dict(zip_longest(question_shorthand, question_string[:len(question_shorthand)]))
 
 
-def parse_data(data):
+def parse_overall_data(data):
     all_people = list(map(lambda line: Person(*line), data))
     all_students = []
     for person in all_people:  # filters out all responses where there is no gender
@@ -66,11 +66,11 @@ def pick_graphing_style(ques_text_ans, people):
                 print("question: " + question + " ques_text_ans[question]: " + answer_type)
 
 
-data = run_overall()
+data = run_overall('ORCA_overall_CS_edited.csv')
 ques_to_question = ques_to_question()
 data = data[2:]  # deletes the question text and shorthand from the dataset
 
-people = parse_data(data)
+people = parse_overall_data(data)
 
 ques_ans = ques_to_answer()
 pick_graphing_style(ques_ans, people)
