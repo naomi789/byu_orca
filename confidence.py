@@ -26,11 +26,11 @@ def one_source(file, tuple_for_results):
     data = data[2:]  # deletes the question text and shorthand from the dataset
 
     processed = list(map(lambda line: tuple_for_results(*line), data))
-    answer = [] # make this into a dictionary
-    for person in processed:  # filters out all responses where there is no gender
+    answer = []  # make this into a dictionary
+    for person in processed:  #  filters out all responses where there is no gender
         if getattr(person, 'gender') is not '':
             answer.append(person)
-            # save the 'identifier' as a key with person as a value
+            #  save the 'identifier' as a key with person as a value
 
     return answer
 
