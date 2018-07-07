@@ -3,15 +3,29 @@ from data_structures import first_confident_person, middle_confidence_person, la
 
 def main():
     first_survey, all_middle_results, final_survey = import_data()
-    
 
+    # graph all confidence points across time, one line per CLASS (expect: see differences) (do I care about professor differences? no?)
+    # graph all confidence points across time, one line per GENDER (expect: women are lower than men)
+    # graph all confidence points across time, one line per FINAL GRADE (positive slope if good grade, zero/negative/shaky for bad grades)
+    # graph all confidence points across time, one line per FINAL GRADE PER GENDER (women need a higher grade to see an uptick in confidence)
+    # graph all confidence points across time, one line per class per gender (women dislike 142 and 235 more)
+    # graph all confidence points across time (expect: if confidence fell more than X points, they are no longer CS majors)
+    # compare overall GPA to confidence levels (each metric) (expect: correlation. ofc.)
+    # compare overall GPA to confidence levels (each metric) PER GENDER (expect: given X gpa, women have lower confidence than men)
+    # compare each confidence metric to the other (what is/is not consistent)
 
-def one_source(file, tuple_results):
+    # expect: non majors who grow in confidence are more likely to switch to CS
+    # expect: CS majors who's confidence falls are more likely to leave CS
+    # expect: if I asked about age, expect younger students to have weaker study habits --> less confidence EXCEPT UW paper questions
+    # expect: sooner graduation date --> more confidence in intro CS courses? or less bc they've been nurveous and procrastinating?
+    # expect: upperclassmen to feel more prepared before the semester. Have more confidence in graduating. )
+
+def one_source(file, tuple_for_results):
     # first survey  # raw_first_confidence_survey/confidence_preliminary.csv
     data = run_overall(file)
     data = data[2:]  # deletes the question text and shorthand from the dataset
 
-    processed = list(map(lambda line: tuple_results(*line), data))
+    processed = list(map(lambda line: tuple_for_results(*line), data))
     answer = [] # make this into a dictionary
     for person in processed:  # filters out all responses where there is no gender
         if getattr(person, 'gender') is not '':
