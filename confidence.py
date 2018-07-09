@@ -3,8 +3,7 @@ from data_structures import first_confident_person, middle_confidence_person, la
 
 
 def main():
-    first_survey, all_middle_results, final_survey = import_data()
-    unite_into_people(first_survey, all_middle_results, final_survey)
+    pass
 
 
 def one_source(file, tuple_for_results):
@@ -20,6 +19,7 @@ def one_source(file, tuple_for_results):
             #  save the 'identifier' as a key with person as a value
 
     return answer
+
 
 def import_data():
     # first survey # raw_first_confidence_survey/confidence_preliminary.csv
@@ -46,4 +46,5 @@ def unite_into_people(first_survey, all_middle_results, final_survey):
     pass
 
 
-main()
+first_survey, all_middle_results, final_survey = import_data()
+unite_into_people(first_survey, all_middle_results, final_survey)
