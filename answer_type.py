@@ -9,7 +9,7 @@ from scipy.stats import mannwhitneyu
 
 def graph_string(question, people):
     print("graph string")
-    f = open('results/strings/' + question + '.txt', 'w')
+    f = open('results_at_BYUstrings/' + question + '.txt', 'w')
     # ques_to_question = ques_to_question()
     f.write("question: " + question + '\n\n')
     string_value = defaultdict(int)
@@ -26,7 +26,7 @@ def graph_string(question, people):
 
 def long_text(question, people):
     print("graph long text")
-    f = open('results/strings/' + question + '.txt', 'w')
+    f = open('results_at_BYUstrings/' + question + '.txt', 'w')
     f.write("question: " + question + '\n\n')
     for person in people:
         value = getattr(person, question)
@@ -58,7 +58,7 @@ def graph_num(question, focus_var, people):
 
 def gender_graph_num(question, people, focus_var, a, b):
     print("graph gender number")
-    f = open('results/' + focus_var + '/numbers/' + question + '.txt', 'w')
+    f = open('results_at_BYU' + focus_var + '/numbers/' + question + '.txt', 'w')
     f.write("question: " + question + '\n\n')
 
     option_a = []
@@ -96,7 +96,7 @@ def gender_graph_num(question, people, focus_var, a, b):
     option_a.sort()
     option_b.sort()
 
-    f = open('results/' + focus_var + '/numbers/' + question + '.txt', 'w')
+    f = open('results_at_BYU' + focus_var + '/numbers/' + question + '.txt', 'w')
     f.write("focus_var: " + focus_var + '\n')
     f.write("question: " + question + '\n\n')
 

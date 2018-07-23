@@ -50,7 +50,7 @@ def filter_and_graph(question, options, people, answer_type, focus_var, category
         likert_percents(question, focus_var, graphable_options, category_counts, category_names)
 
     elif answer_type in likert_question_answer_types:
-        f = open('results/' + focus_var + '/likert_stats/' + question + '.txt', 'w')
+        f = open('results_at_BYU/' + focus_var + '/likert_stats/' + question + '.txt', 'w')
         option_a_countable = convert_into_numbers(option_a_graphable)
         option_b_countable = convert_into_numbers(option_b_graphable)
 
@@ -252,7 +252,7 @@ def likert_percents(question, focus_var, category_values, category_counts, categ
     plt.ylabel("Percent of Likert Responses")
     plt.legend(loc="upper right")
 
-    plt.savefig('results/' + focus_var + '/likert_percents/' + question + '.pdf')
+    plt.savefig('results_at_BYU/' + focus_var + '/likert_percents/' + question + '.pdf')
 
 
 def percent_per_factor(question, focus_var, option_a, option_b, count_option_a_responses, count_option_b_responses, a,
@@ -297,7 +297,7 @@ def percent_per_factor(question, focus_var, option_a, option_b, count_option_a_r
 
     # todo get this to work:
     plt.tight_layout()
-    plt.savefig('results/' + focus_var + '/percent_per_factor/' + question + '.pdf')
+    plt.savefig('results_at_BYU/' + focus_var + '/percent_per_factor/' + question + '.pdf')
 
 
 def make_box_and_whisker(question, option_a, option_b, focus_var, a, b):
@@ -312,7 +312,7 @@ def make_box_and_whisker(question, option_a, option_b, focus_var, a, b):
     axes[1].boxplot(option_b)
     axes[1].set_title(b)
 
-    plt.savefig('results/' + focus_var + '/box_and_whisker/' + question + '.pdf')
+    plt.savefig('results_at_BYU/' + focus_var + '/box_and_whisker/' + question + '.pdf')
 
 
 def get_file_location(question, focus_var, graph_type):
@@ -320,11 +320,11 @@ def get_file_location(question, focus_var, graph_type):
     x_values = sorted_answers(ques_ans[question])  # possible answers
 
     if ques_ans[question] in list_question_answer_types:
-        file_destination = 'results/' + focus_var + '/' + graph_type + '/select_all/' + question + '.pdf'
+        file_destination = 'results_at_BYU/' + focus_var + '/' + graph_type + '/select_all/' + question + '.pdf'
     elif ques_ans[question] in likert_question_answer_types:
-        file_destination = 'results/' + focus_var + '/' + graph_type + '/mult_choice/' + question + '.pdf'
+        file_destination = 'results_at_BYU/' + focus_var + '/' + graph_type + '/mult_choice/' + question + '.pdf'
     else:
-        file_destination = 'results/' + focus_var + '/' + graph_type + '/error/' + question + '.pdf'
+        file_destination = 'results_at_BYU/' + focus_var + '/' + graph_type + '/error/' + question + '.pdf'
 
     return file_destination, x_values
 
