@@ -296,7 +296,7 @@ def percent_per_factor(question, focus_var, option_a, option_b, count_option_a_r
     axes.legend()
 
     # todo get this to work:
-    # plt.tight_layout()
+    plt.tight_layout()
     plt.savefig('results/' + focus_var + '/percent_per_factor/' + question + '.pdf')
 
 
