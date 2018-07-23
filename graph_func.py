@@ -258,16 +258,19 @@ def likert_percents(question, focus_var, category_values, category_counts, categ
 def percent_per_factor(question, focus_var, option_a, option_b, count_option_a_responses, count_option_b_responses, a,
                        b):
     print("select all that apply graph")
+
     plt.figure()
     plt.suptitle(question)
 
     plt.rcdefaults()
-    fig, axes = plt.subplots(nrows=2, ncols=1, figsize=(8.5, 11))
+    fig, axes = plt.subplots(figsize=(8.5, 11))  # nrows=2, ncols=1,
     possible_answers = option_a.keys()
     y_pos = np.arange(len(possible_answers))
 
-    axes[0].set_yticks(y_pos)
-    axes[0].set_yticklabels(possible_answers)
+    bar_width = .2
+
+    axes.set_yticks(y_pos + bar_width / 2)
+    axes.set_yticklabels(possible_answers)
 
     option_a_performance = calc_percent(option_a, count_option_a_responses)
     option_b_performance = calc_percent(option_b, count_option_b_responses)
@@ -278,18 +281,22 @@ def percent_per_factor(question, focus_var, option_a, option_b, count_option_a_r
     else:
         color_a = 'orange'
         color_b = 'navy'
-    axes[0].barh(y_pos, option_a_performance, align='center', color=color_a, tick_label=possible_answers)
-    axes[0].set_yticks(y_pos)
-    axes[0].set_yticklabels(possible_answers)
-    axes[0].set_xlim(0, 1)
+
+    axes.barh(y_pos, option_a_performance, align='center', color=color_a, tick_label=possible_answers, label=a)
+    axes.set_yticks(y_pos)
+    axes.set_yticklabels(possible_answers)
+    axes.set_xlim(0, 1)
 
     plt.xlabel(b)
-    axes[1].barh(y_pos, option_b_performance, align='center', color=color_b, tick_label=possible_answers)
-    axes[1].set_yticks(y_pos)
-    axes[1].set_yticklabels(possible_answers)
-    axes[1].set_xlim(0, 1)
+    axes.barh(y_pos + bar_width, option_b_performance, align='center', color=color_b, tick_label=possible_answers, label=b)
+    axes.set_yticks(y_pos + bar_width / 2)
+    axes.set_yticklabels(possible_answers)
+    axes.set_xlim(0, 1)
 
-    plt.tight_layout()
+    # todo: make a legend
+    axes.legend()
+
+    # plt.tight_layout()
     plt.savefig('results/' + focus_var + '/percent_per_factor/' + question + '.pdf')
 
 
