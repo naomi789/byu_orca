@@ -20,14 +20,56 @@ question_shorthand = ['duration_seconds', 'Location_Latitude', 'LocationLongitud
                       'intelligence_malleable', 'failure_lazy', 'failure_environment', 'failure_ability',
                       'describe_positive_experience', 'describe_negative_experience', 'suggestion_improve_institution']
 
+BYU_question_shorthand = ['duration_seconds', 'Location_Latitude', 'LocationLongitude', 'consent_current',
+                          'consent_future', 'email', 'gender', 'gender_other', 'race', 'age', 'university_program',
+                          'university_major', 'university_minor', 'university_courses_fall',
+                          'university_graduation_year', 'university_gpa', 'university_gpa_TEXT',
+                          'received_internship_offer', 'extracurriculars', 'major_pros', 'major_pros_TEXT',
+                          'major_cons', 'major_cons_TEXT', 'confidence_graduate_gpa', 'confidence_prepared_courses',
+                          'participation_questions_comfortable_NONCS', 'participation_absent_frequency',
+                          'participation_questions_ask_frequency', 'participation_questions_comfortable',
+                          'participation_not_questions_frequency', 'participation_absent_why',
+                          'participation_MORE_comfortable', 'participation_LESS_comfortable',
+                          'participation_not_reasons', 'participation_questions_ask_ignored',
+                          'participation_group_project_role', 'professors_ask_advice', 'professors_encouraged_you',
+                          'participation_TA_session', 'participation_TA_ask_questions', 'participation_talk_peers',
+                          'courses_professors_engaging', 'professors_represent_diversity', 'role_models_same_gender',
+                          'participation_peers_help_you', 'participation_peers_you_serve', 'participation_clubs',
+                          'participation_friends_CS_students', 'friends_CS_students_want_more', 'scholarship',
+                          'extracurricular_plans_before_graduation', 'frequency_balance_career_parenthood',
+                          'professors_declare_parent', 'professors_declare_full_time', 'department_sexist_you',
+                          'department_sexist_others', 'department_success_because_gender', 'department_appearance',
+                          'department_appearance_comments', 'complaints_how', 'complaints_concequences',
+                          'complaints_concequences_fear', 'peer_mistreated_react', 'people_surprise_major',
+                          'people_sexist_jokes_gender', 'highest_standard', 'peer_sexism_ignoring_suggestion',
+                          'friends_other_gender', 'intelligence_fixed', 'intelligence_malleable', 'failure_lazy',
+                          'failure_environment', 'failure_ability', 'describe_positive_experience',
+                          'describe_negative_experience', 'suggestion_improve_institution']
+
 answer_type = ["int", "double", "double", "string", "string", "string", "string", "string", "string", "double",
-               "string", "string", "string", "extracurriculars", "encouragement", "string", "barriers", "string", "agreement", "comfort",
-               "frequency_class", "frequency_class", "responsibilities", "frequency", "professor_encouragement", "frequency_TA", "frequency", "frequency",
-               "agreement", "agreement", "agreement", "frequency", "frequency", "meetings_clubs", "percentage", "scholarships", "yes_no",
+               "string", "string", "string", "extracurriculars", "encouragement", "string", "barriers", "string",
+               "agreement", "comfort",
+               "frequency_class", "frequency_class", "responsibilities", "frequency", "professor_encouragement",
+               "frequency_TA", "frequency", "frequency",
+               "agreement", "agreement", "agreement", "frequency", "frequency", "meetings_clubs", "percentage",
+               "scholarships", "yes_no",
                "involvement", "frequency", "frequency", "frequency", "certainty", "certainty", "certainty", "frequency",
-               "appearance_comments", "certainty", "certainty", "certainty", "sexism_response", "agreement", "frequency", "student_groups_standards", "frequency",
+               "appearance_comments", "certainty", "certainty", "certainty", "sexism_response", "agreement",
+               "frequency", "student_groups_standards", "frequency",
                "agreement", "agreement", "agreement", "agreement", "agreement", "agreement", "string", "string",
                "string"]
+
+BYU_answer_type = ['int', 'double', 'double', 'string', 'string', 'string', 'string', 'string', 'string', 'string',
+                   'double', 'string', 'string', 'courses', 'string', 'string', 'double', 'yes_no', 'extracurriculars',
+                   'encouragement', 'string', 'barriers', 'string', 'agreement', 'agreement', 'comfort',
+                   'frequency_absent', 'frequency_class', 'comfort', 'frequency_class', 'miss_class',
+                   'increase_comfort', 'decrease_comfort', 'participate_decrease', 'frequency_class',
+                   'responsibilities', 'frequency', 'professor_encouragement', 'frequency_TA', 'frequency', 'frequency',
+                   'agreement', 'agreement', 'agreement', 'frequency', 'frequency', 'meetings_clubs', 'percentage',
+                   'agreement', 'scholarships', 'involvement', 'frequency', 'frequency', 'frequency', 'certainty',
+                   'certainty', 'certainty', 'frequency', 'appearance_comments', 'certainty', 'certainty', 'certainty',
+                   'sexism_response', 'agreement', 'frequency', 'student_groups_standards', 'frequency', 'agreement',
+                   'agreement', 'agreement', 'agreement', 'agreement', 'agreement', 'string', 'string', 'string']
 
 question_string = ["duration_seconds", "Location_Latitude", "LocationLongitude", "What university are you attending?",
                    "What company are you interning with this summer?",
@@ -89,6 +131,8 @@ question_string = ["duration_seconds", "Location_Latitude", "LocationLongitude",
                    "Are there any negative experiences or interactions that you had with members of the CS department that you would like to share?",
                    "What one change would you most like to see implemented that would improve the educational experience at this institution?"]
 
+BYU_question_string = []
+
 agreement = ['Strongly agree',
              'Agree',
              'Somewhat agree',
@@ -125,4 +169,6 @@ certainty = ['Definitely yes', 'Probably yes',
 
 color_options = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink', 'black']
 
-long_colors = ['palevioletred', 'navy', 'm', 'royalblue', 'g', 'purple', 'seagreen', 'blueviolet', 'forestgreen', 'salmon', 'dodgerblue', 'mediumvioletred', 'aqua', 'firebrick', 'mediumaquamarine', 'goldenrod', 'darkred', 'sandybrown', 'grey',  'silver', 'orange', 'coral']
+long_colors = ['palevioletred', 'navy', 'm', 'royalblue', 'g', 'purple', 'seagreen', 'blueviolet', 'forestgreen',
+               'salmon', 'dodgerblue', 'mediumvioletred', 'aqua', 'firebrick', 'mediumaquamarine', 'goldenrod',
+               'darkred', 'sandybrown', 'grey', 'silver', 'orange', 'coral']
