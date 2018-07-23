@@ -205,6 +205,7 @@ def calc_percent(options_to_answers, total_responses):
 
 
 def likert_percents(question, focus_var, category_values, category_counts, category_names):
+    print("select one only graph")
     num_categories=len(category_values)
     assert(num_categories == len(category_values) and
            num_categories == len(category_counts) and
@@ -256,6 +257,7 @@ def likert_percents(question, focus_var, category_values, category_counts, categ
 
 def percent_per_factor(question, focus_var, option_a, option_b, count_option_a_responses, count_option_b_responses, a,
                        b):
+    print("select all that apply graph")
     plt.figure()
     plt.suptitle(question)
 

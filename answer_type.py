@@ -8,6 +8,7 @@ from scipy.stats import mannwhitneyu
 
 
 def graph_string(question, people):
+    print("graph string")
     f = open('results/strings/' + question + '.txt', 'w')
     # ques_to_question = ques_to_question()
     f.write("question: " + question + '\n\n')
@@ -24,6 +25,7 @@ def graph_string(question, people):
 
 
 def long_text(question, people):
+    print("graph long text")
     f = open('results/strings/' + question + '.txt', 'w')
     f.write("question: " + question + '\n\n')
     for person in people:
@@ -37,6 +39,7 @@ def long_text(question, people):
 
 
 def graph_num(question, focus_var, people):
+    print("graph numbers")
     if question != 'university_gpa_TEXT':
         return
 
@@ -54,6 +57,7 @@ def graph_num(question, focus_var, people):
 
 
 def gender_graph_num(question, people, focus_var, a, b):
+    print("graph gender number")
     f = open('results/' + focus_var + '/numbers/' + question + '.txt', 'w')
     f.write("question: " + question + '\n\n')
 
@@ -111,7 +115,7 @@ def gender_graph_num(question, people, focus_var, a, b):
     # f.write("ANOVA: " + str(table))
 
     f.close()
-    make_box_and_whisker(question, option_a, option_b, focus_var, a, b)
+    # make_box_and_whisker(question, option_a, option_b, focus_var, a, b)
 
 
 def mult_choice(question, focus_var, options, people, answer_type):
