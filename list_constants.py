@@ -19,7 +19,7 @@ encouragement = ['Mother\'s encouragement', 'Father\'s encouragement', 'Other fa
                  'Advancement opportunities', 'Career possibilities fit interests',
                  'Career possibilities will give freedom to make own decisions', 'Teaching quality',
                  'Mentoring or friendship from students', 'Participation in conference or event',
-                 'Specific BYU courses or labs (if so which ones)', 'None of the above', '']
+                 'Specific BYU courses or labs (list courses here please)', 'None of the above', '']
 
 barriers = ['There are no barriers', 'Coursework too difficult', 'The coursework is too removed from real problems',
             'Feeling as if I don\'t fit in', 'Need to balance parenting and career after having children',
@@ -27,27 +27,33 @@ barriers = ['There are no barriers', 'Coursework too difficult', 'The coursework
             'Not certain of steps needed to succeed', 'Not clear on my goals for the future',
             'Not enough confidence in my ability to succeed', 'Not enough financial support to finish college',
             'Not enough time to take other courses', 'Parents are encouraging other paths',
-            'Sacrifice too much free time', 'Specific BYU courses or labs (if so which ones)', 'Other barriers', '']
+            'Sacrifice too much free time', 'Specific BYU courses or labs (list courses here please)', 'Other barriers', '']
 
 responsibilities = [
-    'Writing/ creating materials (designed user interface created poster/visual aid or wrote reports/essays etc)',
-    'Managerial (group leader presentation etc)',
-    'Support tasks (schedule meetings email professor scribe/notetaker other errands)', 'Technical (coding math etc)',
+    'Writing or creating materials (designed user interface/created poster or visual aid/wrote reports or essays/etc)',
+    'Managerial (group leader/presentation/etc)',
+    'Support tasks (schedule meetings/email professor/scribe or notetaker/other errands)', 'Technical (coding/math/etc)',
     'Click to write Choice 5', '']
+
 professor_encouragement = ['Join the computer science major', 'Continue in the CS major', 'Apply for a scholarship',
                            'Apply for internship', 'Apply for part-time/full-time job',
                            'Apply for a research position (either on or off campus)', 'Grad school',
                            'Leadership position', '']
 meetings_clubs = ['ACM (Association of Computing Machinery)',
-                  'IEEE (Institute of Electrical and Electronics Engineers)', 'Linux/Ubuntu groups',
-                  'Competetive coding groups', 'Hackathons', 'groups for race gender or sexual orientation minorities',
+                  'CS Colloquiums',
+                  'YHacks (ethical hacking)',
+                  'Linux Club (Linux operating system club)',
+                  'WiCS (Women in Computer Science)',
+                  'WIT (Women in Technology)',
+                  'Visiting companies\' tech talks',
+                  'Dev Club (Developer\'s club)',
                   'Visiting companies\' tech talks', '']
 
 percentage = ['0 - 20%', '21 - 40%', '41 - 60%', '61 - 80%', '81 - 100%', '']
 
 scholarships = ['Minority based (race gender etc)',
-                'Academic path based (ie specific to the major department field etc)',
-                'Need based (financial aid FAFSA pell grant etc)', 'Other qualifications',
+                'Academic path based (specific to your major/department/field/etc)',
+                'Need based (financial aid/FAFSA/pell grant/etc)', 'Other qualifications',
                 'I have never received a scholarship', '']
 
 yes_no = ['Yes', 'No', '']
@@ -59,7 +65,11 @@ appearance_comments = ['Too formal', 'Too casual', 'Workplace appropriateness/mo
                        'I never receive negative comments', '']
 
 sexism_response = ['I would say something during the event', 'I would speak to the victim after the event',
-                   'I would speak to the perpetrator after the event', 'I would probably not say anything', '']
+                   'I would speak to the perpetrator after the event', 'I would probably not say anything',
+                    'I would report this to the department if this happened at school',
+'I would report this to my boss if this happened at work',
+'I would report this to a professor if this happened at school',
+                   '']
 
 student_groups_standards = ['Male students', 'Female students', 'Non-binary students',
                             'All students are held to an equal standard', '']

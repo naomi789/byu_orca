@@ -1,6 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from constants import question_shorthand, answer_type, question_string, agreement, frequency, frequency_TA, \
+from constants import BYU_question_shorthand, BYU_answer_type, BYU_question_string, agreement, frequency, frequency_TA, \
     frequency_class, comfort, certainty, color_options, long_colors
 
 from list_constants import responsibilities, professor_encouragement, meetings_clubs, percentage, scholarships, \
@@ -154,11 +154,11 @@ def sorted_answers(question_options):
 
 
 def ques_to_answer():
-    if len(question_shorthand) is not len(answer_type):
+    if len(BYU_question_shorthand) is not len(BYU_answer_type):
         print("mapping questions to answer error")
         exit(1)
     else:
-        translate_questions = dict(zip_longest(question_shorthand, answer_type[:len(question_shorthand)]))
+        translate_questions = dict(zip_longest(BYU_question_shorthand, BYU_answer_type[:len(BYU_question_shorthand)]))
     return translate_questions
 
 

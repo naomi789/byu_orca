@@ -9,7 +9,7 @@ from scipy.stats import mannwhitneyu
 
 def graph_string(question, people):
     print("graph string")
-    f = open('results_at_BYUstrings/' + question + '.txt', 'w')
+    f = open('results_at_BYU/strings/' + question + '.txt', 'w', encoding='utf-8')
     # ques_to_question = ques_to_question()
     f.write("question: " + question + '\n\n')
     string_value = defaultdict(int)
@@ -26,7 +26,7 @@ def graph_string(question, people):
 
 def long_text(question, people):
     print("graph long text")
-    f = open('results_at_BYUstrings/' + question + '.txt', 'w')
+    f = open('results_at_BYU/strings/' + question + '.txt', 'w')
     f.write("question: " + question + '\n\n')
     for person in people:
         value = getattr(person, question)
@@ -58,7 +58,7 @@ def graph_num(question, focus_var, people):
 
 def gender_graph_num(question, people, focus_var, a, b):
     print("graph gender number")
-    f = open('results_at_BYU' + focus_var + '/numbers/' + question + '.txt', 'w')
+    f = open('results_at_BYU/' + focus_var + '/numbers/' + question + '.txt', 'w')
     f.write("question: " + question + '\n\n')
 
     option_a = []
@@ -92,11 +92,23 @@ def gender_graph_num(question, people, focus_var, a, b):
                 option_b.append(float(value))
         else:
             other_prefer_not.append(value)
+    gender_graph_num_stats(question, people, focus_var, a, b, option_a, option_b)
 
+
+def gender_graph_num_stats(question, people, focus_var, a, b, option_a, option_b):
     option_a.sort()
     option_b.sort()
 
-    f = open('results_at_BYU' + focus_var + '/numbers/' + question + '.txt', 'w')
+    # # todo: delete this it was just for debugging
+    # print('a: ' + a)
+    # print('b: ' + b)
+    # print('option_a: ' + str(option_a))
+    # print('option_b: ' + str(option_b))
+    if len(option_a) < 1 or len(option_b) < 1:
+        return  # because we can't compare the data
+
+
+    f = open('results_at_BYU/' + focus_var + '/numbers/' + question + '.txt', 'w')
     f.write("focus_var: " + focus_var + '\n')
     f.write("question: " + question + '\n\n')
 
