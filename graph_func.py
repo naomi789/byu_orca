@@ -5,7 +5,8 @@ from constants import BYU_question_shorthand, BYU_answer_type, BYU_question_stri
 
 from list_constants import responsibilities, professor_encouragement, meetings_clubs, percentage, scholarships, \
     yes_no, involvement, appearance_comments, sexism_response, student_groups_standards, majors_minors, \
-    graduation_year, extracurriculars, encouragement, barriers, likert_question_answer_types, list_question_answer_types
+    graduation_year, extracurriculars, encouragement, barriers, likert_question_answer_types, \
+    list_question_answer_types, frequency_absent
 from itertools import zip_longest
 from textwrap import wrap
 import scipy.stats
@@ -116,8 +117,11 @@ def deconstruct_answers_filter(unsorted_one_gender_answers, answer_count_diction
 #    return option_a_graphable, option_b_graphable
 
 def values(option_list, options):
-    foo = [dict.fromkeys(sorted_answers(options), 0) for _ in option_list]
-    bar = zip(option_list, foo)
+    # todo the problem is here # CURRENT BUG
+    # I'm getting an array of chars instead of a list of ~5 strings
+    temp = sorted_answers(options)
+    dict_of_answers_per_focus_var = [dict.fromkeys(sorted_answers(options), 0) for _ in option_list]
+    bar = zip(option_list, dict_of_answers_per_focus_var)
 
     if options in likert_question_answer_types:
         ret = map(lambda x: filter_for_a_and_b(x[0], x[1]), bar)
@@ -148,9 +152,13 @@ def sorted_answers(question_options):
         'involvement': involvement,
         'appearance_comments': appearance_comments,
         'sexism_response': sexism_response,
-        'student_groups_standards': student_groups_standards
+        'student_groups_standards': student_groups_standards,
+        'frequency_absent': frequency_absent
     }
-    return switcher.get(question_options, 'other_answer_types')
+    answer = switcher.get(question_options, 'error')
+    if answer == 'error':
+        raise Exception('answer type is unknown in sorted_answers()\'s switcher')
+    return answer
 
 
 def ques_to_answer():

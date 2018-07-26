@@ -51,7 +51,10 @@ def pick_graphing_style(ques_text_ans, people):
     for focus_var in possible_focus_var:
         counter = 1
         for question in BYU_question_shorthand:
-            print("focus_var: " + focus_var + " question number: " + str(counter))
+            if question == 'participation_absent_frequency':
+                temp = 23
+
+            print('\nfocus_var: ' + focus_var + " question number: " + str(counter))
             print('question: ' + question)
             counter += 1
             answer_type = ques_text_ans[question]
@@ -62,7 +65,6 @@ def pick_graphing_style(ques_text_ans, people):
                 graph_string(question, people)
             elif ques_text_ans[question] == 'int' or ques_text_ans[question] == 'double':
                 graph_num(question, focus_var, people)
-                temp = 'trash'
             elif answer_type in likert_question_answer_types:
                 mult_choice(question, focus_var, ques_text_ans[question], people, answer_type)
             elif answer_type in list_question_answer_types:

@@ -59,7 +59,7 @@ answer_type = ["int", "double", "double", "string", "string", "string", "string"
                "agreement", "agreement", "agreement", "agreement", "agreement", "agreement", "string", "string",
                "string"]
 
-BYU_answer_type = ['int', 'double', 'double', 'string', 'string', 'string', 'string', 'string', 'string', 'string',
+BYU_answer_type = ['int', 'double', 'double', 'string', 'string', 'string', 'string', 'race', 'int', 'string',
                    'double', 'string', 'string', 'courses', 'string', 'string', 'double', 'yes_no', 'extracurriculars',
                    'encouragement', 'string', 'barriers', 'string', 'agreement', 'agreement', 'comfort',
                    'frequency_absent', 'frequency_class', 'comfort', 'frequency_class', 'miss_class',
@@ -247,5 +247,7 @@ long_colors = ['palevioletred', 'navy', 'm', 'royalblue', 'g', 'purple', 'seagre
 consent_current = ['Yes I am over 18 and agree to participate in this study.', 'No I am under 18', 'No I do not consent to participate in this study']
 
 consent_future = ['Yes - please enter your email address here', 'No']
+
+
 
 do_not_graph = [consent_current, consent_future]
