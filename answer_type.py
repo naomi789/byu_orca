@@ -154,9 +154,6 @@ def mult_choice(question, focus_var, possible_answers, people, answer_type):
     call_respective_graphing_functions(question, focus_var, possible_answers, people, answer_type, option_a_graphable, option_b_graphable, list_all_answers_from_people_in_category_a, list_all_answers_from_people_in_category_b, list_all_answers_per_category, answer_to_count_per_category, categories)
 
 
-
-
-
 def compare_confidence_GPA(people, focus_var, a, b):
     question = 'compare confidence to GPA'
     print(question)
