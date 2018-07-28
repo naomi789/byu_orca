@@ -43,17 +43,17 @@ def filter_and_graph(question, options, people, focus_var, category_names):
 
 
 
-def call_respective_graphing_functions(question, focus_var, possible_answers, people, answer_type, list_all_answers_per_category, answer_to_count_per_category, categories):
+def call_respective_graphing_functions(question, focus_var, answer_type, list_all_answers_per_category, answer_to_count_per_category, categories):
     option_a_graphable = answer_to_count_per_category[0]
     option_b_graphable = answer_to_count_per_category[1]
     list_all_answers_from_people_in_category_a = list_all_answers_per_category[0]
-    list_all_answers_from_people_in_category_b =  list_all_answers_per_category[1]
+    list_all_answers_from_people_in_category_b = list_all_answers_per_category[1]
+
     #  decide and call preferred graph here
     # bar_graph(question, focus_var, option_a_graphable, option_b_graphable, len(list_all_answers_from_people_in_category_a), len(list_all_answers_from_people_in_category_b), a, b)
     # pie_chart(question, focus_var, option_a_graphable, option_b_graphable, len(list_all_answers_from_people_in_category_a), len(list_all_answers_from_people_in_category_b), a, b)
 
     if answer_type in list_question_answer_types:
-
         percent_per_factor(question, focus_var, option_a_graphable, option_b_graphable, len(list_all_answers_from_people_in_category_a), len(list_all_answers_from_people_in_category_b), categories[0], categories[1])
     elif answer_type in likert_question_answer_types:
         category_counts = list(map(len, list_all_answers_per_category))
