@@ -46,45 +46,19 @@ def filter_and_graph(question, options, people, focus_var, category_names):
 def call_respective_graphing_functions(question, focus_var, answer_type, list_all_answers_per_category, answer_to_count_per_category, categories):
     option_a_graphable = answer_to_count_per_category[0]
     option_b_graphable = answer_to_count_per_category[1]
-    list_all_answers_from_people_in_category_a = list_all_answers_per_category[0]
-    list_all_answers_from_people_in_category_b = list_all_answers_per_category[1]
+
+    category_counts = list(map(len, list_all_answers_per_category))
 
     #  decide and call preferred graph here
     # bar_graph(question, focus_var, option_a_graphable, option_b_graphable, len(list_all_answers_from_people_in_category_a), len(list_all_answers_from_people_in_category_b), a, b)
     # pie_chart(question, focus_var, option_a_graphable, option_b_graphable, len(list_all_answers_from_people_in_category_a), len(list_all_answers_from_people_in_category_b), a, b)
 
     if answer_type in list_question_answer_types:
-        percent_per_factor(question, focus_var, option_a_graphable, option_b_graphable, len(list_all_answers_from_people_in_category_a), len(list_all_answers_from_people_in_category_b), categories[0], categories[1])
+        percent_per_factor(question, focus_var, option_a_graphable, option_b_graphable, category_counts[0], category_counts[1], categories[0], categories[1])
     elif answer_type in likert_question_answer_types:
-        category_counts = list(map(len, list_all_answers_per_category))
         likert_percents(question, focus_var, answer_to_count_per_category, category_counts, categories)
+        likert_statistics(question, focus_var, answer_to_count_per_category, category_counts, categories)
 
-    elif answer_type in likert_question_answer_types:
-        f = open('results_at_BYU/' + focus_var + '/likert_stats/' + question + '.txt', 'w')
-        option_a_countable = convert_into_numbers(option_a_graphable)
-        option_b_countable = convert_into_numbers(option_b_graphable)
-
-        f.write("question: " + question + '\n')
-        f.write("dict: " + str(option_a_graphable) + '\n')
-        f.write("dict: " + str(option_b_graphable) + '\n')
-        f.write('\n')
-
-        f.write("option_a, " + categories[0] + " wilcoxon: " + str(scipy.stats.wilcoxon(option_a_countable)) + '\n')
-        f.write("option_b, " + categories[1] + " wilcoxon: " + str(scipy.stats.wilcoxon(option_b_countable)) + '\n')
-        f.write('\n')
-
-        f.write(
-            "mann whitney " + categories[0] + " v. " + categories[1] + ": " + str(mannwhitneyu(option_a_countable, option_b_countable)) + '\n')
-        f.write('\n')
-
-        # f.write(anova()) # https://plot.ly/python/anova/
-        # f.write('\n')
-
-        # f.write("ttest related option_a v. option_b: " + str(scipy.stats.ttest_rel(option_a_countable, option_b_countable)) + '\n')
-        # f.write("ttest independent option_a v. option_b: " + str(scipy.stats.ttest_ind(option_a_countable, option_b_countable)) + '\n')
-        f.write('\n')
-
-        f.close()
 
 
 def convert_into_numbers(option_and_count_dict):
@@ -271,6 +245,41 @@ def likert_percents(question, focus_var, category_values, category_counts, categ
     plt.legend(loc="upper right")
 
     plt.savefig('results_at_BYU/' + focus_var + '/likert_percents/' + question + '.pdf')
+
+def likert_statistics(question, focus_var, answer_to_count_per_category, category_counts, categories):
+    option_a_graphable = answer_to_count_per_category[0]
+    option_b_graphable = answer_to_count_per_category[1]
+
+    f = open('results_at_BYU/' + focus_var + '/likert_stats/' + question + '.txt', 'w')
+    option_a_countable = convert_into_numbers(option_a_graphable)
+    option_b_countable = convert_into_numbers(option_b_graphable)
+
+    f.write("question: " + question + '\n')
+    f.write("dict: " + str(option_a_graphable) + '\n')
+    f.write("dict: " + str(option_b_graphable) + '\n')
+    f.write('\n')
+
+    f.write("option_a, " + categories[0] + " wilcoxon: " + str(scipy.stats.wilcoxon(option_a_countable)) + '\n')
+    f.write("option_b, " + categories[1] + " wilcoxon: " + str(scipy.stats.wilcoxon(option_b_countable)) + '\n')
+    f.write('\n')
+
+    f.write('\n' + categories[0] + ' ' + str(np.mean(option_a_countable)))
+    f.write('\n' + categories[1] + ' ' + str(np.mean(option_b_countable)))
+    f.write('\n')
+
+    f.write(
+        "mann whitney " + categories[0] + " v. " + categories[1] + ": " + str(
+            mannwhitneyu(option_a_countable, option_b_countable)) + '\n')
+    f.write('\n')
+
+    # f.write(anova()) # https://plot.ly/python/anova/
+    # f.write('\n')
+
+    # f.write("ttest related option_a v. option_b: " + str(scipy.stats.ttest_rel(option_a_countable, option_b_countable)) + '\n')
+    # f.write("ttest independent option_a v. option_b: " + str(scipy.stats.ttest_ind(option_a_countable, option_b_countable)) + '\n')
+    f.write('\n')
+
+    f.close()
 
 
 def percent_per_factor(question, focus_var, option_a, option_b, count_option_a_responses, count_option_b_responses, a,
