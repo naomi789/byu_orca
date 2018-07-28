@@ -136,7 +136,7 @@ def gender_graph_num_stats(question, people, focus_var, a, b, option_a, option_b
 def mult_choice(question, focus_var, possible_answers, people, answer_type):
     variables = []
     if focus_var == 'gender':
-        variables = ['Male', 'Female']
+        categories = ['Male', 'Female']
         option_a_graphable, option_b_graphable, list_all_answers_from_people_in_category_a, list_all_answers_from_people_in_category_b, list_all_answers_per_category, answer_to_count_per_category = filter_and_graph(question, possible_answers, people, answer_type, focus_var, categories)
 
     elif focus_var == 'university_program':
