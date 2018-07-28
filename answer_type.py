@@ -151,7 +151,7 @@ def mult_choice(question, focus_var, possible_answers, people, answer_type):
         categories = ['2018', '2019', '2020', '2021 or later']
         list_all_answers_from_people_in_category_a, list_all_answers_from_people_in_category_b, list_all_answers_per_category, answer_to_count_per_category = filter_and_graph(question, possible_answers, people, focus_var, categories)
 
-    call_respective_graphing_functions(question, focus_var, possible_answers, people, answer_type, answer_to_count_per_category[0], answer_to_count_per_category[1], list_all_answers_from_people_in_category_a, list_all_answers_from_people_in_category_b, list_all_answers_per_category, answer_to_count_per_category, categories)
+    call_respective_graphing_functions(question, focus_var, possible_answers, people, answer_type, list_all_answers_from_people_in_category_a, list_all_answers_from_people_in_category_b, list_all_answers_per_category, answer_to_count_per_category, categories)
 
 
 def compare_confidence_GPA(people, focus_var, a, b):
