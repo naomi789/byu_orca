@@ -154,31 +154,28 @@ def compare_confidence_GPA(people, focus_var, categories):
     option_a = []
     option_b = []
 
-    for person in people:
-        category = getattr(person, focus_var)
-        y_percentile = getattr(person, 'confidence_percentile')
-        x_gpa = getattr(person, 'university_gpa_TEXT')
+    for category in categories:
+        for person in people:
+            this_category = getattr(person, focus_var)
+            y_percentile = getattr(person, 'confidence_percentile')
+            x_gpa = getattr(person, 'university_gpa_TEXT')
 
-        if x_gpa == '' or y_percentile == '':  # or x_gpa > 4:
-            # print(str(x_gpa) + ', ' + str(y_percentile))
-            continue
-        else:
-            # print(str(x_gpa) + ', ' + str(y_percentile))
-            x_gpa = float(x_gpa)
-            y_percentile = float(y_percentile)
+            if x_gpa == '' or y_percentile == '':  # or x_gpa > 4:
+                # print(str(x_gpa) + ', ' + str(y_percentile))
+                continue
+            else:
+                # print(str(x_gpa) + ', ' + str(y_percentile))
+                x_gpa = float(x_gpa)
+                y_percentile = float(y_percentile)
 
-        if x_gpa > 4:
-            continue
+            if x_gpa > 4:
+                continue
 
-        if category == 'Male':
-            option_a.append((x_gpa, y_percentile))
-        elif category == 'Female':
-            option_b.append((x_gpa, y_percentile))
+            if this_category== 'Male':
+                option_a.append((x_gpa, y_percentile))
+            elif this_category== 'Female':
+                option_b.append((x_gpa, y_percentile))
 
-    print(option_a)
-    print(option_b)
-
-    np.random.seed(19680801)
 
     x, y = map(list, zip(*option_a))
     fig, ax = plt.subplots()
