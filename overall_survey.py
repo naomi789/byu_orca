@@ -4,7 +4,7 @@ from itertools import zip_longest
 from datetime import datetime
 import numpy as np
 import matplotlib.pyplot as plt
-from answer_type import mult_choice, graph_string, graph_num, long_text
+from answer_type import mult_choice, graph_string, graph_num, long_text, compare_confidence_GPA
 from constants import BYU_question_shorthand, BYU_question_string, do_not_graph
 # , answer_type, agreement, comfort, certainty, frequency, frequency_class, frequency_TA
 from list_constants import likert_question_answer_types, list_question_answer_types
@@ -59,7 +59,7 @@ def pick_graphing_style(ques_text_ans, people):
         for question in BYU_question_shorthand:
             answer_type = ques_text_ans[question]
 
-            if question == 'scholarship':
+            if question == 'received_internship_offer':
                 current_bug = 23
 
             print('\nfocus_var: ' + focus_var + " question number: " + str(counter))
@@ -80,6 +80,8 @@ def pick_graphing_style(ques_text_ans, people):
                 mult_choice(question, focus_var, ques_text_ans[question], people, answer_type)
             elif answer_type in do_not_graph:
                 pass
+            elif question == 'confidence_percentile':
+                compare_confidence_GPA(people, focus_var, 'Male', 'Female')
             else:
                 print("question: " + question + " ques_text_ans[question]: " + answer_type)
 
