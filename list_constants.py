@@ -53,7 +53,7 @@ meetings_clubs = ['ACM (Association of Computing Machinery)',
 
 percentage = ['0 - 20%', '21 - 40%', '41 - 60%', '61 - 80%', '81 - 100%', '']
 
-scholarships = ['Minority based (race gender etc)',
+scholarships = ['Minority based (race/gender/etc)',
                 'Academic path based (specific to your major/department/field/etc)',
                 'Need based (financial aid/FAFSA/pell grant/etc)', 'Other qualifications',
                 'I have never received a scholarship', '']
@@ -63,7 +63,7 @@ yes_no = ['Yes', 'No', '']
 involvement = ['Internship', 'Study abroad', 'Research', 'Capstone project', 'Leadership role in club or at work', '']
 
 appearance_comments = ['Too formal', 'Too casual', 'Workplace appropriateness/modesty',
-                       'Facial hair/hair color length or style', 'Body type or weight',
+                       'Facial hair or hair color/length/style', 'Body type or weight',
                        'I never receive negative comments', '']
 
 sexism_response = ['I would say something during the event', 'I would speak to the victim after the event',

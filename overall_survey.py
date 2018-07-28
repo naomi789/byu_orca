@@ -59,14 +59,14 @@ def pick_graphing_style(ques_text_ans, people):
         for question in BYU_question_shorthand:
             answer_type = ques_text_ans[question]
 
-            if question == 'participation_TA_session':
-                temp = 23
+            if question == 'scholarship':
+                current_bug = 23
 
             print('\nfocus_var: ' + focus_var + " question number: " + str(counter))
             print('question: ' + question)
             counter += 1
             print('answer_type: ' + answer_type)
-                        
+
             if question in ['describe_positive_experience', 'describe_negative_experience',
                             'suggestion_improve_institution']:
                 long_text(question, people)
