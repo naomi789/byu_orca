@@ -180,22 +180,21 @@ def compare_confidence_GPA(people, focus_var, categories):
 
     np.random.seed(19680801)
 
-    # matplotlib.rcParams['axes.unicode_minus'] = False # changes how neg num are displayed
     x, y = map(list, zip(*option_a))
     fig, ax = plt.subplots()
-    ax.plot(x, y, 'o')
+    ax.plot(x, y, 'o', label='Male', color='C0')
 
     ax.set_title(title)
 
     fit = np.polyfit(x, y, 1)
     fit_fn = np.poly1d(fit)
-    # fit_fn is now a function which takes in x and returns an estimate for y
-
-    plt.plot(x, y, 'yo', x, fit_fn(x), '--k')
+    plt.plot(x, fit_fn(x), color='navy', label='Male - linear regression')
 
     plt.xlim(0, 4.5)
     plt.xticks([.5, 1, 1.5, 2, 2.5, 3, 3.5, 4])
     plt.ylim(0, 110)
     plt.yticks([num for num in range(0, 101) if num % 10 == 0])
+
+    plt.legend(loc="upper right")
 
     plt.savefig('results_at_BYU/' + focus_var + '/' + question + '.pdf')
