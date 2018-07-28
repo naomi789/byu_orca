@@ -34,8 +34,7 @@ responsibilities = [
     'Writing or creating materials (designed user interface/created poster or visual aid/wrote reports or essays/etc)',
     'Managerial (group leader/presentation/etc)',
     'Support tasks (schedule meetings/email professor/scribe or notetaker/other errands)',
-    'Technical (coding/math/etc)',
-    'Click to write Choice 5', '']
+    'Technical (coding/math/etc)', '']
 
 professor_encouragement = ['Join the computer science major', 'Continue in the CS major', 'Apply for a scholarship',
                            'Apply for internship', 'Apply for part-time/full-time job',
@@ -128,3 +127,4 @@ list_question_answer_types = ['responsibilities', 'professor_encouragement', 'me
                               'scholarships', 'yes_no', 'involvement', 'appearance_comments', 'sexism_response',
                               'student_groups_standards', 'majors_minors', 'graduation_year', 'extracurriculars',
                               'encouragement', 'barriers', 'more_comfortable', 'less_comfortable', '']
+
