@@ -137,19 +137,19 @@ def mult_choice(question, focus_var, possible_answers, people, answer_type):
     variables = []
     if focus_var == 'gender':
         categories = ['Male', 'Female']
-        option_a_graphable, option_b_graphable, list_all_answers_from_people_in_category_a, list_all_answers_from_people_in_category_b, list_all_answers_per_category, answer_to_count_per_category = filter_and_graph(question, possible_answers, people, answer_type, focus_var, categories)
+        option_a_graphable, option_b_graphable, list_all_answers_from_people_in_category_a, list_all_answers_from_people_in_category_b, list_all_answers_per_category, answer_to_count_per_category = filter_and_graph(question, possible_answers, people, focus_var, categories)
 
     elif focus_var == 'university_program':
         categories = ['Undergraduate', 'Not undergrads']
-        option_a_graphable, option_b_graphable, list_all_answers_from_people_in_category_a, list_all_answers_from_people_in_category_b, list_all_answers_per_category, answer_to_count_per_category = filter_and_graph(question, possible_answers, people, answer_type, focus_var, categories)
+        option_a_graphable, option_b_graphable, list_all_answers_from_people_in_category_a, list_all_answers_from_people_in_category_b, list_all_answers_per_category, answer_to_count_per_category = filter_and_graph(question, possible_answers, people, focus_var, categories)
 
     elif focus_var == 'university_major':
         categories = ['Computer Science', 'Not CS majors']
-        option_a_graphable, option_b_graphable, list_all_answers_from_people_in_category_a, list_all_answers_from_people_in_category_b, list_all_answers_per_category, answer_to_count_per_category = filter_and_graph(question, possible_answers, people, answer_type, focus_var, categories)
+        option_a_graphable, option_b_graphable, list_all_answers_from_people_in_category_a, list_all_answers_from_people_in_category_b, list_all_answers_per_category, answer_to_count_per_category = filter_and_graph(question, possible_answers, people, focus_var, categories)
 
     elif focus_var == 'university_graduation_year':
         categories = ['2018', '2019', '2020', '2021 or later']
-        option_a_graphable, option_b_graphable, list_all_answers_from_people_in_category_a, list_all_answers_from_people_in_category_b, list_all_answers_per_category, answer_to_count_per_category = filter_and_graph(question, possible_answers, people, answer_type, focus_var, categories)
+        option_a_graphable, option_b_graphable, list_all_answers_from_people_in_category_a, list_all_answers_from_people_in_category_b, list_all_answers_per_category, answer_to_count_per_category = filter_and_graph(question, possible_answers, people, focus_var, categories)
 
     call_respective_graphing_functions(question, focus_var, possible_answers, people, answer_type, option_a_graphable, option_b_graphable, list_all_answers_from_people_in_category_a, list_all_answers_from_people_in_category_b, list_all_answers_per_category, answer_to_count_per_category, categories)
 

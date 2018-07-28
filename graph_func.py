@@ -13,7 +13,7 @@ import scipy.stats
 from scipy.stats import mannwhitneyu
 
 
-def filter_and_graph(question, options, people, answer_type, focus_var, category_names):
+def filter_and_graph(question, options, people, focus_var, category_names):
     a = category_names[0]
     b = category_names[1]
 
