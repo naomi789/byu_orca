@@ -39,24 +39,23 @@ def filter_and_graph(question, options, people, answer_type, focus_var, category
     option_a_graphable = graphable_options[0]
     option_b_graphable = graphable_options[1]
 
-    call_respective_graphing_functions(answer_type, question, focus_var, option_a_graphable, option_b_graphable,
-                                       option_a, option_b, a,
-                                       b, graphable_options, category_names, categorized_responses)
+    return option_a_graphable, option_b_graphable, option_a, option_b, categorized_responses, graphable_options
 
 
-def call_respective_graphing_functions(answer_type, question, focus_var, option_a_graphable, option_b_graphable,
-                                       option_a, option_b, a,
-                                       b, graphable_options, category_names, categorized_responses):
+
+def call_respective_graphing_functions(question, focus_var, possible_answers, people, answer_type, option_a_graphable, option_b_graphable, list_all_answers_from_people_in_category_a, list_all_answers_from_people_in_category_b, list_all_answers_per_category, answer_to_count_per_category, categories):
+
     #  decide and call preferred graph here
-    # bar_graph(question, focus_var, option_a_graphable, option_b_graphable, len(option_a), len(option_b), a, b)
-    # pie_chart(question, focus_var, option_a_graphable, option_b_graphable, len(option_a), len(option_b), a, b)
+    # bar_graph(question, focus_var, option_a_graphable, option_b_graphable, len(list_all_answers_from_people_in_category_a), len(list_all_answers_from_people_in_category_b), a, b)
+    # pie_chart(question, focus_var, option_a_graphable, option_b_graphable, len(list_all_answers_from_people_in_category_a), len(list_all_answers_from_people_in_category_b), a, b)
 
     if answer_type in list_question_answer_types:
-        percent_per_factor(question, focus_var, option_a_graphable, option_b_graphable, len(option_a), len(option_b), a,
+
+        percent_per_factor(question, focus_var, option_a_graphable, option_b_graphable, len(list_all_answers_from_people_in_category_a), len(list_all_answers_from_people_in_category_b), a,
                            b)
     elif answer_type in likert_question_answer_types:
-        category_counts = list(map(len, categorized_responses))
-        likert_percents(question, focus_var, graphable_options, category_counts, category_names)
+        category_counts = list(map(len, list_all_answers_per_category))
+        likert_percents(question, focus_var, answer_to_count_per_category, category_counts, category_names)
 
     elif answer_type in likert_question_answer_types:
         f = open('results_at_BYU/' + focus_var + '/likert_stats/' + question + '.txt', 'w')

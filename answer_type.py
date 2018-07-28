@@ -1,10 +1,12 @@
-from graph_func import filter_and_graph, make_box_and_whisker
+from graph_func import filter_and_graph, make_box_and_whisker, call_respective_graphing_functions
 # from overall_survey import ques_to_question
 from collections import defaultdict
 from scipy.stats import mannwhitneyu
 
 
 # import statsmodels.api as sm
+
+
 
 
 def graph_string(question, people):
@@ -40,7 +42,8 @@ def long_text(question, people):
 
 def graph_num(question, focus_var, people):
     print("graph numbers")
-    if question != 'university_gpa_TEXT':
+    number_questions = ['university_gpa_TEXT', 'confidence_percentile']
+    if question not in number_questions :
         return
 
     if focus_var == 'gender':
@@ -130,15 +133,31 @@ def gender_graph_num_stats(question, people, focus_var, a, b, option_a, option_b
     # make_box_and_whisker(question, option_a, option_b, focus_var, a, b)
 
 
-def mult_choice(question, focus_var, options, people, answer_type):
+def mult_choice(question, focus_var, possible_answers, people, answer_type):
+    variables = []
     if focus_var == 'gender':
-        filter_and_graph(question, options, people, answer_type, focus_var, ['Male', 'Female'])
+        variables = ['Male', 'Female']
+        option_a_graphable, option_b_graphable, list_all_answers_from_people_in_category_a, list_all_answers_from_people_in_category_b, list_all_answers_per_category, answer_to_count_per_category = filter_and_graph(question, possible_answers, people, answer_type, focus_var, categories)
 
     elif focus_var == 'university_program':
-        filter_and_graph(question, options, people, answer_type, focus_var, ['Undergraduate', 'Not undergrads'])
+        categories = ['Undergraduate', 'Not undergrads']
+        option_a_graphable, option_b_graphable, list_all_answers_from_people_in_category_a, list_all_answers_from_people_in_category_b, list_all_answers_per_category, answer_to_count_per_category = filter_and_graph(question, possible_answers, people, answer_type, focus_var, categories)
 
     elif focus_var == 'university_major':
-        filter_and_graph(question, options, people, answer_type, focus_var, ['Computer Science', 'Not CS majors'])
+        categories = ['Computer Science', 'Not CS majors']
+        option_a_graphable, option_b_graphable, list_all_answers_from_people_in_category_a, list_all_answers_from_people_in_category_b, list_all_answers_per_category, answer_to_count_per_category = filter_and_graph(question, possible_answers, people, answer_type, focus_var, categories)
 
     elif focus_var == 'university_graduation_year':
-        filter_and_graph(question, options, people, answer_type, focus_var, ['2018', '2019', '2020', '2021 or later'])
+        categories = ['2018', '2019', '2020', '2021 or later']
+        option_a_graphable, option_b_graphable, list_all_answers_from_people_in_category_a, list_all_answers_from_people_in_category_b, list_all_answers_per_category, answer_to_count_per_category = filter_and_graph(question, possible_answers, people, answer_type, focus_var, categories)
+
+    call_respective_graphing_functions(question, focus_var, possible_answers, people, answer_type, option_a_graphable, option_b_graphable, list_all_answers_from_people_in_category_a, list_all_answers_from_people_in_category_b, list_all_answers_per_category, answer_to_count_per_category, categories)
+
+
+
+
+
+def compare_confidence_GPA(people, focus_var, a, b):
+    question = 'compare confidence to GPA'
+    print(question)
+    f = open('results_at_BYU/' + focus_var + '/numbers/' + question + '.txt', 'w')
