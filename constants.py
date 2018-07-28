@@ -25,7 +25,7 @@ BYU_question_shorthand = ['duration_seconds', 'Location_Latitude', 'LocationLong
                           'university_major', 'university_minor', 'university_courses_fall',
                           'university_graduation_year', 'university_gpa', 'university_gpa_TEXT',
                           'received_internship_offer', 'extracurriculars', 'major_pros', 'major_pros_TEXT',
-                          'major_cons', 'major_cons_TEXT', 'confidence_graduate_gpa', 'confidence_prepared_courses',
+                          'major_cons', 'major_cons_TEXT', 'confidence_graduate_gpa', 'confidence_prepared_courses','confidence_percentile',
                           'participation_questions_comfortable_NONCS', 'participation_absent_frequency',
                           'participation_questions_ask_frequency', 'participation_questions_comfortable',
                           'participation_not_questions_frequency', 'participation_absent_why',
@@ -61,7 +61,7 @@ answer_type = ["int", "double", "double", "string", "string", "string", "string"
 
 BYU_answer_type = ['int', 'double', 'double', 'string', 'string', 'string', 'string', 'race', 'int', 'string',
                    'double', 'string', 'string', 'courses', 'string', 'string', 'double', 'yes_no', 'extracurriculars',
-                   'encouragement', 'string', 'barriers', 'string', 'agreement', 'agreement', 'comfort',
+                   'encouragement', 'string', 'barriers', 'string', 'agreement', 'agreement', 'percentile', 'comfort',
                    'frequency_absent', 'frequency_class', 'comfort', 'frequency_class', 'miss_class',
                    'increase_comfort', 'decrease_comfort', 'participate_decrease', 'frequency_class',
                    'responsibilities', 'frequency', 'professor_encouragement', 'frequency_TA', 'frequency', 'frequency',
@@ -151,6 +151,7 @@ BYU_question_string = ['Please read the entire text above before selecting an an
                        'What do you perceive as being a barrier to your completion of this major and your career in this field? (select all that apply) - Specific BYU courses or labs (list courses here please) - Text',
                        'How much do you agree with the following statement: I am confident in my ability to graduate with a 3.0 or higher major GPA (your major GPA does not include AP/IB credits or general education/GE classes).',
                        'How much do you agree with the following statement: I am prepared for my CS course(s) next semester.',
+                       'With respect to your peers in your major, what percentile would you rank yourself at? Please enter a number between 0 and 100.',
                        'How comfortable are you asking questions in your non-CS courses?',
                        'How often are you absent from your CS class(es)?',
                        'On average how often do you ask questions in CS courses?',
@@ -216,7 +217,7 @@ agreement = ['Strongly agree',
 
 frequency = ['Never', 'Once or twice a semester', 'Once a month', 'Once a week', 'Daily', '']
 
-frequency_TA = ['Never, my classes do not have help session', 'Never I don\'t go to help sessions',
+frequency_TA = ['Never my classes do not have help session', 'Never I don\'t go to help sessions',
                 'Once or twice a semester',
                 'Once a month',
                 'Once a week',
