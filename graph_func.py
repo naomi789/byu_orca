@@ -7,6 +7,7 @@ from list_constants import responsibilities, professor_encouragement, meetings_c
     yes_no, involvement, appearance_comments, sexism_response, student_groups_standards, majors_minors, \
     graduation_year, extracurriculars, encouragement, barriers, likert_question_answer_types, \
     list_question_answer_types, frequency_absent
+from data_structures import ques_ans
 from itertools import zip_longest
 from textwrap import wrap
 import scipy.stats
@@ -146,13 +147,13 @@ def sorted_answers(question_options):
     return answer
 
 
-def ques_to_answer():
-    if len(BYU_question_shorthand) is not len(BYU_answer_type):
-        print("mapping questions to answer error")
-        exit(1)
-    else:
-        translate_questions = dict(zip_longest(BYU_question_shorthand, BYU_answer_type[:len(BYU_question_shorthand)]))
-    return translate_questions
+# def ques_to_answer():
+#     if len(BYU_question_shorthand) is not len(BYU_answer_type):
+#         print("mapping questions to answer error")
+#         exit(1)
+#     else:
+#         translate_questions = dict(zip_longest(BYU_question_shorthand, BYU_answer_type[:len(BYU_question_shorthand)]))
+#     return translate_questions
 
 
 def bar_graph(question, focus_var, option_a, option_b, count_option_a_responses, count_option_b_responses, a, b):
@@ -349,7 +350,7 @@ def make_box_and_whisker(question, option_a, option_b, focus_var, a, b):
 
 
 def get_file_location(question, focus_var, graph_type):
-    ques_ans = ques_to_answer()
+    # ques_ans = ques_to_answer()
     x_values = sorted_answers(ques_ans[question])  # possible answers
 
     if ques_ans[question] in list_question_answer_types:

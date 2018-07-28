@@ -7,6 +7,7 @@ import matplotlib as matplotlib
 import matplotlib.pyplot as plt
 from numpy.polynomial.polynomial import polyfit
 import statsmodels.api as sm
+from data_structures import ques_ans
 
 def graph_string(question, people):
     print("graph string")
@@ -42,7 +43,7 @@ def long_text(question, people):
 def graph_num(question, focus_var, people):
     print("graph numbers")
     number_questions = ['university_gpa_TEXT', 'confidence_percentile']
-    if question not in number_questions :
+    if question not in number_questions:
         return
 
     if focus_var == 'gender':
@@ -59,6 +60,8 @@ def graph_num(question, focus_var, people):
 
 
 def gender_graph_num(question, people, focus_var, a, b):
+    if question == 'confidence_percentile':
+        current_bug = 23
     print("graph gender number")
     f = open('results_at_BYU/' + focus_var + '/numbers/' + question + '.txt', 'w')
     f.write("question: " + question + '\n\n')
@@ -77,7 +80,7 @@ def gender_graph_num(question, people, focus_var, a, b):
         focus_attribute = getattr(person, focus_var)
         if value == "":
             continue
-        elif value.isdigit() and int(value) < 5:
+        elif value.isdigit():  # and int(value) < 5:
             if focus_attribute == a:
                 option_a.append(int(value))
             elif b_is_not_a:
@@ -85,7 +88,7 @@ def gender_graph_num(question, people, focus_var, a, b):
             elif focus_attribute == b:
                 option_b.append(int(value))
 
-        elif value.replace('.', '', 1).isdigit() and float(value) < 5:
+        elif value.replace('.', '', 1).isdigit():  #  and float(value) < 5:
             if focus_attribute == a:
                 option_a.append(float(value))
             elif b_is_not_a:
@@ -94,10 +97,10 @@ def gender_graph_num(question, people, focus_var, a, b):
                 option_b.append(float(value))
         else:
             other_prefer_not.append(value)
-    gender_graph_num_stats(question, people, focus_var, a, b, option_a, option_b)
+    gender_graph_num_stats(question, focus_var, a, b, option_a, option_b)
 
 
-def gender_graph_num_stats(question, people, focus_var, a, b, option_a, option_b):
+def gender_graph_num_stats(question, focus_var, a, b, option_a, option_b):
     option_a.sort()
     option_b.sort()
 
@@ -141,9 +144,7 @@ def mult_choice(question, focus_var, possible_answers, people, answer_type):
         categories = ['Computer Science', 'Not CS majors']
     elif focus_var == 'university_graduation_year':
         categories = ['2018', '2019', '2020', '2021 or later']
-
-    list_all_answers_per_category, answer_to_count_per_category = filter_and_graph(question, possible_answers, people, focus_var, categories)
-    call_respective_graphing_functions(question, focus_var, answer_type, list_all_answers_per_category, answer_to_count_per_category, categories)
+    return categories
 
 
 def compare_confidence_GPA(people, focus_var, categories):
@@ -153,28 +154,36 @@ def compare_confidence_GPA(people, focus_var, categories):
 
     option_a = []
     option_b = []
+    category = [] # this is trash
 
-    for category in categories:
-        for person in people:
-            this_category = getattr(person, focus_var)
-            y_percentile = getattr(person, 'confidence_percentile')
-            x_gpa = getattr(person, 'university_gpa_TEXT')
+    num_categories = len(categories)
+    categorized_responses = np.empty([num_categories, 0]).tolist()
 
-            if x_gpa == '' or y_percentile == '':  # or x_gpa > 4:
-                # print(str(x_gpa) + ', ' + str(y_percentile))
-                continue
-            else:
-                # print(str(x_gpa) + ', ' + str(y_percentile))
-                x_gpa = float(x_gpa)
-                y_percentile = float(y_percentile)
+    for person in people:
+        this_category = getattr(person, focus_var)
+        y_percentile = getattr(person, 'confidence_percentile')
+        x_gpa = getattr(person, 'university_gpa_TEXT')
 
-            if x_gpa > 4:
-                continue
+        if x_gpa == '' or y_percentile == '':  # or x_gpa > 4:
+            # print(str(x_gpa) + ', ' + str(y_percentile))
+            continue
+        else:
+            # print(str(x_gpa) + ', ' + str(y_percentile))
+            x_gpa = float(x_gpa)
+            y_percentile = float(y_percentile)
 
-            if this_category== 'Male':
-                option_a.append((x_gpa, y_percentile))
-            elif this_category== 'Female':
-                option_b.append((x_gpa, y_percentile))
+        if x_gpa > 4:
+            continue
+
+        mult_choice(question, focus_var, ques_ans, people, answer_type)
+
+        if this_category == 'Male':
+            # option_a.append((x_gpa, y_percentile))
+            category[0].append((x_gpa, y_percentile))
+        elif this_category == 'Female':
+            # option_b.append((x_gpa, y_percentile))
+            category[1].append((x_gpa, y_percentile))
+
 
 
     x, y = map(list, zip(*option_a))
