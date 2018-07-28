@@ -134,24 +134,17 @@ def gender_graph_num_stats(question, people, focus_var, a, b, option_a, option_b
 
 
 def mult_choice(question, focus_var, possible_answers, people, answer_type):
-    variables = []
     if focus_var == 'gender':
         categories = ['Male', 'Female']
-        list_all_answers_per_category, answer_to_count_per_category = filter_and_graph(question, possible_answers, people, focus_var, categories)
-
     elif focus_var == 'university_program':
         categories = ['Undergraduate', 'Not undergrads']
-        list_all_answers_per_category, answer_to_count_per_category = filter_and_graph(question, possible_answers, people, focus_var, categories)
-
     elif focus_var == 'university_major':
         categories = ['Computer Science', 'Not CS majors']
-        list_all_answers_per_category, answer_to_count_per_category = filter_and_graph(question, possible_answers, people, focus_var, categories)
-
     elif focus_var == 'university_graduation_year':
         categories = ['2018', '2019', '2020', '2021 or later']
-        list_all_answers_per_category, answer_to_count_per_category = filter_and_graph(question, possible_answers, people, focus_var, categories)
 
-    call_respective_graphing_functions(question, focus_var, possible_answers, people, answer_type, list_all_answers_per_category[0], list_all_answers_per_category[1], list_all_answers_per_category, answer_to_count_per_category, categories)
+    list_all_answers_per_category, answer_to_count_per_category = filter_and_graph(question, possible_answers, people, focus_var, categories)
+    call_respective_graphing_functions(question, focus_var, possible_answers, people, answer_type, list_all_answers_per_category, answer_to_count_per_category, categories)
 
 
 def compare_confidence_GPA(people, focus_var, a, b):
