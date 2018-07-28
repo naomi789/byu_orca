@@ -62,6 +62,7 @@ def call_respective_graphing_functions(question, focus_var, answer_type, list_al
 
 
 def convert_into_numbers(option_and_count_dict):
+    static_list = list(option_and_count_dict.items())
     responses_as_numbers = []
     counter = 1
     for key in option_and_count_dict.keys():
@@ -69,7 +70,11 @@ def convert_into_numbers(option_and_count_dict):
             for num in range(0, option_and_count_dict[key]):
                 responses_as_numbers.append(counter)
         counter = counter + 1
-    return responses_as_numbers
+    min = static_list[0][0]
+    max = static_list[-1][0]
+    if max == '':
+        max = static_list[-2][0]
+    return responses_as_numbers, min, max
 
 
 def filter_for_a_and_b(unsorted_one_option_answers, answer_count_dictionary):
@@ -251,8 +256,8 @@ def likert_statistics(question, focus_var, answer_to_count_per_category, categor
     option_b_graphable = answer_to_count_per_category[1]
 
     f = open('results_at_BYU/' + focus_var + '/likert_stats/' + question + '.txt', 'w')
-    option_a_countable = convert_into_numbers(option_a_graphable)
-    option_b_countable = convert_into_numbers(option_b_graphable)
+    option_a_countable, min, max = convert_into_numbers(option_a_graphable)
+    option_b_countable, min, max = convert_into_numbers(option_b_graphable)
 
     f.write("question: " + question + '\n')
     f.write("dict: " + str(option_a_graphable) + '\n')
@@ -265,7 +270,12 @@ def likert_statistics(question, focus_var, answer_to_count_per_category, categor
 
     f.write('\n' + categories[0] + ' ' + str(np.mean(option_a_countable)))
     f.write('\n' + categories[1] + ' ' + str(np.mean(option_b_countable)))
-    f.write('\n')
+    f.write('\n\n')
+
+    f.write('on a scale where the min was: ' + min + ' ' + str(1) + '\n')
+    f.write('ACTUALLY HELP I JUST REALIZED THE WHOLE "NO RESPONSE" THING IS A PROBLEM HERE AND MY STATS ARE INVALID')
+    f.write('and the max was: ' + max + ' ' + str(len(answer_to_count_per_category[0].keys())))
+    f.write('\n\n')
 
     f.write(
         "mann whitney " + categories[0] + " v. " + categories[1] + ": " + str(
