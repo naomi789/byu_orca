@@ -39,7 +39,7 @@ def filter_and_graph(question, options, people, focus_var, category_names):
     option_a_graphable = graphable_options[0]
     option_b_graphable = graphable_options[1]
 
-    return option_a, option_b, categorized_responses, graphable_options
+    return categorized_responses, graphable_options
 
 
 
