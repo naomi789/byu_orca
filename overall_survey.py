@@ -52,13 +52,12 @@ def parse_overall_data(data):
 # need to refactor 'ques_text_ans' the obj that contains ques : ans_type
 def pick_graphing_style(ques_text_ans, people):
     possible_focus_var = ['gender', 'university_program', 'university_graduation_year', 'university_major']  # maybe GPA, too?
-
     for focus_var in possible_focus_var:
         counter = 1
         for question in BYU_question_shorthand:
             answer_type = ques_text_ans[question]
 
-            if question == 'received_internship_offer':
+            if question == 'people_sexist_jokes_gender':
                 current_bug = 23
 
             print('\nfocus_var: ' + focus_var + " question number: " + str(counter))
@@ -79,10 +78,9 @@ def pick_graphing_style(ques_text_ans, people):
                 mult_choice(question, focus_var, ques_text_ans[question], people, answer_type)
             elif answer_type in do_not_graph:
                 pass
-            elif question == 'confidence_percentile':
-                compare_confidence_GPA(people, focus_var, 'Male', 'Female')
             else:
                 print("question: " + question + " ques_text_ans[question]: " + answer_type)
+
 
 
 data = run_overall('raw_overall_survey/overall_data_prepped_BYU.csv')  # ./fake_data/ORCA_overall_CS_edited.csv
@@ -128,4 +126,10 @@ temp = {'duration_seconds': 'int', 'Location_Latitude': 'double', 'LocationLongi
         'describe_positive_experience': 'string', 'describe_negative_experience': 'string',
         'suggestion_improve_institution': 'string'}
 
-pick_graphing_style(temp, people)
+
+# the one that actually does stuff
+# pick_graphing_style(temp, people)
+
+# some other random graphs
+compare_confidence_GPA(people, 'gender', ['Male', 'Female'])
+

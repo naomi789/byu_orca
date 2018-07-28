@@ -2,12 +2,11 @@ from graph_func import filter_and_graph, make_box_and_whisker, call_respective_g
 # from overall_survey import ques_to_question
 from collections import defaultdict
 from scipy.stats import mannwhitneyu
-
-
-# import statsmodels.api as sm
-
-
-
+import numpy as np
+import matplotlib as matplotlib
+import matplotlib.pyplot as plt
+from numpy.polynomial.polynomial import polyfit
+import statsmodels.api as sm
 
 def graph_string(question, people):
     print("graph string")
@@ -147,7 +146,56 @@ def mult_choice(question, focus_var, possible_answers, people, answer_type):
     call_respective_graphing_functions(question, focus_var, answer_type, list_all_answers_per_category, answer_to_count_per_category, categories)
 
 
-def compare_confidence_GPA(people, focus_var, a, b):
-    question = 'compare confidence to GPA'
-    print(question)
-    f = open('results_at_BYU/' + focus_var + '/numbers/' + question + '.txt', 'w')
+def compare_confidence_GPA(people, focus_var, categories):
+    question = 'confidence_percentile'
+    title = question + '\nfocus_var: ' + focus_var
+    print(title)
+
+    option_a = []
+    option_b = []
+
+    for person in people:
+        category = getattr(person, focus_var)
+        y_percentile = getattr(person, 'confidence_percentile')
+        x_gpa = getattr(person, 'university_gpa_TEXT')
+
+        if x_gpa == '' or y_percentile == '':  # or x_gpa > 4:
+            # print(str(x_gpa) + ', ' + str(y_percentile))
+            continue
+        else:
+            # print(str(x_gpa) + ', ' + str(y_percentile))
+            x_gpa = float(x_gpa)
+            y_percentile = float(y_percentile)
+
+        if x_gpa > 4:
+            continue
+
+        if category == 'Male':
+            option_a.append((x_gpa, y_percentile))
+        elif category == 'Female':
+            option_b.append((x_gpa, y_percentile))
+
+    print(option_a)
+    print(option_b)
+
+    np.random.seed(19680801)
+
+    # matplotlib.rcParams['axes.unicode_minus'] = False # changes how neg num are displayed
+    x, y = map(list, zip(*option_a))
+    fig, ax = plt.subplots()
+    ax.plot(x, y, 'o')
+
+    ax.set_title(title)
+
+    fit = np.polyfit(x, y, 1)
+    fit_fn = np.poly1d(fit)
+    # fit_fn is now a function which takes in x and returns an estimate for y
+
+    plt.plot(x, y, 'yo', x, fit_fn(x), '--k')
+
+    plt.xlim(0, 4.5)
+    plt.xticks([.5, 1, 1.5, 2, 2.5, 3, 3.5, 4])
+    plt.ylim(0, 110)
+    plt.yticks([num for num in range(0, 101) if num % 10 == 0])
+
+    plt.savefig('results_at_BYU/' + focus_var + '/' + question + '.pdf')
