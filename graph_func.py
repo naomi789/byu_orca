@@ -32,12 +32,8 @@ def filter_and_graph(question, options, people, focus_var, category_names):
                 categorized_responses[0].append(getattr(person, question))
             else:  # elif focus_var_person[:4] == 'Not ':
                 categorized_responses[1].append(getattr(person, question))
-    option_a = categorized_responses[0]
-    option_b = categorized_responses[1]
 
     graphable_options = values(categorized_responses, options)
-    option_a_graphable = graphable_options[0]
-    option_b_graphable = graphable_options[1]
 
     return categorized_responses, graphable_options
 
