@@ -51,11 +51,10 @@ def call_respective_graphing_functions(question, focus_var, possible_answers, pe
 
     if answer_type in list_question_answer_types:
 
-        percent_per_factor(question, focus_var, option_a_graphable, option_b_graphable, len(list_all_answers_from_people_in_category_a), len(list_all_answers_from_people_in_category_b), a,
-                           b)
+        percent_per_factor(question, focus_var, option_a_graphable, option_b_graphable, len(list_all_answers_from_people_in_category_a), len(list_all_answers_from_people_in_category_b), categories[0], categories[1])
     elif answer_type in likert_question_answer_types:
         category_counts = list(map(len, list_all_answers_per_category))
-        likert_percents(question, focus_var, answer_to_count_per_category, category_counts, category_names)
+        likert_percents(question, focus_var, answer_to_count_per_category, category_counts, categories)
 
     elif answer_type in likert_question_answer_types:
         f = open('results_at_BYU/' + focus_var + '/likert_stats/' + question + '.txt', 'w')
@@ -67,12 +66,12 @@ def call_respective_graphing_functions(question, focus_var, possible_answers, pe
         f.write("dict: " + str(option_b_graphable) + '\n')
         f.write('\n')
 
-        f.write("option_a, " + a + " wilcoxon: " + str(scipy.stats.wilcoxon(option_a_countable)) + '\n')
-        f.write("option_b, " + b + " wilcoxon: " + str(scipy.stats.wilcoxon(option_b_countable)) + '\n')
+        f.write("option_a, " + categories[0] + " wilcoxon: " + str(scipy.stats.wilcoxon(option_a_countable)) + '\n')
+        f.write("option_b, " + categories[1] + " wilcoxon: " + str(scipy.stats.wilcoxon(option_b_countable)) + '\n')
         f.write('\n')
 
         f.write(
-            "mann whitney " + a + " v. " + b + ": " + str(mannwhitneyu(option_a_countable, option_b_countable)) + '\n')
+            "mann whitney " + categories[0] + " v. " + categories[1] + ": " + str(mannwhitneyu(option_a_countable, option_b_countable)) + '\n')
         f.write('\n')
 
         # f.write(anova()) # https://plot.ly/python/anova/
