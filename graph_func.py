@@ -334,7 +334,12 @@ def percent_per_factor(question, focus_var, option_a, option_b, count_option_a_r
     plt.savefig('results_at_BYU/' + focus_var + '/percent_per_factor/' + question + '.pdf')
 
 
-def make_box_and_whisker(question, option_a, option_b, focus_var, a, b):
+def make_box_and_whisker(question, list_options, focus_var, names_of_options):
+    option_a = list_options
+    # option_b = list_options[1]
+    a = names_of_options
+    # b = names_of_options[1]
+
     plt.figure()
     plt.suptitle(question)  # ques_to_question['confidence_graduate_gpa'] + str(datetime.now().time()))
 
@@ -343,8 +348,8 @@ def make_box_and_whisker(question, option_a, option_b, focus_var, a, b):
     axes[0].boxplot(option_a)
     axes[0].set_title(a)
 
-    axes[1].boxplot(option_b)
-    axes[1].set_title(b)
+    # axes[1].boxplot(option_b)
+    # axes[1].set_title(b)
 
     plt.savefig('results_at_BYU/' + focus_var + '/box_and_whisker/' + question + '.pdf')
 

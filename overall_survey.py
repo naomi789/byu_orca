@@ -4,7 +4,8 @@ from itertools import zip_longest
 from datetime import datetime
 import numpy as np
 import matplotlib.pyplot as plt
-from answer_type import mult_choice, graph_string, graph_num, long_text, compare_confidence_GPA, call_respective_graphing_functions, filter_and_graph
+from answer_type import mult_choice, graph_string, graph_num, long_text, compare_confidence_GPA
+from graph_func import call_respective_graphing_functions, filter_and_graph
 from constants import BYU_question_shorthand, BYU_question_string, do_not_graph
 # , answer_type, agreement, comfort, certainty, frequency, frequency_class, frequency_TA
 from list_constants import likert_question_answer_types, list_question_answer_types
@@ -72,7 +73,7 @@ def pick_graphing_style(ques_ans, people):
             elif answer_type == 'int' or answer_type == 'double':
                 graph_num(question, focus_var, people)
             elif answer_type in likert_question_answer_types:
-                categories = mult_choice(question, focus_var, answer_type, people, answer_type)
+                categories = mult_choice(focus_var)
                 list_all_answers_per_category, answer_to_count_per_category = filter_and_graph(question,
                                                                                                answer_type, people,
                                                                                                focus_var, categories)
@@ -91,8 +92,9 @@ people = parse_overall_data(data)
 # print(ques_ans)
 
 # the one that actually does stuff
-pick_graphing_style(ques_ans, people)
+# pick_graphing_style(ques_ans, people)
 
 # some other random graphs
-# compare_confidence_GPA(people, 'gender', ['Male', 'Female'])
+compare_confidence_GPA(people, 'gender')
+
 

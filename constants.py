@@ -241,6 +241,8 @@ certainty = ['Definitely yes', 'Probably yes',
 
 color_options = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink', 'black']
 
+gender_colors = ['blue', 'pink', 'purple', 'green']
+
 long_colors = ['palevioletred', 'navy', 'm', 'royalblue', 'g', 'purple', 'seagreen', 'blueviolet', 'forestgreen',
                'salmon', 'dodgerblue', 'mediumvioletred', 'aqua', 'firebrick', 'mediumaquamarine', 'goldenrod',
                'darkred', 'sandybrown', 'grey', 'silver', 'orange', 'coral']
