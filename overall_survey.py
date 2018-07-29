@@ -4,7 +4,7 @@ from itertools import zip_longest
 from datetime import datetime
 import numpy as np
 import matplotlib.pyplot as plt
-from answer_type import mult_choice, graph_string, graph_num, long_text, compare_confidence_GPA
+from answer_type import mult_choice, graph_string, graph_num, long_text, compare_confidence_GPA, associate_with_professors
 from graph_func import call_respective_graphing_functions, filter_and_graph
 from constants import BYU_question_shorthand, BYU_question_string, do_not_graph
 # , answer_type, agreement, comfort, certainty, frequency, frequency_class, frequency_TA
@@ -92,9 +92,11 @@ people = parse_overall_data(data)
 # print(ques_ans)
 
 # the one that actually does stuff
-pick_graphing_style(ques_ans, people)
+# pick_graphing_style(ques_ans, people)
 
 # some other random graphs
 # compare_confidence_GPA(people, 'gender')
+for type_of_feedback in ['describe_positive_experience', 'describe_negative_experience']:
+    associate_with_professors(people, type_of_feedback)
 
 

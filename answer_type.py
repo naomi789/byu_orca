@@ -5,6 +5,8 @@ import matplotlib.pyplot as plt
 from data_structures import ques_ans
 from constants import gender_colors
 from graph_func import make_box_and_whisker
+from list_constants import staff_names, professor_names
+
 
 def graph_string(question, people):
     print("graph string")
@@ -85,7 +87,7 @@ def gender_graph_num(question, people, focus_var, a, b):
             elif focus_attribute == b:
                 option_b.append(int(value))
 
-        elif value.replace('.', '', 1).isdigit():  #  and float(value) < 5:
+        elif value.replace('.', '', 1).isdigit():  # and float(value) < 5:
             if focus_attribute == a:
                 option_a.append(float(value))
             elif b_is_not_a:
@@ -108,7 +110,6 @@ def gender_graph_num_stats(question, focus_var, a, b, option_a, option_b):
     # print('option_b: ' + str(option_b))
     if len(option_a) < 1 or len(option_b) < 1:
         return  # because we can't compare the data
-
 
     f = open('results_at_BYU/' + focus_var + '/numbers/' + question + '.txt', 'w')
     f.write("focus_var: " + focus_var + '\n')
@@ -175,7 +176,6 @@ def compare_confidence_GPA(people, focus_var):
     fig, ax = plt.subplots()
     ax.set_title(title)
 
-
     counter = 0
     for category in categorized_responses.keys():
         option_a = categorized_responses[category]
@@ -202,3 +202,29 @@ def compare_confidence_GPA(people, focus_var):
         make_box_and_whisker(category + ' GPA', x, focus_var, categories)
         make_box_and_whisker(category + ' percentile', y, focus_var, categories)
 
+
+def associate_with_professors(people, pos_neg_feedback):
+    f = open('results_at_BYU/strings/' + pos_neg_feedback + '.txt', 'w', encoding='utf-8')
+
+    all_names = staff_names + professor_names + [first.split(' ', 1)[0] for first in staff_names] + [
+        first.split(' ', 1)[0] for first in professor_names] + [last.split(' ', 1)[1] for last in staff_names] + [
+                    last.split(' ', 1)[1] for last in professor_names]
+
+    name_to_comment = defaultdict(list)
+    for person in people:
+        if pos_neg_feedback == 'describe_positive_experience':
+            comment = getattr(person, 'describe_positive_experience').lower()
+        elif pos_neg_feedback == 'describe_negative_experience':
+            comment = getattr(person, 'describe_negative_experience').lower()
+
+        for name in all_names:
+            if name in comment:
+                no_new_lines = comment.replace('\n', ' ')
+                name_to_comment[name].append(no_new_lines.replace(name, name.upper()))
+
+    for name in name_to_comment.keys():
+        f.write('name: ' + name + '\n')
+        for value in name_to_comment[name]:
+            f.write('comment: ' + value + '\n')
+        f.write('\n\n')
+    f.close()

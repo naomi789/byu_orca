@@ -128,3 +128,10 @@ list_question_answer_types = ['responsibilities', 'professor_encouragement', 'me
                               'student_groups_standards', 'majors_minors', 'graduation_year', 'extracurriculars',
                               'encouragement', 'barriers', 'more_comfortable', 'less_comfortable', '']
 
+professor_names = ['brent adams', 'cory barker', 'mark clement', 'jacob crandall', 'casey deccio', 'parris egbert',
+                   'ryan farrell', 'kelly flanagan', 'christophe giraud-carrier', 'michael goodrich', 'seth holladay',
+                   'frank jones', 'michael jones', 'tony martinez', 'eric mercer', 'bryan morse', 'dennis ng',
+                   'ken rodham', 'paul roper', 'kent seamons', 'kevin seppi', 'quinn snell', 'dan ventura',
+                   'sean warnick', 'david wingate', 'scott woodfield', 'daniel zappala']
+
+staff_names = ['gordon billings', 'jennifer bonnett', 'lynette nelson', 'erin rowan', 'greg corlett', 'klark walker']
