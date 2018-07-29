@@ -62,16 +62,20 @@ def call_respective_graphing_functions(question, focus_var, answer_type, list_al
 def convert_into_numbers(option_and_count_dict):
     static_list = list(option_and_count_dict.items())
     responses_as_numbers = []
-    counter = 1
+    counter = len(option_and_count_dict) - 1  # this will put '' at being 0, if it exists, so no effect!!
+    # however... if there isn't a zero, this will be a problem
+    # TODO QUICK FIX THIS
     for key in option_and_count_dict.keys():
         if key != "":
             for num in range(0, option_and_count_dict[key]):
                 responses_as_numbers.append(counter)
-        counter = counter + 1
-    min = static_list[0][0]
-    max = static_list[-1][0]
+        counter -= 1
+    max = static_list[0][0]
+    min = static_list[-1][0]
     if max == '':
         max = static_list[-2][0]
+
+
     return responses_as_numbers, min, max
 
 
@@ -192,11 +196,24 @@ def bar_graph(question, focus_var, option_a, option_b, count_option_a_responses,
 def calc_percent(options_to_answers, total_responses):
     ordered_list = []
     for key in options_to_answers.keys():
+        # TODO: why did I do this if?
         if total_responses == 0:
             ordered_list.append(0)
         else:
             ordered_list.append(int(options_to_answers[key]) / total_responses)
     return ordered_list
+
+
+def calc_likert_avg(one_name, one_category_and_their_answers, count):
+    for choice in one_category_and_their_answers:
+        if choice == '':
+            #  so if this is a likert question, I want to ignore this option
+            #  but if it isn't likert, then I do want to consider it
+            pass
+    #     else:
+    # pass
+
+    # return avg_val_per_category # as a list
 
 
 def likert_percents(question, focus_var, answer_to_count_per_category, category_counts, category_names):
@@ -318,7 +335,7 @@ def percent_per_factor(question, focus_var, answer_to_count_per_category, catego
 
         category_performance = calc_percent(dict_ans_count, count)
 
-        axes.barh(index + bar_width* counter, category_performance, bar_width, tick_label=possible_answers, label=category_name) # color=color_a,
+        axes.barh(index + bar_width * counter, category_performance, bar_width, tick_label=possible_answers, label=category_name) # color=color_a,
         axes.set_yticks(index)
         axes.set_yticklabels(possible_answers)
         axes.set_xlim(0, 1)

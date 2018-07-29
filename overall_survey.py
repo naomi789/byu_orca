@@ -62,8 +62,8 @@ def assorted_special_graphs(people):
 
 # need to refactor 'ques_text_ans' the obj that contains ques : ans_type
 def pick_graphing_style(ques_ans, people):
-    possible_focus_var = ['university_graduation_year', 'gender', 'university_program', 'university_major',
-                          'major_and_gender']  # maybe GPA, too?
+    possible_focus_var = ['university_graduation_year', 'gender', 'university_program', 'university_major']
+        # ,'major_and_gender', 'university_graduation_year_and_gender']  # maybe GPA, too?
     for focus_var in possible_focus_var:
         counter = 1
         for question in BYU_question_shorthand:
