@@ -306,16 +306,11 @@ def percent_per_factor(question, focus_var, answer_to_count_per_category, catego
     plt.rcdefaults()
     fig, axes = plt.subplots(figsize=(8.5, 11))
 
-    bar_width = .35
-
+    bar_width = .1
+    counter = 0
 
     # enter for_loop
     for category_name, dict_ans_count, count in zip(category_names, answer_to_count_per_category, category_counts):
-
-        # a = category
-        # count_option_a_responses = category_counts[0]
-        # option_a = answer_to_count_per_category[0]
-
         possible_answers = dict_ans_count.keys()
         index = np.arange(len(possible_answers))
         axes.set_yticks(index + bar_width / 2)
@@ -323,10 +318,12 @@ def percent_per_factor(question, focus_var, answer_to_count_per_category, catego
 
         category_performance = calc_percent(dict_ans_count, count)
 
-        axes.barh(index, category_performance, bar_width, tick_label=possible_answers, label=category_name) # color=color_a,
+        axes.barh(index + bar_width* counter, category_performance, bar_width, tick_label=possible_answers, label=category_name) # color=color_a,
         axes.set_yticks(index)
         axes.set_yticklabels(possible_answers)
         axes.set_xlim(0, 1)
+
+        counter += 1
 
 
     # stuff outside the for loop
