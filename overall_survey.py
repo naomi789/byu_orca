@@ -25,8 +25,14 @@ def run_overall(file_name):
 
 def ques_to_question():
     if len(BYU_question_shorthand) is not len(BYU_question_string):
-        print(len(BYU_question_shorthand))
-        print(len(BYU_question_string))
+        for long_ques, short_ques in zip(BYU_question_string, BYU_question_shorthand):
+            if long_ques == 'If members of the CS department (students/TAs/professors/etc) make negative comments about your appearance what do they comment about? (select all that apply)':
+                pass
+            print(long_ques)
+            print(short_ques)
+            print('\n')
+        print(str(len(BYU_question_shorthand)) + str(BYU_question_shorthand))
+        print(str(len(BYU_question_string)) + str(BYU_question_string))
         print("mapping SHORTHAND questions to question error")
         exit(1)
     else:
@@ -91,6 +97,9 @@ def pick_graphing_style(people):
 
 data = run_overall('raw_overall_survey/overall_data_prepped_BYU.csv')  # ./fake_data/ORCA_overall_CS_edited.csv
 ques_to_question = ques_to_question()
+
+print(ques_to_question)
+
 data = data[2:]  # deletes the question text and shorthand from the dataset
 
 people = parse_overall_data(data)
