@@ -9,6 +9,8 @@ from constants import BYU_question_shorthand, BYU_question_string
 from list_constants import likert_question_answer_types, list_question_answer_types, confidence_measurement, long_feedback
 import os
 from data_structures import ques_ans
+import logging
+
 
 plt.style.use('seaborn-deep')
 
@@ -84,6 +86,8 @@ def pick_graphing_style(people):
 
 
 # if __name__ == "__main__":  # needed if I decide to include this file elsewhere
+# logging.basicConfig(level=logging.DEBUG)  # or 'INFO', 'WARNING', 'ERROR', 'CRITICIAL'
+# logging.info('asdf')
 
 data = run_overall('raw_overall_survey/overall_data_prepped_BYU.csv')  # ./fake_data/ORCA_overall_CS_edited.csv
 ques_to_question = ques_to_question()
