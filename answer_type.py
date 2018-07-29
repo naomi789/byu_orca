@@ -14,7 +14,6 @@ import matplotlib.cbook as cbook
 def graph_string(question, people):
     print("graph string")
     f = open('results_at_BYU/strings/' + question + '.txt', 'w', encoding='utf-8')
-    # ques_to_question = ques_to_question()
     f.write("question: " + question + '\n\n')
     string_value = defaultdict(int)
     for person in people:

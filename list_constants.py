@@ -137,3 +137,5 @@ professor_names = ['brent adams', 'cory barker', 'mark clement', 'jacob crandall
 staff_names = ['gordon billings', 'jennifer bonnett', 'lynette nelson', 'erin rowan', 'greg corlett', 'klark walker']
 
 confidence_measurement = ['confidence_prepared_courses', 'confidence_graduate_gpa']
+
+long_feedback = ['describe_positive_experience', 'describe_negative_experience', 'suggestion_improve_institution']
