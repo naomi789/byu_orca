@@ -141,6 +141,8 @@ def mult_choice(focus_var):
         categories = ['Computer Science', 'Not CS majors']
     elif focus_var == 'university_graduation_year':
         categories = ['2018', '2019', '2020', '2021 or later']
+    elif focus_var == 'major_and_gender':
+        pass
     return categories
 
 

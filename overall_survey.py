@@ -51,7 +51,7 @@ def parse_overall_data(data):
 
 # need to refactor 'ques_text_ans' the obj that contains ques : ans_type
 def pick_graphing_style(ques_ans, people):
-    possible_focus_var = ['gender', 'university_program', 'university_graduation_year', 'university_major']  # maybe GPA, too?
+    possible_focus_var = ['gender', 'university_program', 'university_graduation_year', 'university_major', 'major_and_gender']  # maybe GPA, too?
     for focus_var in possible_focus_var:
         counter = 1
         for question in BYU_question_shorthand:
