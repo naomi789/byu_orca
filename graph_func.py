@@ -16,6 +16,7 @@ from scipy.stats import mannwhitneyu
 def filter_and_graph(question, options, people, focus_var, category_names):
     num_categories = len(category_names)
     categorized_responses = np.empty([num_categories, 0]).tolist()
+    answer_type = ques_ans[question]
     for person in people:
         focus_var_person = getattr(person, focus_var)
         if focus_var_person == "":
@@ -23,7 +24,9 @@ def filter_and_graph(question, options, people, focus_var, category_names):
         if focus_var == 'university_major':
             if focus_var_person == 'Computer Science':
                 value = getattr(person, question)
-                if value is not '':
+
+                # this means likert responses can't be 'none of the above'
+                if value is not '' or answer_type not in likert_question_answer_types:
                     categorized_responses[0].append(value)
             else:
                 value = getattr(person, question)
@@ -33,7 +36,16 @@ def filter_and_graph(question, options, people, focus_var, category_names):
         else:  # elif focus_var == "university_graduation_year":
             for category in zip(category_names, categorized_responses):
                 if focus_var_person == category[0]:
-                    category[1].append(getattr(person, question))
+                    value = getattr(person, question)
+
+                    # if answer_type in likert_question_answer_types:
+                    #     pass
+
+                    # this means likert responses can't be 'none of the above'
+                    if value is not '' or answer_type not in likert_question_answer_types:
+                        category[1].append(value)
+                    else:
+                        print(value)
 
     graphable_options = values(categorized_responses, options)
 
