@@ -197,7 +197,6 @@ def compare_confidence_GPA(people, focus_var):
         print(category)
         option_a = categorized_responses[category]
         x, y = map(list, zip(*option_a))
-
         make_box_and_whisker(category + ' GPA', x, focus_var, categories)
         make_box_and_whisker(category + ' percentile', y, focus_var, categories)
 
