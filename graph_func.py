@@ -40,7 +40,7 @@ def filter_and_graph(question, options, people, focus_var, category_names):
 
 
 
-def call_respective_graphing_functions(question, focus_var, answer_type, list_all_answers_per_category, answer_to_count_per_category, categories):
+def call_respective_graphing_functions(question, focus_var, answer_type, list_all_answers_per_category, answer_to_count_per_category, category_names):
     option_a_graphable = answer_to_count_per_category[0]
     option_b_graphable = answer_to_count_per_category[1]
 
@@ -51,10 +51,11 @@ def call_respective_graphing_functions(question, focus_var, answer_type, list_al
     # pie_chart(question, focus_var, option_a_graphable, option_b_graphable, len(list_all_answers_from_people_in_category_a), len(list_all_answers_from_people_in_category_b), a, b)
 
     if answer_type in list_question_answer_types:
-        percent_per_factor(question, focus_var, answer_to_count_per_category, category_counts, categories)
+        percent_per_factor(question, focus_var, answer_to_count_per_category, category_counts, category_names)
     elif answer_type in likert_question_answer_types:
-        likert_percents(question, focus_var, answer_to_count_per_category, category_counts, categories)
-        likert_statistics(question, focus_var, answer_to_count_per_category, categories)
+        likert_percents(question, focus_var, answer_to_count_per_category, category_counts, category_names)
+        # (question, focus_var, category_values, category_counts, category_names):
+        likert_statistics(question, focus_var, answer_to_count_per_category, category_names)
 
 
 
@@ -198,10 +199,11 @@ def calc_percent(options_to_answers, total_responses):
     return ordered_list
 
 
-def likert_percents(question, focus_var, category_values, category_counts, category_names):
+def likert_percents(question, focus_var, answer_to_count_per_category, category_counts, category_names):
+    # answer_to_count_per_category, category_counts, category_names)
     print("select one only graph")
-    num_categories = len(category_values)
-    assert (num_categories == len(category_values) and
+    num_categories = len(answer_to_count_per_category)
+    assert (num_categories == len(answer_to_count_per_category) and
             num_categories == len(category_counts) and
             num_categories == len(category_names))
     plt.figure()
@@ -212,15 +214,15 @@ def likert_percents(question, focus_var, category_values, category_counts, categ
         title += str(category[1]) + ' (' + str(category[0]) + ')\n'
     plt.suptitle(title)
 
-    ind = [x for x, _ in enumerate(category_values)]
+    ind = [x for x, _ in enumerate(answer_to_count_per_category)]
 
-    possible_responses = category_values[0].keys()
-    for category in category_values:
+    possible_responses = answer_to_count_per_category[0].keys()
+    for category in answer_to_count_per_category:
         assert (category.keys() == possible_responses)
 
     all_bars = []
 
-    categories = list(zip(category_values, category_counts))
+    categories = list(zip(answer_to_count_per_category, category_counts))
     for response in possible_responses:
         set_of_responses = []
         for category in categories:
@@ -289,10 +291,16 @@ def likert_statistics(question, focus_var, answer_to_count_per_category, categor
     f.close()
 
 
-def percent_per_factor(question, focus_var, answer_to_count_per_category, category_counts, categories):
+def percent_per_factor(question, focus_var, answer_to_count_per_category, category_counts, category_names):
     print("select all that apply graph")
-    a = categories[0]
-    b = categories[1]
+    num_categories = len(answer_to_count_per_category)
+
+    assert (num_categories == len(answer_to_count_per_category) and
+            num_categories == len(category_counts) and
+            num_categories == len(category_names))
+
+    a = category_names[0]
+    b = category_names[1]
 
     count_option_a_responses = category_counts[0]
     count_option_b_responses = category_counts[1]
