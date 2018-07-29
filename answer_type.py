@@ -135,7 +135,7 @@ def mult_choice(focus_var):
     if focus_var == 'gender':
         categories = ['Male', 'Female']
     elif focus_var == 'university_program':
-        categories = ['Undergraduate', 'Not undergrads']
+        categories = ['Undergraduate', 'Masters', 'PhD', 'Not currently pursuing a degree']  # ['Undergraduate', 'Not undergrads']
     elif focus_var == 'university_major':
         categories = ['Computer Science', 'Not CS majors']
     elif focus_var == 'university_graduation_year':

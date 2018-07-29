@@ -45,7 +45,7 @@ def assorted_special_graphs(people):
 
 
 def pick_graphing_style(people):
-    possible_focus_var = ['university_graduation_year', 'gender', 'university_program', 'university_major']
+    possible_focus_var = ['university_major', 'university_graduation_year', 'gender', 'university_program']
     # TODO: add functionality for: 'major_and_gender', 'university_graduation_year_and_gender']  # maybe GPA, too?
     for focus_var in possible_focus_var:
         counter = 1

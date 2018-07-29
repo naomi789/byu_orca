@@ -15,24 +15,23 @@ from scipy.stats import mannwhitneyu
 
 
 def filter_and_graph(question, options, people, focus_var, category_names):
-    a = category_names[0]
-    b = category_names[1]
-
     num_categories = len(category_names)
     categorized_responses = np.empty([num_categories, 0]).tolist()
     for person in people:
         focus_var_person = getattr(person, focus_var)
         if focus_var_person == "":
             continue
-        if focus_var == "university_graduation_year":
+        if focus_var == 'university_major':
+            if focus_var_person == 'Computer Science':
+                categorized_responses[0].append(getattr(person, question))
+            else:
+                categorized_responses[1].append(getattr(person, question))
+
+        else:  # elif focus_var == "university_graduation_year":
             for category in zip(category_names, categorized_responses):
                 if focus_var_person == category[0]:
                     category[1].append(getattr(person, question))
-        else:
-            if focus_var_person == a:
-                categorized_responses[0].append(getattr(person, question))
-            else:  # elif focus_var_person[:4] == 'Not ':
-                categorized_responses[1].append(getattr(person, question))
+
 
     graphable_options = values(categorized_responses, options)
 
