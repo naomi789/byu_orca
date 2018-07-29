@@ -131,7 +131,6 @@ def gender_graph_num_stats(question, focus_var, a, b, option_a, option_b):
     f.close()
     # make_box_and_whisker(question, option_a, option_b, focus_var, a, b)
 
-
 def mult_choice(focus_var):
     if focus_var == 'gender':
         categories = ['Male', 'Female']
