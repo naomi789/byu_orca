@@ -6,9 +6,6 @@ from data_structures import ques_ans
 from constants import gender_colors
 from graph_func import make_box_and_whisker, convert_into_numbers
 from list_constants import staff_names, professor_names
-import matplotlib.ticker as ticker
-import matplotlib.cbook as cbook
-
 
 
 def graph_string(question, people):
