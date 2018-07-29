@@ -72,7 +72,7 @@ def pick_graphing_style(ques_ans, people):
                 graph_string(question, people)
             elif answer_type == 'int' or answer_type == 'double':
                 graph_num(question, focus_var, people)
-            elif answer_type in likert_question_answer_types:
+            elif answer_type in likert_question_answer_types or answer_type in list_question_answer_types:
                 categories = mult_choice(focus_var)
                 list_all_answers_per_category, answer_to_count_per_category = filter_and_graph(question,
                                                                                                answer_type, people,

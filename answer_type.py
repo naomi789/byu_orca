@@ -57,8 +57,8 @@ def graph_num(question, focus_var, people):
 
 
 def gender_graph_num(question, people, focus_var, a, b):
-    if question == 'confidence_percentile':
-        current_bug = 23
+    # if question == 'confidence_percentile':
+    #     current_bug = 23
     print("graph gender number")
     f = open('results_at_BYU/' + focus_var + '/numbers/' + question + '.txt', 'w')
     f.write("question: " + question + '\n\n')

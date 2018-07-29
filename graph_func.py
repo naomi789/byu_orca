@@ -299,6 +299,19 @@ def percent_per_factor(question, focus_var, answer_to_count_per_category, catego
             num_categories == len(category_counts) and
             num_categories == len(category_names))
 
+    # start graphing:
+    plt.figure()
+    plt.suptitle(question)
+
+    plt.rcdefaults()
+    fig, axes = plt.subplots(figsize=(8.5, 11))
+
+    bar_width = .35
+
+    # enter for_loop
+    for category in category_names:
+        pass
+
     a = category_names[0]
     b = category_names[1]
 
@@ -308,36 +321,22 @@ def percent_per_factor(question, focus_var, answer_to_count_per_category, catego
     option_a = answer_to_count_per_category[0]
     option_b = answer_to_count_per_category[1]
 
-    plt.figure()
-    plt.suptitle(question)
-
-    plt.rcdefaults()
-    fig, axes = plt.subplots(figsize=(8.5, 11))  # nrows=2, ncols=1,
     possible_answers = option_a.keys()
     index = np.arange(len(possible_answers))
-
-    bar_width = .35
-
     axes.set_yticks(index + bar_width / 2)
     axes.set_yticklabels(possible_answers)
+
 
     option_a_performance = calc_percent(option_a, count_option_a_responses)
     option_b_performance = calc_percent(option_b, count_option_b_responses)
 
-    if a == 'Male':
-        color_a = 'deepskyblue'
-        color_b = 'hotpink'
-    else:
-        color_a = 'orange'
-        color_b = 'navy'
-
-    axes.barh(index, option_a_performance, bar_width, color=color_a, tick_label=possible_answers, label=a)
+    axes.barh(index, option_a_performance, bar_width, tick_label=possible_answers, label=a) # color=color_a,
     axes.set_yticks(index)
     axes.set_yticklabels(possible_answers)
     axes.set_xlim(0, 1)
 
     plt.xlabel(b)
-    axes.barh(index + bar_width, option_b_performance, bar_width, color=color_b, tick_label=possible_answers, label=b)
+    axes.barh(index + bar_width, option_b_performance, bar_width, tick_label=possible_answers, label=b) # color=color_b,
     axes.set_yticks(index + bar_width / 2)
     axes.set_yticklabels(possible_answers)
     axes.set_xlim(0, 1)
