@@ -22,9 +22,13 @@ def filter_and_graph(question, options, people, focus_var, category_names):
             continue
         if focus_var == 'university_major':
             if focus_var_person == 'Computer Science':
-                categorized_responses[0].append(getattr(person, question))
+                value = getattr(person, question)
+                if value is not '':
+                    categorized_responses[0].append(value)
             else:
-                categorized_responses[1].append(getattr(person, question))
+                value = getattr(person, question)
+                if value is not '':
+                    categorized_responses[1].append(value)
 
         else:  # elif focus_var == "university_graduation_year":
             for category in zip(category_names, categorized_responses):
