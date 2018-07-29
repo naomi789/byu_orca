@@ -218,13 +218,13 @@ def associate_with_professors(people, pos_neg_feedback):
             comment = getattr(person, 'describe_negative_experience').lower()
 
         for name in all_names:
-            if name in comment:
+            if ' ' + name + ' ' in comment:  # prevents 'running' from matching with dr. ng and 'frankly' with frank
                 no_new_lines = comment.replace('\n', ' ')
                 name_to_comment[name].append(no_new_lines.replace(name, name.upper()))
 
     for name in name_to_comment.keys():
         f.write('name: ' + name + '\n')
         for value in name_to_comment[name]:
-            f.write('comment: ' + value + '\n')
-        f.write('\n\n')
+            f.write('comment: ' + value + '\n\n')
+        f.write('\n\n\n')
     f.close()
