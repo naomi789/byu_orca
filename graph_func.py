@@ -217,7 +217,11 @@ def likert_percents(question, focus_var, answer_to_count_per_category, category_
     plt.xticks(ind, category_names)
     plt.ylim(ymax=1)
     plt.ylabel("Percent of Likert Responses")
-    plt.legend(loc="upper right")
+    # plt.legend(loc="upper right")
+
+    ax = plt.gca()
+    handles, labels = ax.get_legend_handles_labels()
+    ax.legend(handles[::-1], labels[::-1], title='Line', loc='upper right')
 
     plt.savefig('results_at_BYU/' + focus_var + '/likert_percents/' + question + '.pdf')
 
