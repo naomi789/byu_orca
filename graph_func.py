@@ -308,42 +308,30 @@ def percent_per_factor(question, focus_var, answer_to_count_per_category, catego
 
     bar_width = .35
 
+
     # enter for_loop
-    for category in category_names:
-        pass
+    for category_name, dict_ans_count, count in zip(category_names, answer_to_count_per_category, category_counts):
 
-    a = category_names[0]
-    b = category_names[1]
+        # a = category
+        # count_option_a_responses = category_counts[0]
+        # option_a = answer_to_count_per_category[0]
 
-    count_option_a_responses = category_counts[0]
-    count_option_b_responses = category_counts[1]
+        possible_answers = dict_ans_count.keys()
+        index = np.arange(len(possible_answers))
+        axes.set_yticks(index + bar_width / 2)
+        axes.set_yticklabels(possible_answers)
 
-    option_a = answer_to_count_per_category[0]
-    option_b = answer_to_count_per_category[1]
+        category_performance = calc_percent(dict_ans_count, count)
 
-    possible_answers = option_a.keys()
-    index = np.arange(len(possible_answers))
-    axes.set_yticks(index + bar_width / 2)
-    axes.set_yticklabels(possible_answers)
+        axes.barh(index, category_performance, bar_width, tick_label=possible_answers, label=category_name) # color=color_a,
+        axes.set_yticks(index)
+        axes.set_yticklabels(possible_answers)
+        axes.set_xlim(0, 1)
 
 
-    option_a_performance = calc_percent(option_a, count_option_a_responses)
-    option_b_performance = calc_percent(option_b, count_option_b_responses)
-
-    axes.barh(index, option_a_performance, bar_width, tick_label=possible_answers, label=a) # color=color_a,
-    axes.set_yticks(index)
-    axes.set_yticklabels(possible_answers)
-    axes.set_xlim(0, 1)
-
-    plt.xlabel(b)
-    axes.barh(index + bar_width, option_b_performance, bar_width, tick_label=possible_answers, label=b) # color=color_b,
-    axes.set_yticks(index + bar_width / 2)
-    axes.set_yticklabels(possible_answers)
-    axes.set_xlim(0, 1)
-
+    # stuff outside the for loop
     axes.legend()
 
-    # todo get this to work:
     plt.tight_layout()
     plt.savefig('results_at_BYU/' + focus_var + '/percent_per_factor/' + question + '.pdf')
 
