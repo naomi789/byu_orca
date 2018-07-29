@@ -25,31 +25,16 @@ def run_overall(file_name):
 
 def ques_to_question():
     if len(BYU_question_shorthand) is not len(BYU_question_string):
-        for long_ques, short_ques in zip(BYU_question_string, BYU_question_shorthand):
-            if long_ques == 'If members of the CS department (students/TAs/professors/etc) make negative comments about your appearance what do they comment about? (select all that apply)':
-                pass
-            print(long_ques)
-            print(short_ques)
-            print('\n')
-        print(str(len(BYU_question_shorthand)) + str(BYU_question_shorthand))
-        print(str(len(BYU_question_string)) + str(BYU_question_string))
-        print("mapping SHORTHAND questions to question error")
+        logging.critical(str(len(BYU_question_shorthand)) + str(BYU_question_shorthand))
+        logging.critical(str(len(BYU_question_string)) + str(BYU_question_string))
+        logging.critical('mapping SHORTHAND questions to question error')
         exit(1)
     else:
         return dict(zip_longest(BYU_question_shorthand, BYU_question_string[:len(BYU_question_shorthand)]))
 
 
 def parse_overall_data(data):
-    all_people = list(map(lambda line: Person(*line), data))
-    all_students = []
-    counter = 0
-    for person in all_people:  # filters out all responses where there is no gender
-        counter += 1
-        if getattr(person, 'gender') is not '':
-            all_students.append(person)
-        #  todo: should also check that other values are not '' # ['gender', 'gradu_year', 'cs_not_major']  # maybe GPA, too?
-    print('there were ' + str(counter) + ' participants.')
-    return all_students
+    return list(map(lambda line: Person(*line), data))
 
 
 def assorted_special_graphs(people):
@@ -61,16 +46,17 @@ def assorted_special_graphs(people):
 
 def pick_graphing_style(people):
     possible_focus_var = ['university_graduation_year', 'gender', 'university_program', 'university_major']
-    # ,'major_and_gender', 'university_graduation_year_and_gender']  # maybe GPA, too?
+    # TODO: add functionality for: 'major_and_gender', 'university_graduation_year_and_gender']  # maybe GPA, too?
     for focus_var in possible_focus_var:
         counter = 1
         for question in BYU_question_shorthand:
             answer_type = ques_ans[question]
 
-            print('\nfocus_var: ' + focus_var + " question number: " + str(counter))
-            print('question: ' + question)
+            logging.info('\nfocus_var: ' + focus_var + " question number: " + str(counter))
+            logging.info('question: ' + question)
+            logging.info('answer_type: ' + answer_type)
+
             counter += 1
-            print('answer_type: ' + answer_type)
 
             if question in long_feedback:
                 long_text(question, people)
@@ -92,13 +78,11 @@ def pick_graphing_style(people):
 
 
 # if __name__ == "__main__":  # needed if I decide to include this file elsewhere
-# logging.basicConfig(level=logging.DEBUG)  # or 'INFO', 'WARNING', 'ERROR', 'CRITICIAL'
-# logging.info('asdf')
+logging.basicConfig(level=logging.ERROR)  # 'DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICIAL'
+
 
 data = run_overall('raw_overall_survey/overall_data_prepped_BYU.csv')  # ./fake_data/ORCA_overall_CS_edited.csv
-ques_to_question = ques_to_question()
-
-print(ques_to_question)
+# ques_to_question = ques_to_question() # not using yet, but would be good to add to graphs, eventually
 
 data = data[2:]  # deletes the question text and shorthand from the dataset
 

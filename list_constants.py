@@ -100,7 +100,7 @@ miss_class_reasons = ['Physical or mental health issues (flu/cold/depression/anx
                       'I don\'t like the professor/the way they teach/the environment or culture of the class']
 
 likert_question_answer_types = ['certainty', 'agreement', 'frequency', 'frequency_absent', 'not_participate_reasons',
-                                'frequency_TA', 'frequency_class', 'comfort', 'miss_class_reasons', '']
+                                'frequency_TA', 'frequency_class', 'comfort', 'miss_class_reasons']
 
 more_comfortable = ['Feeling like I am on a similar academic level to my peers', 'Feeling like I won’t be judged',
                     'Knowing my peers in the class', 'Not knowing my peers in the class/feeling anonymous',
