@@ -6,6 +6,9 @@ from data_structures import ques_ans
 from constants import gender_colors
 from graph_func import make_box_and_whisker
 from list_constants import staff_names, professor_names
+import matplotlib.ticker as ticker
+import matplotlib.cbook as cbook
+
 
 
 def graph_string(question, people):
@@ -218,7 +221,9 @@ def associate_with_professors(people, pos_neg_feedback):
             comment = getattr(person, 'describe_negative_experience').lower()
 
         for name in all_names:
-            if ' ' + name + ' ' in comment:  # prevents 'running' from matching with dr. ng and 'frankly' with frank
+            # prevents 'running' from matching with dr. ng and 'frankly' with frank
+            # except, this also looses 'seppi.' or typo'd names like 'dr.barker '
+            if ' ' + name + ' ' in comment:
                 no_new_lines = comment.replace('\n', ' ')
                 name_to_comment[name].append(no_new_lines.replace(name, name.upper()))
 
@@ -228,3 +233,30 @@ def associate_with_professors(people, pos_neg_feedback):
             f.write('comment: ' + value + '\n\n')
         f.write('\n\n\n')
     f.close()
+
+
+def time_confidence(question, focus_var, answer_to_count_per_category, list_all_answers_per_category, category_names):
+    category_counts = list(map(len, list_all_answers_per_category))
+
+    fig, ax = plt.subplots(figsize=(8.5, 11))
+
+
+    with cbook.get_sample_data('goog.npz') as datafile:
+        r = np.load(datafile)['price_data'].view(np.recarray)
+    r = r[-30:]  # get the last 30 days
+
+    date = r.date.astype('O')
+
+    ax.plot(date, r.adj_close, 'o-')
+    ax.set_title("Default")
+    fig.autofmt_xdate()
+
+    # next we'll write a custom formatter
+    N = len(r)
+    ind = np.arange(N)  # the evenly spaced plot indices
+
+    plt.savefig('results_at_BYU/' + focus_var + '/bar_graph_' + question + '.pdf')
+
+
+
+

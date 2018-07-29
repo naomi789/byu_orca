@@ -4,11 +4,12 @@ from itertools import zip_longest
 from datetime import datetime
 import numpy as np
 import matplotlib.pyplot as plt
-from answer_type import mult_choice, graph_string, graph_num, long_text, compare_confidence_GPA, associate_with_professors
+from answer_type import mult_choice, graph_string, graph_num, long_text, compare_confidence_GPA, \
+    associate_with_professors, time_confidence
 from graph_func import call_respective_graphing_functions, filter_and_graph
 from constants import BYU_question_shorthand, BYU_question_string, do_not_graph
 # , answer_type, agreement, comfort, certainty, frequency, frequency_class, frequency_TA
-from list_constants import likert_question_answer_types, list_question_answer_types
+from list_constants import likert_question_answer_types, list_question_answer_types, confidence_measurement
 import os
 from data_structures import ques_ans
 
@@ -49,9 +50,20 @@ def parse_overall_data(data):
     return all_students
 
 
+def assorted_special_graphs(people):
+    compare_confidence_GPA(people, 'gender')
+
+    for type_of_feedback in ['describe_positive_experience', 'describe_negative_experience']:
+        associate_with_professors(people, type_of_feedback)
+
+    # for type in ['confidence_prepared']:
+    #     time_confidence(people, type)
+
+
 # need to refactor 'ques_text_ans' the obj that contains ques : ans_type
 def pick_graphing_style(ques_ans, people):
-    possible_focus_var = ['gender', 'university_program', 'university_graduation_year', 'university_major', 'major_and_gender']  # maybe GPA, too?
+    possible_focus_var = ['university_graduation_year', 'gender', 'university_program', 'university_major',
+                          'major_and_gender']  # maybe GPA, too?
     for focus_var in possible_focus_var:
         counter = 1
         for question in BYU_question_shorthand:
@@ -73,12 +85,15 @@ def pick_graphing_style(ques_ans, people):
             elif answer_type == 'int' or answer_type == 'double':
                 graph_num(question, focus_var, people)
             elif answer_type in likert_question_answer_types or answer_type in list_question_answer_types:
-                categories = mult_choice(focus_var)
-                list_all_answers_per_category, answer_to_count_per_category = filter_and_graph(question,
-                                                                                               answer_type, people,
-                                                                                               focus_var, categories)
+                category_names = mult_choice(focus_var)
+                list_all_answers_per_category, answer_to_count_per_category = filter_and_graph(question, answer_type,
+                                                                                               people, focus_var,
+                                                                                               category_names)
                 call_respective_graphing_functions(question, focus_var, answer_type, list_all_answers_per_category,
-                                                   answer_to_count_per_category, categories)
+                                                   answer_to_count_per_category, category_names)
+
+                if question in confidence_measurement and focus_var == 'university_graduation_year':
+                    time_confidence(question, focus_var, answer_to_count_per_category, list_all_answers_per_category, category_names)
 
 
 
@@ -92,11 +107,7 @@ people = parse_overall_data(data)
 # print(ques_ans)
 
 # the one that actually does stuff
-# pick_graphing_style(ques_ans, people)
+pick_graphing_style(ques_ans, people)
 
-# some other random graphs
-# compare_confidence_GPA(people, 'gender')
-for type_of_feedback in ['describe_positive_experience', 'describe_negative_experience']:
-    associate_with_professors(people, type_of_feedback)
-
-
+# does other graphs
+assorted_special_graphs(people)

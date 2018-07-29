@@ -135,3 +135,5 @@ professor_names = ['brent adams', 'cory barker', 'mark clement', 'jacob crandall
                    'sean warnick', 'david wingate', 'scott woodfield', 'daniel zappala']
 
 staff_names = ['gordon billings', 'jennifer bonnett', 'lynette nelson', 'erin rowan', 'greg corlett', 'klark walker']
+
+confidence_measurement = ['confidence_prepared', 'confidence_graduate_gpa']
