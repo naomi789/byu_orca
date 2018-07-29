@@ -145,8 +145,8 @@ def mult_choice(focus_var):
         categories = ['Computer Science', 'Not CS majors']
     elif focus_var == 'university_graduation_year':
         categories = ['2018', '2019', '2020', '2021 or later']
-    elif focus_var == 'major_and_gender':
-        pass
+    # elif focus_var == 'major_and_gender':
+    #     pass
     return categories
 
 
@@ -245,9 +245,9 @@ def time_confidence(question, focus_var, answer_to_count_per_category, list_all_
         r = np.load(datafile)['price_data'].view(np.recarray)
     r = r[-30:]  # get the last 30 days
 
-    date = r.date.astype('O')
-
-    ax.plot(date, r.adj_close, 'o-')
+    x_axis = r.date.astype('O')
+    y_axis = r.adj_close
+    ax.plot(x_axis, y_axis, 'o-')
     ax.set_title("Default")
     fig.autofmt_xdate()
 
