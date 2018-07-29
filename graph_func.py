@@ -51,10 +51,10 @@ def call_respective_graphing_functions(question, focus_var, answer_type, list_al
     # pie_chart(question, focus_var, option_a_graphable, option_b_graphable, len(list_all_answers_from_people_in_category_a), len(list_all_answers_from_people_in_category_b), a, b)
 
     if answer_type in list_question_answer_types:
-        percent_per_factor(question, focus_var, option_a_graphable, option_b_graphable, category_counts[0], category_counts[1], categories[0], categories[1])
+        percent_per_factor(question, focus_var, answer_to_count_per_category, category_counts, categories)
     elif answer_type in likert_question_answer_types:
         likert_percents(question, focus_var, answer_to_count_per_category, category_counts, categories)
-        likert_statistics(question, focus_var, answer_to_count_per_category, category_counts, categories)
+        likert_statistics(question, focus_var, answer_to_count_per_category, categories)
 
 
 
@@ -248,7 +248,7 @@ def likert_percents(question, focus_var, category_values, category_counts, categ
 
     plt.savefig('results_at_BYU/' + focus_var + '/likert_percents/' + question + '.pdf')
 
-def likert_statistics(question, focus_var, answer_to_count_per_category, category_counts, categories):
+def likert_statistics(question, focus_var, answer_to_count_per_category, categories):
     option_a_graphable = answer_to_count_per_category[0]
     option_b_graphable = answer_to_count_per_category[1]
 
@@ -289,9 +289,16 @@ def likert_statistics(question, focus_var, answer_to_count_per_category, categor
     f.close()
 
 
-def percent_per_factor(question, focus_var, option_a, option_b, count_option_a_responses, count_option_b_responses, a,
-                       b):
+def percent_per_factor(question, focus_var, answer_to_count_per_category, category_counts, categories):
     print("select all that apply graph")
+    a = categories[0]
+    b = categories[1]
+
+    count_option_a_responses = category_counts[0]
+    count_option_b_responses = category_counts[1]
+
+    option_a = answer_to_count_per_category[0]
+    option_b = answer_to_count_per_category[1]
 
     plt.figure()
     plt.suptitle(question)

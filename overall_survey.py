@@ -57,8 +57,8 @@ def pick_graphing_style(ques_ans, people):
         for question in BYU_question_shorthand:
             answer_type = ques_ans[question]
 
-            if question == 'people_sexist_jokes_gender':
-                current_bug = 23
+            # if question == 'people_sexist_jokes_gender':
+            #     current_bug = 23
 
             print('\nfocus_var: ' + focus_var + " question number: " + str(counter))
             print('question: ' + question)
@@ -92,9 +92,9 @@ people = parse_overall_data(data)
 # print(ques_ans)
 
 # the one that actually does stuff
-# pick_graphing_style(ques_ans, people)
+pick_graphing_style(ques_ans, people)
 
 # some other random graphs
-compare_confidence_GPA(people, 'gender')
+# compare_confidence_GPA(people, 'gender')
 
 
