@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from constants import BYU_question_shorthand, BYU_answer_type, BYU_question_string, agreement, frequency, frequency_TA, \
-    frequency_class, comfort, certainty, color_options, long_colors
+from constants import agreement, frequency, frequency_TA, frequency_class, comfort, certainty, color_options, \
+    long_colors
 
 from list_constants import responsibilities, professor_encouragement, meetings_clubs, percentage, scholarships, \
     yes_no, involvement, appearance_comments, sexism_response, student_groups_standards, majors_minors, \
@@ -9,7 +9,6 @@ from list_constants import responsibilities, professor_encouragement, meetings_c
     list_question_answer_types, frequency_absent
 from data_structures import ques_ans
 from itertools import zip_longest
-from textwrap import wrap
 import scipy.stats
 from scipy.stats import mannwhitneyu
 
@@ -32,17 +31,13 @@ def filter_and_graph(question, options, people, focus_var, category_names):
                 if focus_var_person == category[0]:
                     category[1].append(getattr(person, question))
 
-
     graphable_options = values(categorized_responses, options)
 
     return categorized_responses, graphable_options
 
 
-
-def call_respective_graphing_functions(question, focus_var, answer_type, list_all_answers_per_category, answer_to_count_per_category, category_names):
-    option_a_graphable = answer_to_count_per_category[0]
-    option_b_graphable = answer_to_count_per_category[1]
-
+def call_respective_graphing_functions(question, focus_var, answer_type, list_all_answers_per_category,
+                                       answer_to_count_per_category, category_names):
     category_counts = list(map(len, list_all_answers_per_category))
 
     #  decide and call preferred graph here
@@ -53,9 +48,7 @@ def call_respective_graphing_functions(question, focus_var, answer_type, list_al
         percent_per_factor(question, focus_var, answer_to_count_per_category, category_counts, category_names)
     elif answer_type in likert_question_answer_types:
         likert_percents(question, focus_var, answer_to_count_per_category, category_counts, category_names)
-        # (question, focus_var, category_values, category_counts, category_names):
         likert_statistics(question, focus_var, answer_to_count_per_category, category_names)
-
 
 
 def convert_into_numbers(option_and_count_dict):
@@ -74,7 +67,6 @@ def convert_into_numbers(option_and_count_dict):
     if max == '':
         max = static_list[-2][0]
 
-
     return responses_as_numbers, min, max
 
 
@@ -91,19 +83,6 @@ def deconstruct_answers_filter(unsorted_one_gender_answers, answer_count_diction
             answer_count_dictionary[each_answer] += 1
     return answer_count_dictionary
 
-
-# def values_per_a_and_b(option_a, option_b, options):
-#    option_a_graphable = dict.fromkeys(sorted_answers(options), 0)
-#    option_b_graphable = dict.fromkeys(sorted_answers(options), 0)
-#
-#    if options in likert_question_answer_types:
-#        option_a_graphable = filter_for_a_and_b(option_a, option_a_graphable)
-#        option_b_graphable = filter_for_a_and_b(option_b, option_b_graphable)
-#    elif options in list_question_answer_types:
-#        option_a_graphable = deconstruct_answers_filter(option_a, option_a_graphable)
-#        option_b_graphable = deconstruct_answers_filter(option_b, option_b_graphable)
-#
-#    return option_a_graphable, option_b_graphable
 
 def values(option_list, options):
     # todo the problem is here # CURRENT BUG
@@ -151,15 +130,6 @@ def sorted_answers(question_options):
     return answer
 
 
-# def ques_to_answer():
-#     if len(BYU_question_shorthand) is not len(BYU_answer_type):
-#         print("mapping questions to answer error")
-#         exit(1)
-#     else:
-#         translate_questions = dict(zip_longest(BYU_question_shorthand, BYU_answer_type[:len(BYU_question_shorthand)]))
-#     return translate_questions
-
-
 def bar_graph(question, focus_var, option_a, option_b, count_option_a_responses, count_option_b_responses, a, b):
     file_destination, x_values = get_file_location(question, focus_var, 'bar_graph')
 
@@ -174,8 +144,6 @@ def bar_graph(question, focus_var, option_a, option_b, count_option_a_responses,
                     color='cornflowerblue', label=a)
     rects2 = ax.bar(ind + width / 2, option_b_vals, width,
                     color='hotpink', label=b)
-    # rects3 = ax.bar(ind + width / 2, other_prefer_not, width,
-    #                 color='lime', label='other_p_not')
 
     # Add some text for labels, title and custom x-axis tick labels, etc.
     ax.set_ylabel('Scores')
@@ -203,20 +171,7 @@ def calc_percent(options_to_answers, total_responses):
     return ordered_list
 
 
-def calc_likert_avg(one_name, one_category_and_their_answers, count):
-    for choice in one_category_and_their_answers:
-        if choice == '':
-            #  so if this is a likert question, I want to ignore this option
-            #  but if it isn't likert, then I do want to consider it
-            pass
-    #     else:
-    # pass
-
-    # return avg_val_per_category # as a list
-
-
 def likert_percents(question, focus_var, answer_to_count_per_category, category_counts, category_names):
-    # answer_to_count_per_category, category_counts, category_names)
     print("select one only graph")
     num_categories = len(answer_to_count_per_category)
     assert (num_categories == len(answer_to_count_per_category) and
@@ -265,6 +220,7 @@ def likert_percents(question, focus_var, answer_to_count_per_category, category_
     plt.legend(loc="upper right")
 
     plt.savefig('results_at_BYU/' + focus_var + '/likert_percents/' + question + '.pdf')
+
 
 def likert_statistics(question, focus_var, answer_to_count_per_category, categories):
     option_a_graphable = answer_to_count_per_category[0]
@@ -325,7 +281,6 @@ def percent_per_factor(question, focus_var, answer_to_count_per_category, catego
     bar_width = .1
     counter = 0
 
-    # enter for_loop
     for category_name, dict_ans_count, count in zip(category_names, answer_to_count_per_category, category_counts):
         possible_answers = dict_ans_count.keys()
         index = np.arange(len(possible_answers))
@@ -334,15 +289,14 @@ def percent_per_factor(question, focus_var, answer_to_count_per_category, catego
 
         category_performance = calc_percent(dict_ans_count, count)
 
-        axes.barh(index + bar_width * counter, category_performance, bar_width, tick_label=possible_answers, label=category_name) # color=color_a,
+        axes.barh(index + bar_width * counter, category_performance, bar_width, tick_label=possible_answers,
+                  label=category_name)  # color=color_a,
         axes.set_yticks(index)
         axes.set_yticklabels(possible_answers)
         axes.set_xlim(0, 1)
 
         counter += 1
 
-
-    # stuff outside the for loop
     axes.legend()
 
     plt.tight_layout()
@@ -351,9 +305,7 @@ def percent_per_factor(question, focus_var, answer_to_count_per_category, catego
 
 def make_box_and_whisker(question, list_options, focus_var, names_of_options):
     option_a = list_options
-    # option_b = list_options[1]
     a = names_of_options
-    # b = names_of_options[1]
 
     plt.figure()
     plt.suptitle(question)  # ques_to_question['confidence_graduate_gpa'] + str(datetime.now().time()))
@@ -363,14 +315,10 @@ def make_box_and_whisker(question, list_options, focus_var, names_of_options):
     axes[0].boxplot(option_a)
     axes[0].set_title(a)
 
-    # axes[1].boxplot(option_b)
-    # axes[1].set_title(b)
-
     plt.savefig('results_at_BYU/' + focus_var + '/box_and_whisker/' + question + '.pdf')
 
 
 def get_file_location(question, focus_var, graph_type):
-    # ques_ans = ques_to_answer()
     x_values = sorted_answers(ques_ans[question])  # possible answers
 
     if ques_ans[question] in list_question_answer_types:
