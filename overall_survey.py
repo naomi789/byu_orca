@@ -18,7 +18,7 @@ Person = namedtuple('Person', BYU_question_shorthand)
 
 
 def run_overall(file_name):
-    print(os.path.dirname(os.path.realpath(__file__)))
+    logging.info(os.path.dirname(os.path.realpath(__file__)))
     with open(file_name, 'r', encoding='utf-8') as file:
         return list(csv.reader(file, delimiter=','))
 
@@ -42,6 +42,9 @@ def assorted_special_graphs(people):
 
     for type_of_feedback in ['describe_positive_experience', 'describe_negative_experience']:
         associate_with_professors(people, type_of_feedback)
+
+    # pie chart of what non-CS majors there were
+    #
 
 
 def pick_graphing_style(people):
@@ -78,7 +81,7 @@ def pick_graphing_style(people):
 
 
 # if __name__ == "__main__":  # needed if I decide to include this file elsewhere
-logging.basicConfig(level=logging.ERROR)  # 'DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICIAL'
+logging.basicConfig(level=logging.INFO)  # 'DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICIAL'
 
 
 data = run_overall('raw_overall_survey/overall_data_prepped_BYU.csv')  # ./fake_data/ORCA_overall_CS_edited.csv

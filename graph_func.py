@@ -12,8 +12,13 @@ from itertools import zip_longest
 import scipy.stats
 from scipy.stats import mannwhitneyu
 
+import logging
+
+
 
 def filter_and_graph(question, options, people, focus_var, category_names):
+    if question == 'participation_questions_ask_frequency':
+        temp = 23
     num_categories = len(category_names)
     categorized_responses = np.empty([num_categories, 0]).tolist()
     answer_type = ques_ans[question]
@@ -44,8 +49,6 @@ def filter_and_graph(question, options, people, focus_var, category_names):
                     # this means likert responses can't be 'none of the above'
                     if value is not '' or answer_type not in likert_question_answer_types:
                         category[1].append(value)
-                    else:
-                        print(value)
 
     graphable_options = values(categorized_responses, options)
 
@@ -188,7 +191,7 @@ def calc_percent(options_to_answers, total_responses):
 
 
 def likert_percents(question, focus_var, answer_to_count_per_category, category_counts, category_names):
-    print("select one only graph")
+    logging.info("select one only graph")
     num_categories = len(answer_to_count_per_category)
     assert (num_categories == len(answer_to_count_per_category) and
             num_categories == len(category_counts) and
@@ -286,7 +289,7 @@ def likert_statistics(question, focus_var, answer_to_count_per_category, categor
 def percent_per_factor(question, focus_var, answer_to_count_per_category, category_counts, category_names):
     if question == 'participation_group_project_role':
         pass
-    print("select all that apply graph")
+    logging.info("select all that apply graph")
     num_categories = len(answer_to_count_per_category)
 
     assert (num_categories == len(answer_to_count_per_category) and
@@ -298,7 +301,7 @@ def percent_per_factor(question, focus_var, answer_to_count_per_category, catego
     plt.suptitle(question)
 
     plt.rcdefaults()
-    fig, axes = plt.subplots(figsize=(8.5, 11))
+    fig, axes = plt.subplots(figsize=(11, 8.5))
 
     bar_width = .1
     counter = 0
@@ -310,9 +313,6 @@ def percent_per_factor(question, focus_var, answer_to_count_per_category, catego
         axes.set_yticklabels(possible_answers)
 
         category_performance = calc_percent(dict_ans_count, count)
-
-        if question == 'participation_group_project_role':
-            pass
 
         answers_with_new_lines = []
         for answer in possible_answers:
@@ -331,7 +331,7 @@ def percent_per_factor(question, focus_var, answer_to_count_per_category, catego
         counter += 1
 
     axes.legend()
-
+    plt.title(question)
     plt.tight_layout()
     plt.savefig('results_at_BYU/' + focus_var + '/percent_per_factor/' + question + '.pdf')
 

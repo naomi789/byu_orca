@@ -214,12 +214,24 @@ agreement = ['Strongly agree',
 
 frequency = ['Never', 'Once or twice a semester', 'Once a month', 'Once a week', 'Daily', '']
 
+frequency_typo = ['Never', 'Once or twice a semester', 'Once a month', 'Once a week', 'Daily', '']
+
+
 frequency_TA = ['Never my classes do not have help session', 'Never I don\'t go to help sessions',
                 'Once or twice a semester',
                 'Once a month',
                 'Once a week',
                 'Daily',
                 '']
+
+frequency_TA_typo = ['Never my classes do not have help session', 'Never I don\'t go to help sessions',
+                'Once or twice a semester',
+                'Once a month',
+                'Once a week ',
+                'Daily',
+                '']
+
+frequency_class_typo = ['Never', 'Once or twice a semester', 'Once a month', 'Once a week ', 'Daily', '']
 
 frequency_class = ['Never', 'Once or twice a semester', 'Once a month', 'Once a week', 'Daily', '']
 

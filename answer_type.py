@@ -6,10 +6,10 @@ from data_structures import ques_ans
 from constants import gender_colors
 from graph_func import make_box_and_whisker, convert_into_numbers
 from list_constants import staff_names, professor_names
-
+import logging
 
 def graph_string(question, people):
-    print("graph string")
+    logging.info("graph string")
     f = open('results_at_BYU/strings/' + question + '.txt', 'w', encoding='utf-8')
     f.write("question: " + question + '\n\n')
     string_value = defaultdict(int)
@@ -25,7 +25,7 @@ def graph_string(question, people):
 
 
 def long_text(question, people):
-    print("graph long text")
+    logging.info("graph long text")
     f = open('results_at_BYU/strings/' + question + '.txt', 'w')
     f.write("question: " + question + '\n\n')
     for person in people:
@@ -39,7 +39,7 @@ def long_text(question, people):
 
 
 def graph_num(question, focus_var, people):
-    print("graph numbers")
+    logging.info("graph numbers")
     number_questions = ['university_gpa_TEXT', 'confidence_percentile']
     if question not in number_questions:
         return
@@ -60,7 +60,7 @@ def graph_num(question, focus_var, people):
 def gender_graph_num(question, people, focus_var, a, b):
     # if question == 'confidence_percentile':
     #     current_bug = 23
-    print("graph gender number")
+    logging.info("graph gender number")
     f = open('results_at_BYU/' + focus_var + '/numbers/' + question + '.txt', 'w')
     f.write("question: " + question + '\n\n')
 
@@ -151,7 +151,6 @@ def compare_confidence_GPA(people, focus_var):
     answer_type = ques_ans[question]
     categories = mult_choice(focus_var)
     title = question + '\nfocus_var: ' + focus_var
-    print(title)
 
     categorized_responses = defaultdict(list)
     for person in people:
@@ -195,7 +194,6 @@ def compare_confidence_GPA(people, focus_var):
     plt.savefig('results_at_BYU/' + focus_var + '/' + question + '.pdf')
 
     for category in categorized_responses.keys():
-        print(category)
         option_a = categorized_responses[category]
         x, y = map(list, zip(*option_a))
         make_box_and_whisker(category + ' GPA', x, focus_var, categories)
