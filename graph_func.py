@@ -7,7 +7,7 @@ from list_constants import responsibilities, professor_encouragement, meetings_c
     yes_no, involvement, appearance_comments, sexism_response, student_groups_standards, majors_minors, \
     graduation_year, extracurriculars, encouragement, barriers, likert_question_answer_types, \
     list_question_answer_types, frequency_absent
-from data_structures import ques_ans
+from data_structures import ques_ans, short_to_long
 from itertools import zip_longest
 import scipy.stats
 from scipy.stats import mannwhitneyu
@@ -200,6 +200,9 @@ def likert_percents(question, focus_var, answer_to_count_per_category, category_
     title = 'question: ' + question + '\n'
     title += 'focus_var: ' + focus_var + '\n'
     categories = list(zip(category_counts, category_names))
+    real_tutle = short_to_long[question]
+
+    # TODO: can I get these questions on the legend instead of in the title hashtag readability
     for category in categories:
         title += str(category[1]) + ' (' + str(category[0]) + ')\n'
     plt.suptitle(title)
@@ -298,7 +301,6 @@ def percent_per_factor(question, focus_var, answer_to_count_per_category, catego
 
     # start graphing:
     plt.figure()
-    plt.suptitle(question)
 
     plt.rcdefaults()
     fig, axes = plt.subplots(figsize=(11, 8.5))
@@ -331,7 +333,7 @@ def percent_per_factor(question, focus_var, answer_to_count_per_category, catego
         counter += 1
 
     axes.legend()
-    plt.title(question)
+    plt.title(short_to_long[question])
     plt.tight_layout()
     plt.savefig('results_at_BYU/' + focus_var + '/percent_per_factor/' + question + '.pdf')
 
