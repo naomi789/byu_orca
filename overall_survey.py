@@ -91,6 +91,13 @@ data = data[2:]  # deletes the question text and shorthand from the dataset
 
 people = parse_overall_data(data)
 
+# will not be needed again unless the questions change for UVA version
+# short_to_long = {}
+# for short, long in zip(BYU_question_shorthand, BYU_question_string):
+#     short_to_long[short] = long
+#
+# print(short_to_long)
+
 # the one that actually does stuff
 pick_graphing_style(people)
 
