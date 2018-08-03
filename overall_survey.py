@@ -2,7 +2,8 @@ from collections import namedtuple
 import csv
 from itertools import zip_longest
 import matplotlib.pyplot as plt
-from answer_type import mult_choice, graph_string, graph_num, long_text, compare_confidence_GPA, \
+from language_processing import graph_string, long_text
+from answer_type import mult_choice, graph_num, compare_confidence_GPA, \
     associate_with_professors, time_confidence
 from graph_func import call_respective_graphing_functions, filter_and_graph
 from constants import BYU_question_shorthand, BYU_question_string
