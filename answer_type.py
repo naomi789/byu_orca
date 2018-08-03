@@ -171,35 +171,6 @@ def compare_confidence_GPA(people, focus_var):
         make_box_and_whisker(category + ' percentile', y, focus_var, categories)
 
 
-def associate_with_professors(people, pos_neg_feedback):
-    f = open('results_at_BYU/strings/' + pos_neg_feedback + '.txt', 'w', encoding='utf-8')
-
-    all_names = staff_names + professor_names + [first.split(' ', 1)[0] for first in staff_names] + [
-        first.split(' ', 1)[0] for first in professor_names] + [last.split(' ', 1)[1] for last in staff_names] + [
-                    last.split(' ', 1)[1] for last in professor_names]
-
-    name_to_comment = defaultdict(list)
-    for person in people:
-        if pos_neg_feedback == 'describe_positive_experience':
-            comment = getattr(person, 'describe_positive_experience').lower()
-        elif pos_neg_feedback == 'describe_negative_experience':
-            comment = getattr(person, 'describe_negative_experience').lower()
-
-        for name in all_names:
-            # prevents 'running' from matching with dr. ng and 'frankly' with frank
-            # except, this also looses 'seppi.' or typo'd names like 'dr.barker '
-            if ' ' + name + ' ' in comment:
-                no_new_lines = comment.replace('\n', ' ')
-                name_to_comment[name].append(no_new_lines.replace(name, name.upper()))
-
-    for name in name_to_comment.keys():
-        f.write('name: ' + name + '\n')
-        for value in name_to_comment[name]:
-            f.write('comment: ' + value + '\n\n')
-        f.write('\n\n\n')
-    f.close()
-
-
 def time_confidence(question, focus_var, answer_to_count_per_category, list_all_answers_per_category, category_names):
     category_counts = list(map(len, list_all_answers_per_category))
 
