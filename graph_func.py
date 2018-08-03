@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from constants import agreement, frequency, frequency_TA, frequency_class, comfort, certainty, color_options, \
-    long_colors
+from constants import agreement, frequency, frequency_typo, frequency_TA, frequency_TA_typo, frequency_class, \
+    frequency_class_typo, comfort, certainty, color_options, long_colors
 
 from list_constants import responsibilities, professor_encouragement, meetings_clubs, percentage, scholarships, \
     yes_no, involvement, appearance_comments, sexism_response, student_groups_standards, majors_minors, \
@@ -122,8 +122,11 @@ def sorted_answers(question_options):
     switcher = {
         'agreement': agreement,
         'frequency': frequency,
+        'frequency_typo': frequency_typo,
         'frequency_TA': frequency_TA,
+        'frequency_TA_typo': frequency_TA_typo,
         'frequency_class': frequency_class,
+        'frequency_class_typo': frequency_class_typo,
         'comfort': comfort,
         'certainty': certainty,
         'majors_minors': majors_minors,
@@ -141,7 +144,7 @@ def sorted_answers(question_options):
         'appearance_comments': appearance_comments,
         'sexism_response': sexism_response,
         'student_groups_standards': student_groups_standards,
-        'frequency_absent': frequency_absent
+        'frequency_absent': frequency_absent,
     }
     answer = switcher.get(question_options, 'error')
     if answer == 'error':
@@ -191,6 +194,8 @@ def calc_percent(options_to_answers, total_responses):
 
 
 def likert_percents(question, focus_var, answer_to_count_per_category, category_counts, category_names):
+    if question  == 'participation_TA_ask_questions':
+        print('participation_TA_ask_questions')
     logging.info("select one only graph")
     num_categories = len(answer_to_count_per_category)
     assert (num_categories == len(answer_to_count_per_category) and

@@ -53,6 +53,9 @@ def pick_graphing_style(people):
     for focus_var in possible_focus_var:
         counter = 1
         for question in BYU_question_shorthand:
+            if question == 'participation_TA_ask_questions':
+                print('participation_TA_ask_questions')
+
             answer_type = ques_ans[question]
 
             logging.info('\nfocus_var: ' + focus_var + " question number: " + str(counter))
