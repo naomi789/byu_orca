@@ -196,15 +196,18 @@ def likert_percents(question, focus_var, answer_to_count_per_category, category_
     assert (num_categories == len(answer_to_count_per_category) and
             num_categories == len(category_counts) and
             num_categories == len(category_names))
+
     plt.figure()
-    title = 'question: ' + question + '\n'
-    title += 'focus_var: ' + focus_var + '\n'
+    longhand = short_to_long[question]
+    real_title = '\n'.join(longhand[i:i + 60] for i in range(0, len(longhand), 60))
+
+    title = 'question: ' + real_title + '\n'
+    # title += 'focus_var: ' + focus_var + '\n'
     categories = list(zip(category_counts, category_names))
-    real_tutle = short_to_long[question]
 
     # TODO: can I get these questions on the legend instead of in the title hashtag readability
     for category in categories:
-        title += str(category[1]) + ' (' + str(category[0]) + ')\n'
+        title += str(category[1]) + ' (' + str(category[0]) + ') '
     plt.suptitle(title)
 
     ind = [x for x, _ in enumerate(answer_to_count_per_category)]
