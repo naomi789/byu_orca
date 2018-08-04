@@ -194,7 +194,7 @@ def calc_percent(options_to_answers, total_responses):
 
 
 def likert_percents(question, focus_var, answer_to_count_per_category, category_counts, category_names):
-    if question  == 'participation_TA_ask_questions':
+    if question == 'participation_TA_ask_questions':
         print('participation_TA_ask_questions')
     logging.info("select one only graph")
     num_categories = len(answer_to_count_per_category)
@@ -374,32 +374,36 @@ def get_file_location(question, focus_var, graph_type):
     return file_destination, x_values
 
 
-def pie_chart(question, focus_var, [option_a, option_b], count_option_a_responses, count_option_b_responses, a, b):
-    file_destination, x_values = get_file_location(question, focus_var, 'pie_chart')
+def pie_chart(question, choice_to_answer):
+    fig, axes = plt.subplots()
 
-    option_a_vals = option_a.values()
-    option_b_vals = option_b.values()
+    sum_answers = int(0)
+    for val in choice_to_answer:
+        sum_answers += int(choice_to_answer[val])
 
-    num_plots = len(x_values)
-    fig, axes = plt.subplots(nrows=1, ncols=2)  # figsize=(8, 4))
+    axes.set_title(question)
+    # for choice in choice_to_answer:
+    #     val = choice_to_answer[choice]
+    #     wedges, texts, autotexts = axes.pie(val, explode=None, labels=None, autopct='%1.1f%%', colors=long_colors)
 
-    axes[0].set_title(a + " " + str(count_option_a_responses))
-    axes[0].axis('equal')
-    wedges, texts, autotexts = axes[0].pie(option_a_vals, explode=None, labels=None, autopct='%1.1f%%',
-                                           colors=long_colors)  # colors=color_options,
+    print(type(choice_to_answer))
+    keys = choice_to_answer.keys()
+    values = choice_to_answer.values()
 
-    axes[1].set_title(b + " " + str(count_option_b_responses))
-    axes[1].axis('equal')
-    pie_2 = axes[1].pie(option_b_vals, explode=None, labels=None, autopct='%1.1f%%', colors=long_colors)
+    wedges, texts, autotexts = axes.pie(values, explode=None, labels=None, autopct='%1.1f%%', colors=long_colors)
 
-    plt.subplots_adjust(wspace=1)
+    #
+    # axes[1].set_title(b + " " + str(count_option_b_responses))
+    # axes[1].axis('equal')
+    # pie_2 = axes[1].pie(option_b_vals, explode=None, labels=None, autopct='%1.1f%%', colors=long_colors)
+    #
+    # plt.subplots_adjust(wspace=1)
+    #
+    # ques_to_question = dict(zip_longest(question_shorthand, question_string[:len(question_shorthand)]))
+    # longhand = ques_to_question[question]
+    # title = '\n'.join(longhand[i:i + 60] for i in range(0, len(longhand), 60))
 
-    ques_to_question = dict(zip_longest(question_shorthand, question_string[:len(question_shorthand)]))
-    longhand = ques_to_question[question]
-    title = '\n'.join(longhand[i:i + 60] for i in range(0, len(longhand), 60))
-    plt.suptitle(title)
+    # plt.legend(wedges, x_values, title="Legend", loc="lower center", bbox_to_anchor=(1, 0, 0.5, 1))  # lower right # best # center right
 
-    plt.legend(wedges, x_values, title="Legend", loc="lower center",
-               bbox_to_anchor=(1, 0, 0.5, 1))  # lower right # best # center right
+    plt.savefig('results_at_BYU/overall/' + question + '.pdf')
 
-    plt.savefig(file_destination)

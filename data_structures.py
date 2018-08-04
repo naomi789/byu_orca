@@ -20,7 +20,7 @@ middle_confidence_person = namedtuple('middle_confident_person', middle_confiden
 
 ques_ans = {'duration_seconds': 'int', 'Location_Latitude': 'double', 'LocationLongitude': 'double',
             'consent_current': 'string', 'consent_future': 'string', 'email': 'string', 'gender': 'string',
-            'gender_other': 'race', 'race': 'int', 'age': 'string', 'university_program': 'double',
+            'gender_other': 'string', 'race': 'race', 'age': 'int', 'university_program': 'string',
             'university_major': 'string', 'university_minor': 'string', 'university_courses_fall': 'courses',
             'university_graduation_year': 'string', 'university_gpa': 'string', 'university_gpa_TEXT': 'double',
             'received_internship_offer': 'yes_no', 'extracurriculars': 'extracurriculars',

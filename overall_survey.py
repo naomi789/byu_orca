@@ -6,9 +6,9 @@ from language_processing import graph_string, long_text
 from answer_type import mult_choice, graph_num, compare_confidence_GPA, time_confidence
 from graph_func import call_respective_graphing_functions, filter_and_graph, pie_chart
 from constants import BYU_question_shorthand, BYU_question_string
-from list_constants import likert_question_answer_types, list_question_answer_types, confidence_measurement, long_feedback
+from list_constants import likert_question_answer_types, list_question_answer_types, confidence_measurement, long_feedback, race
 from language_processing import associate_with_professors
-from data_structures import short_to_long
+from collections import defaultdict
 import os
 from data_structures import ques_ans
 import logging
@@ -59,7 +59,14 @@ def assorted_special_graphs(people):
         associate_with_professors(people, type_of_feedback)
 
     # pie chart of what non-CS majors there were
-    pie_chart('race')
+    choice_to_answer = {}
+    for person in people:
+        this_race = getattr(person, 'race')
+        if not choice_to_answer.keys().__contains__(this_race):
+            choice_to_answer[this_race] = 0
+        else:
+            choice_to_answer[this_race] += 1
+    pie_chart('race', choice_to_answer)
 
     # pie chart of races
 
@@ -125,10 +132,11 @@ people = parse_overall_data(data)
 #
 # print(short_to_long)
 
+# does other graphs
+assorted_special_graphs(people)
+
 # the one that actually does stuff
 pick_graphing_style(people)
 
-# does other graphs
-assorted_special_graphs(people)
 
 

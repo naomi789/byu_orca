@@ -76,7 +76,7 @@ student_groups_standards = ['Male students', 'Female students', 'Non-binary stud
                             'All students are held to an equal standard', '']
 
 race = ['White', 'Hispanic or Latino', 'Asian/Pacific Islander', 'Black or African American',
-        'Native American or American Indian', 'Other', 'Prefer not to say']
+        'Native American or American Indian', 'Other', 'Prefer not to say', '']
 
 degree_pursuing = ['Undergraduate', 'Masters', 'PhD', 'Not currently pursuing a degree']
 
