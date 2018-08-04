@@ -4,10 +4,11 @@ from itertools import zip_longest
 import matplotlib.pyplot as plt
 from language_processing import graph_string, long_text
 from answer_type import mult_choice, graph_num, compare_confidence_GPA, time_confidence
-from graph_func import call_respective_graphing_functions, filter_and_graph
+from graph_func import call_respective_graphing_functions, filter_and_graph, pie_chart
 from constants import BYU_question_shorthand, BYU_question_string
 from list_constants import likert_question_answer_types, list_question_answer_types, confidence_measurement, long_feedback
 from language_processing import associate_with_professors
+from data_structures import short_to_long
 import os
 from data_structures import ques_ans
 import logging
@@ -38,6 +39,19 @@ def parse_overall_data(data):
     return list(map(lambda line: Person(*line), data))
 
 
+def encouragement_or_barriers(question, focus_var, answer_to_count_per_category, list_all_answers_per_category, category_names):
+    print('question: ' + question)
+    print('focus var: ' + focus_var)
+    print('var, mean: ' + category_names[0] + ', mean: ' + category_names[1])
+
+    category_counts = list(map(len, list_all_answers_per_category))
+
+    sum_0 = category_counts[0]
+    sum_1 = category_counts[1]
+
+    for cat_0_keys, cat_1_keys, in zip(answer_to_count_per_category[0], answer_to_count_per_category[1]):
+        print(cat_0_keys + ', ' + str((answer_to_count_per_category[0][cat_0_keys]/sum_0)) + ', ' + str((answer_to_count_per_category[1][cat_1_keys]/sum_1)) + ',')
+
 def assorted_special_graphs(people):
     compare_confidence_GPA(people, 'gender')
 
@@ -45,7 +59,10 @@ def assorted_special_graphs(people):
         associate_with_professors(people, type_of_feedback)
 
     # pie chart of what non-CS majors there were
-    #
+    pie_chart('race')
+
+    # pie chart of races
+
 
 
 def pick_graphing_style(people):
@@ -82,6 +99,12 @@ def pick_graphing_style(people):
                 if question in confidence_measurement and focus_var == 'university_graduation_year':
                     time_confidence(question, focus_var, answer_to_count_per_category, list_all_answers_per_category,
                                     category_names)
+
+                # Women and Men Engineering Students: Anticipation of Family and Work Roles
+                if question in ['major_pros', 'major_cons']:
+                    encouragement_or_barriers(question, focus_var, answer_to_count_per_category, list_all_answers_per_category,
+                                    category_names)
+
 
 
 # if __name__ == "__main__":  # needed if I decide to include this file elsewhere

@@ -374,7 +374,7 @@ def get_file_location(question, focus_var, graph_type):
     return file_destination, x_values
 
 
-def pie_chart(question, focus_var, option_a, option_b, count_option_a_responses, count_option_b_responses, a, b):
+def pie_chart(question, focus_var, [option_a, option_b], count_option_a_responses, count_option_b_responses, a, b):
     file_destination, x_values = get_file_location(question, focus_var, 'pie_chart')
 
     option_a_vals = option_a.values()
