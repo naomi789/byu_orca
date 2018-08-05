@@ -58,18 +58,27 @@ def assorted_special_graphs(people):
     for type_of_feedback in ['describe_positive_experience', 'describe_negative_experience']:
         associate_with_professors(people, type_of_feedback)
 
+    # pie chart of races
+    var = 'race'
+    choice_to_answer = calculate_one_chart(people, var)
+    assert choice_to_answer
+    pie_chart(var, choice_to_answer)
+
     # pie chart of what non-CS majors there were
+    var = 'university_major'
+    choice_to_answer = calculate_one_chart(people, var)
+    assert choice_to_answer
+    pie_chart('university_major', choice_to_answer)
+
+
+def calculate_one_chart(people, attribute):
     choice_to_answer = {}
     for person in people:
-        this_race = getattr(person, 'race')
-        if not choice_to_answer.keys().__contains__(this_race):
-            choice_to_answer[this_race] = 0
+        this_var = getattr(person, attribute)
+        if not choice_to_answer.keys().__contains__(this_var):
+            choice_to_answer[this_var] = 0
         else:
-            choice_to_answer[this_race] += 1
-    pie_chart('race', choice_to_answer)
-
-    # pie chart of races
-
+            choice_to_answer[this_var] += 1
 
 
 def pick_graphing_style(people):

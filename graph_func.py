@@ -377,7 +377,9 @@ def get_file_location(question, focus_var, graph_type):
 def pie_chart(question, choice_to_answer):
     fig, axes = plt.subplots()
 
-    sum_answers = int(0)
+    plt.axis("equal")
+
+    sum_answers = 0
     for val in choice_to_answer:
         sum_answers += int(choice_to_answer[val])
 
@@ -392,18 +394,8 @@ def pie_chart(question, choice_to_answer):
 
     wedges, texts, autotexts = axes.pie(values, explode=None, labels=None, autopct='%1.1f%%', colors=long_colors)
 
-    #
-    # axes[1].set_title(b + " " + str(count_option_b_responses))
-    # axes[1].axis('equal')
-    # pie_2 = axes[1].pie(option_b_vals, explode=None, labels=None, autopct='%1.1f%%', colors=long_colors)
-    #
-    # plt.subplots_adjust(wspace=1)
-    #
-    # ques_to_question = dict(zip_longest(question_shorthand, question_string[:len(question_shorthand)]))
-    # longhand = ques_to_question[question]
-    # title = '\n'.join(longhand[i:i + 60] for i in range(0, len(longhand), 60))
-
-    # plt.legend(wedges, x_values, title="Legend", loc="lower center", bbox_to_anchor=(1, 0, 0.5, 1))  # lower right # best # center right
+    # handles, labels
+    plt.legend(wedges, keys, title="Legend", loc="lower center", bbox_to_anchor=(1, 0, 0.5, 1))
 
     plt.savefig('results_at_BYU/overall/' + question + '.pdf')
 
