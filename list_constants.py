@@ -99,8 +99,10 @@ miss_class_reasons = ['Physical or mental health issues (flu/cold/depression/anx
                       'I don\'t like the subject of the class',
                       'I don\'t like the professor/the way they teach/the environment or culture of the class']
 
-likert_question_answer_types = ['certainty', 'agreement', 'frequency', 'frequency_typo', 'frequency_absent', 'not_participate_reasons',
-                                'frequency_TA', 'frequency_TA_typo', 'frequency_class', 'frequency_class_typo', 'comfort', 'miss_class_reasons']
+likert_question_answer_types = ['certainty', 'agreement', 'frequency', 'frequency_typo', 'frequency_absent',
+                                'not_participate_reasons',
+                                'frequency_TA', 'frequency_TA_typo', 'frequency_class', 'frequency_class_typo',
+                                'comfort', 'miss_class_reasons']
 
 more_comfortable = ['Feeling like I am on a similar academic level to my peers', 'Feeling like I won’t be judged',
                     'Knowing my peers in the class', 'Not knowing my peers in the class/feeling anonymous',
@@ -130,11 +132,13 @@ list_question_answer_types = ['responsibilities', 'professor_encouragement', 'me
 
 professor_names = ['brent adams', 'cory barker', 'mark clement', 'jacob crandall', 'casey deccio', 'parris egbert',
                    'ryan farrell', 'kelly flanagan', 'christophe giraud-carrier', 'michael goodrich', 'seth holladay',
-                   'frank jones', 'michael jones', 'mike jones', 'tony martinez', 'eric mercer', 'bryan morse', 'dennis ng',
+                   'frank jones', 'michael jones', 'mike jones', 'tony martinez', 'eric mercer', 'bryan morse',
+                   'dennis ng',
                    'ken rodham', 'paul roper', 'kent seamons', 'kevin seppi', 'quinn snell', 'dan ventura',
                    'sean warnick', 'david wingate', 'scott woodfield', 'daniel zappala']
 
-staff_names = ['gordon billings', 'jennifer bonnett', 'lynette nelson', 'erin rowan', 'greg corlett', 'klark walker']
+staff_names = ['gordon billings', 'jennifer bonnett', 'lynette nelson', 'erin rowan', 'greg corlett', 'klark walker',
+               'angela jones', 'other angela']
 
 confidence_measurement = ['confidence_prepared_courses', 'confidence_graduate_gpa']
 
