@@ -378,16 +378,11 @@ def pie_chart(question, choice_to_answer):
     fig, axes = plt.subplots()
 
     plt.axis("equal")
-
     sum_answers = 0
     for val in choice_to_answer:
         sum_answers += int(choice_to_answer[val])
 
     axes.set_title(question)
-    # for choice in choice_to_answer:
-    #     val = choice_to_answer[choice]
-    #     wedges, texts, autotexts = axes.pie(val, explode=None, labels=None, autopct='%1.1f%%', colors=long_colors)
-
     print(type(choice_to_answer))
     keys = choice_to_answer.keys()
     values = choice_to_answer.values()
