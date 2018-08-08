@@ -33,7 +33,7 @@ def long_text(question, people):
 
 
 def associate_with_professors(people, pos_neg_feedback):
-    f = open('results_at_BYU/strings/' + pos_neg_feedback + '.txt', 'w', encoding='utf-8')
+    f = open('results_at_BYU/strings/file_name' + pos_neg_feedback + '.txt', 'w', encoding='utf-8')
 
     all_names = staff_names + professor_names + [first.split(' ', 1)[0] for first in staff_names] + [
         first.split(' ', 1)[0] for first in professor_names] + [last.split(' ', 1)[1] for last in staff_names] + [
@@ -52,6 +52,11 @@ def associate_with_professors(people, pos_neg_feedback):
             if ' ' + name + ' ' in comment:
                 no_new_lines = comment.replace('\n', ' ')
                 name_to_comment[name].append(no_new_lines.replace(name, name.upper()))
+
+    for name in name_to_comment.keys():
+        f.write('\nname: ' + name +' ' + pos_neg_feedback + ': ' + str(name_to_comment[name].__len__()))
+
+    f.write('\n')
 
     for name in name_to_comment.keys():
         f.write('name: ' + name + '\n')

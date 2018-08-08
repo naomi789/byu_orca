@@ -130,7 +130,7 @@ list_question_answer_types = ['responsibilities', 'professor_encouragement', 'me
 
 professor_names = ['brent adams', 'cory barker', 'mark clement', 'jacob crandall', 'casey deccio', 'parris egbert',
                    'ryan farrell', 'kelly flanagan', 'christophe giraud-carrier', 'michael goodrich', 'seth holladay',
-                   'frank jones', 'michael jones', 'tony martinez', 'eric mercer', 'bryan morse', 'dennis ng',
+                   'frank jones', 'michael jones', 'mike jones', 'tony martinez', 'eric mercer', 'bryan morse', 'dennis ng',
                    'ken rodham', 'paul roper', 'kent seamons', 'kevin seppi', 'quinn snell', 'dan ventura',
                    'sean warnick', 'david wingate', 'scott woodfield', 'daniel zappala']
 
