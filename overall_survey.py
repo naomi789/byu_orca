@@ -76,6 +76,22 @@ def assorted_special_graphs(people):
     assert choice_to_answer
     pie_chart(var, choice_to_answer)
 
+    # print out the stats of who responded v. who was invited to take the survey
+    response_rate(people)
+
+
+def response_rate(people):
+    female = 427
+    male = 2163
+    CS_major = 1125
+    CS_minor = 259
+    other_program = 1231
+    doctorate = 31
+    master = 79
+    post_bac = 8
+    undergraduate = 2473
+    pass
+
 
 def calculate_one_chart(people, attribute):
     choice_to_answer = {}
