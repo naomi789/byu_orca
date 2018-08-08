@@ -6,13 +6,14 @@ from language_processing import graph_string, long_text
 from answer_type import mult_choice, graph_num, compare_confidence_GPA, time_confidence
 from graph_func import call_respective_graphing_functions, filter_and_graph, pie_chart
 from constants import BYU_question_shorthand, BYU_question_string
-from list_constants import likert_question_answer_types, list_question_answer_types, confidence_measurement, long_feedback, race
+from list_constants import likert_question_answer_types, list_question_answer_types, confidence_measurement, \
+    long_feedback, race
 from language_processing import associate_with_professors
 from collections import defaultdict
 import os
 from data_structures import ques_ans
 import logging
-
+from list_constants import degree_pursuing
 
 plt.style.use('seaborn-deep')
 
@@ -39,7 +40,8 @@ def parse_overall_data(data):
     return list(map(lambda line: Person(*line), data))
 
 
-def encouragement_or_barriers(question, focus_var, answer_to_count_per_category, list_all_answers_per_category, category_names):
+def encouragement_or_barriers(question, focus_var, answer_to_count_per_category, list_all_answers_per_category,
+                              category_names):
     print('question: ' + question)
     print('focus var: ' + focus_var)
     print('var, mean: ' + category_names[0] + ', mean: ' + category_names[1])
@@ -50,7 +52,9 @@ def encouragement_or_barriers(question, focus_var, answer_to_count_per_category,
     sum_1 = category_counts[1]
 
     for cat_0_keys, cat_1_keys, in zip(answer_to_count_per_category[0], answer_to_count_per_category[1]):
-        print(cat_0_keys + ', ' + str((answer_to_count_per_category[0][cat_0_keys]/sum_0)) + ', ' + str((answer_to_count_per_category[1][cat_1_keys]/sum_1)) + ',')
+        print(cat_0_keys + ', ' + str((answer_to_count_per_category[0][cat_0_keys] / sum_0)) + ', ' + str(
+            (answer_to_count_per_category[1][cat_1_keys] / sum_1)) + ',')
+
 
 def assorted_special_graphs(people):
     compare_confidence_GPA(people, 'gender')
@@ -90,7 +94,79 @@ def response_rate(people):
     master = 79
     post_bac = 8
     undergraduate = 2473
-    pass
+
+    responses_female, responses_male, responses_other_gender = gender_responses(people)
+    responses_CS_major, responses_CS_minor, responses_other_program = program_responses(people)
+    responses_doctorate, responses_master, responses_other, responses_undergrad = degree_responses(people)
+
+    f = open('results_at_BYU/overall/response_rate.txt', 'w')
+    total_invited = female + male
+    total_participated = responses_male + responses_female + responses_other_gender
+    f.write(str(total_invited) + ' students were invited to take this survey, ' + str(
+        total_participated) + ' took it (' + str((total_participated/total_invited)*100) + '%\n)')
+    f.write('Breaking this response rate down into further categories: \n')
+    f.write('Female students: ' + str(100*responses_female / female) + '\n')
+    f.write('Male students: ' + str(100*responses_male / male) + '\n')
+    f.write('Other/Prefer not to say: [none were registered with non-binary/other genders]\n')
+    f.write('CS majors: ' + str(100*responses_CS_major / CS_major) + '\n')
+    f.write('CS minors: ' + str(100*responses_CS_minor / CS_minor) + '\n')
+    f.write('Non-CS-major, non-CS-minor students: ' + str(100*responses_other_program / other_program) + '\n')
+    f.write('Undergraduates: ' + str(100*responses_undergrad/undergraduate) + '\n')
+    f.write('Masters: ' + str(100*responses_master / master) + '\n')
+    f.write('PhD: ' + str(100*responses_doctorate / doctorate) + '\n')
+    f.close()
+
+
+def degree_responses(people):
+    responses_doctorate = 0
+    responses_master = 0
+    responses_other = 0
+    responses_undergrad = 0
+    # degree_pursuing = ['Undergraduate', 'Masters', 'PhD', 'Not currently pursuing a degree']
+
+    for person in people:
+        university_program = getattr(person, 'university_program')
+        if university_program == 'Undergraduate':
+            responses_undergrad += 1
+        elif university_program == 'Masters':
+            responses_master += 1
+        elif university_program == 'PhD':
+            responses_doctorate += 1
+        else:
+            responses_other += 1
+
+    return responses_doctorate, responses_master, responses_other, responses_undergrad
+
+
+def gender_responses(people):
+    responses_female = 0
+    responses_male = 0
+    responses_other_gender = 0
+    for person in people:
+        this_person = getattr(person, 'gender')
+        if this_person == 'Female':
+            responses_female += 1
+        elif this_person == 'Male':
+            responses_male += 1
+        else:
+            responses_other_gender += 1
+    return responses_female, responses_male, responses_other_gender
+
+
+def program_responses(people):
+    responses_CS_major = 0
+    responses_CS_minor = 0
+    responses_other_program = 0
+    for person in people:
+        major = getattr(person, 'university_major')
+        minor = getattr(person, 'university_minor')
+        if major == 'Computer Science':
+            responses_CS_major += 1
+        elif minor == 'Computer Science':
+            responses_CS_minor += 1
+        else:
+            responses_other_program += 1
+    return responses_CS_major, responses_CS_minor, responses_other_program
 
 
 def calculate_one_chart(people, attribute):
@@ -139,14 +215,13 @@ def pick_graphing_style(people):
 
                 # Women and Men Engineering Students: Anticipation of Family and Work Roles
                 if question in ['major_pros', 'major_cons']:
-                    encouragement_or_barriers(question, focus_var, answer_to_count_per_category, list_all_answers_per_category,
-                                    category_names)
-
+                    encouragement_or_barriers(question, focus_var, answer_to_count_per_category,
+                                              list_all_answers_per_category,
+                                              category_names)
 
 
 # if __name__ == "__main__":  # needed if I decide to include this file elsewhere
 logging.basicConfig(level=logging.INFO)  # 'DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICIAL'
-
 
 data = run_overall('raw_overall_survey/overall_data_prepped_BYU.csv')  # ./fake_data/ORCA_overall_CS_edited.csv
 # ques_to_question = ques_to_question() # not using yet, but would be good to add to graphs, eventually
@@ -167,6 +242,3 @@ assorted_special_graphs(people)
 
 # the one that actually does stuff
 pick_graphing_style(people)
-
-
-
