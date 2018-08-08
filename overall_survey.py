@@ -68,7 +68,13 @@ def assorted_special_graphs(people):
     var = 'university_major'
     choice_to_answer = calculate_one_chart(people, var)
     assert choice_to_answer
-    pie_chart('university_major', choice_to_answer)
+    pie_chart(var, choice_to_answer)
+
+    # pie chart of what genders there were
+    var = 'gender'
+    choice_to_answer = calculate_one_chart(people, var)
+    assert choice_to_answer
+    pie_chart(var, choice_to_answer)
 
 
 def calculate_one_chart(people, attribute):
