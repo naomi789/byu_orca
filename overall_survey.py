@@ -79,6 +79,7 @@ def calculate_one_chart(people, attribute):
             choice_to_answer[this_var] = 0
         else:
             choice_to_answer[this_var] += 1
+    return choice_to_answer
 
 
 def pick_graphing_style(people):
