@@ -390,7 +390,7 @@ def pie_chart(question, choice_to_answer):
     wedges, texts, autotexts = axes.pie(values, explode=None, labels=None, autopct='%1.1f%%', colors=long_colors)
 
     # handles, labels
-    plt.legend(wedges, keys, title="Legend", loc="lower center", bbox_to_anchor=(1, 0, 0.5, 1))
+    plt.legend(wedges, keys, title="Legend") # loc="lower center", bbox_to_anchor=(1, 0, 0.5, 1)
 
     plt.savefig('results_at_BYU/overall/' + question + '.pdf')
 
