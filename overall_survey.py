@@ -85,6 +85,7 @@ def assorted_special_graphs(people):
 
 
 def response_rate(people):
+    # these are magic numbers given to me by BYU
     female = 427
     male = 2163
     CS_major = 1125
@@ -149,7 +150,7 @@ def gender_responses(people):
         elif this_person == 'Male':
             responses_male += 1
         else:
-            responses_other_gender += 1
+            responses_other_gender += 1 
     return responses_female, responses_male, responses_other_gender
 
 
