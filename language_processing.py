@@ -4,7 +4,7 @@ import string
 from nltk.corpus import stopwords
 from operator import itemgetter
 from collections import defaultdict
-from list_constants import professor_names, staff_names
+from data_structures import professor_names, staff_names
 
 def graph_string(question, people):
     logging.info("graph string")

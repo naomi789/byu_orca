@@ -3,17 +3,14 @@ import csv
 from itertools import zip_longest
 import matplotlib.pyplot as plt
 from language_processing import graph_string, long_text, find_common_words
-from answer_type import mult_choice, graph_num, compare_confidence_GPA, time_confidence
+from answer_type import mult_choice, graph_num, compare_confidence_GPA
 from graph_func import call_respective_graphing_functions, filter_and_graph, pie_chart
-from constants import BYU_question_shorthand, BYU_question_string
-from list_constants import likert_question_answer_types, list_question_answer_types, confidence_measurement, \
+from data_structures import BYU_question_shorthand, BYU_question_string, likert_question_answer_types, list_question_answer_types, confidence_measurement, \
     long_feedback, race
 from language_processing import associate_with_professors
-from collections import defaultdict
 import os
 from data_structures import ques_ans
 import logging
-from list_constants import degree_pursuing
 
 plt.style.use('seaborn-deep')
 
@@ -241,9 +238,10 @@ def pick_graphing_style(people):
                                                    answer_to_count_per_category, category_names)
 
                 if question in confidence_measurement and focus_var == 'university_graduation_year':
-                    time_confidence(question, focus_var, answer_to_count_per_category, list_all_answers_per_category,
-                                    category_names)
-
+                    # time_confidence(question, focus_var, answer_to_count_per_category, list_all_answers_per_category,
+                    #                 category_names)
+                    pass
+                    # TODO CHECK AND SEE HOW BAD THAT WAS
                 # Women and Men Engineering Students: Anticipation of Family and Work Roles
                 if question in ['major_pros', 'major_cons']:
                     encouragement_or_barriers(question, focus_var, answer_to_count_per_category,
@@ -257,16 +255,13 @@ logging.basicConfig(level=logging.INFO)  # 'DEBUG', 'INFO', 'WARNING', 'ERROR', 
 data = run_overall('raw_overall_survey/overall_data_prepped_BYU.csv')  # ./fake_data/ORCA_overall_CS_edited.csv
 # ques_to_question = ques_to_question() # not using yet, but would be good to add to graphs, eventually
 
-data = data[2:]  # deletes the question text and shorthand from the dataset
-
-people = parse_overall_data(data)
+people = parse_overall_data(data[2:])  # deletes the question text and shorthand from the dataset
 
 # will not be needed again unless the questions change for UVA version
 # short_to_long = {}
 # for short, long in zip(BYU_question_shorthand, BYU_question_string):
 #     short_to_long[short] = long
-#
-# print(short_to_long)
+
 
 # does other graphs
 assorted_special_graphs(people)

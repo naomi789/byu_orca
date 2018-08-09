@@ -1,53 +1,46 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from constants import agreement, frequency, frequency_typo, frequency_TA, frequency_TA_typo, frequency_class, \
-    frequency_class_typo, comfort, certainty, color_options, long_colors
-
-from list_constants import responsibilities, professor_encouragement, meetings_clubs, percentage, scholarships, \
-    yes_no, involvement, appearance_comments, sexism_response, student_groups_standards, majors_minors, \
-    graduation_year, extracurriculars, encouragement, barriers, likert_question_answer_types, \
-    list_question_answer_types, frequency_absent
-from data_structures import ques_ans, short_to_long
+from data_structures import *
 from itertools import zip_longest
 import scipy.stats
 from scipy.stats import mannwhitneyu
-
 import logging
+from collections import Counter
+
 
 
 
 def filter_and_graph(question, options, people, focus_var, category_names):
-    if question == 'participation_questions_ask_frequency':
+    if question == 'confidence_graduate_gpa':
         temp = 23
     num_categories = len(category_names)
     categorized_responses = np.empty([num_categories, 0]).tolist()
     answer_type = ques_ans[question]
+
+    def skip_response(value, answer_type):
+        # if string is not empty AND it is likert
+        return not value and answer_type in likert_question_answer_types
+
     for person in people:
         focus_var_person = getattr(person, focus_var)
-        if focus_var_person == "":
+        if not focus_var_person:
             continue
+        value = getattr(person, question)
+
         if focus_var == 'university_major':
             if focus_var_person == 'Computer Science':
-                value = getattr(person, question)
-
                 # this means likert responses can't be 'none of the above'
-                if value is not '' or answer_type not in likert_question_answer_types:
+                if not skip_response(value, answer_type):
                     categorized_responses[0].append(value)
             else:
-                value = getattr(person, question)
-                if value is not '':
+                if not skip_response(value, answer_type):
                     categorized_responses[1].append(value)
 
         else:  # elif focus_var == "university_graduation_year":
             for category in zip(category_names, categorized_responses):
                 if focus_var_person == category[0]:
-                    value = getattr(person, question)
-
-                    # if answer_type in likert_question_answer_types:
-                    #     pass
-
                     # this means likert responses can't be 'none of the above'
-                    if value is not '' or answer_type not in likert_question_answer_types:
+                    if not skip_response(value, answer_type):
                         category[1].append(value)
 
     graphable_options = values(categorized_responses, options)
@@ -104,49 +97,17 @@ def deconstruct_answers_filter(unsorted_one_gender_answers, answer_count_diction
 
 
 def values(option_list, options):
-    # todo the problem is here # CURRENT BUG
-    # I'm getting an array of chars instead of a list of ~5 strings
-    temp = sorted_answers(options)
-    dict_of_answers_per_focus_var = [dict.fromkeys(sorted_answers(options), 0) for _ in option_list]
-    bar = zip(option_list, dict_of_answers_per_focus_var)
-
-    if options in likert_question_answer_types:
-        ret = map(lambda x: filter_for_a_and_b(x[0], x[1]), bar)
-    elif options in list_question_answer_types:
-        ret = map(lambda x: deconstruct_answers_filter(x[0], x[1]), bar)
-
-    return list(ret)
+    count_per_value = list()
+    possible_answers = sorted_answers(options)
+    for option in option_list:
+        answer_counts = Counter({x: 0 for x in possible_answers})
+        answer_counts.update(option)
+        count_per_value.append(answer_counts)
+    return count_per_value
 
 
 def sorted_answers(question_options):
-    switcher = {
-        'agreement': agreement,
-        'frequency': frequency,
-        'frequency_typo': frequency_typo,
-        'frequency_TA': frequency_TA,
-        'frequency_TA_typo': frequency_TA_typo,
-        'frequency_class': frequency_class,
-        'frequency_class_typo': frequency_class_typo,
-        'comfort': comfort,
-        'certainty': certainty,
-        'majors_minors': majors_minors,
-        'graduation_year': graduation_year,
-        'extracurriculars': extracurriculars,
-        'encouragement': encouragement,
-        'barriers': barriers,
-        'responsibilities': responsibilities,
-        'professor_encouragement': professor_encouragement,
-        'meetings_clubs': meetings_clubs,
-        'percentage': percentage,
-        'scholarships': scholarships,
-        'yes_no': yes_no,
-        'involvement': involvement,
-        'appearance_comments': appearance_comments,
-        'sexism_response': sexism_response,
-        'student_groups_standards': student_groups_standards,
-        'frequency_absent': frequency_absent,
-    }
-    answer = switcher.get(question_options, 'error')
+    answer = answer_dict_switcher.get(question_options, 'error')
     if answer == 'error':
         raise Exception('answer type is unknown in sorted_answers()\'s switcher')
     return answer
@@ -194,8 +155,6 @@ def calc_percent(options_to_answers, total_responses):
 
 
 def likert_percents(question, focus_var, answer_to_count_per_category, category_counts, category_names):
-    if question == 'participation_TA_ask_questions':
-        print('participation_TA_ask_questions')
     logging.info("select one only graph")
     num_categories = len(answer_to_count_per_category)
     assert (num_categories == len(answer_to_count_per_category) and
@@ -206,8 +165,7 @@ def likert_percents(question, focus_var, answer_to_count_per_category, category_
     longhand = short_to_long[question]
     real_title = '\n'.join(longhand[i:i + 60] for i in range(0, len(longhand), 60))
 
-    title = 'question: ' + real_title + '\n'
-    # title += 'focus_var: ' + focus_var + '\n'
+    title = f'question: {real_title}\n'
     categories = list(zip(category_counts, category_names))
 
     # TODO: can I get these questions on the legend instead of in the title hashtag readability
@@ -331,11 +289,10 @@ def percent_per_factor(question, focus_var, answer_to_count_per_category, catego
                 answer = answer[:40]
             answers_with_new_lines.append(answer)
 
-
         axes.barh(index + bar_width * counter, category_performance, bar_width, tick_label=answers_with_new_lines,
                   label=category_name)  # color=color_a,
         axes.set_yticks(index)
-        axes.set_yticklabels(answers_with_new_lines) # possible_answers
+        axes.set_yticklabels(answers_with_new_lines)  # possible_answers
         axes.set_xlim(0, 1)
 
         counter += 1
@@ -390,7 +347,6 @@ def pie_chart(question, choice_to_answer):
     wedges, texts, autotexts = axes.pie(values, explode=None, labels=None, autopct='%1.1f%%', colors=long_colors)
 
     # handles, labels
-    plt.legend(wedges, keys, title="Legend") # loc="lower center", bbox_to_anchor=(1, 0, 0.5, 1)
+    plt.legend(wedges, keys, title="Legend")  # loc="lower center", bbox_to_anchor=(1, 0, 0.5, 1)
 
     plt.savefig('results_at_BYU/overall/' + question + '.pdf')
-

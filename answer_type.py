@@ -2,10 +2,8 @@ from collections import defaultdict
 from scipy.stats import mannwhitneyu
 import numpy as np
 import matplotlib.pyplot as plt
-from data_structures import ques_ans
-from constants import gender_colors
+from data_structures import ques_ans, gender_colors, staff_names, professor_names
 from graph_func import make_box_and_whisker, convert_into_numbers
-from list_constants import staff_names, professor_names
 import logging
 
 
@@ -171,39 +169,17 @@ def compare_confidence_GPA(people, focus_var):
         make_box_and_whisker(category + ' percentile', y, focus_var, categories)
 
 
-def time_confidence(question, focus_var, answer_to_count_per_category, list_all_answers_per_category, category_names):
-    category_counts = list(map(len, list_all_answers_per_category))
-
-    fig, ax = plt.subplots(figsize=(8.5, 11))
-    ax.set_title("Default")
-
-    for one_name, one_category_and_their_answers, count in zip(category_names, answer_to_count_per_category, category_counts):
-        # note that max ignores '' if that was a thing
-        responses_as_numbers, min, max = convert_into_numbers(one_category_and_their_answers)
-        y_axis = sum(responses_as_numbers) / len(responses_as_numbers)
-        x_axis = one_name
-        ax.plot(x_axis, y_axis, 'o-')
-
-        # # inside for loop
-        # with cbook.get_sample_data('goog.npz') as datafile:
-        #     r = np.load(datafile)['price_data'].view(np.recarray)
-        # r = r[-30:]  # get the last 30 days
-        #
-        # x_axis = r.date.astype('O')
-        # y_axis = r.adj_close
-        # ax.plot(x_axis, y_axis, 'o-')
-        #
-        # # for loop ends
-
-
-
-    # fig.autofmt_xdate()
-    # next we'll write a custom formatter
-    # N = len(r)
-    # ind = np.arange(N)  # the evenly spaced plot indices
-
-    plt.savefig('results_at_BYU/' + focus_var + '/bar_graph_' + question + '.pdf')
-
-
-
-
+# def time_confidence(question, focus_var, answer_to_count_per_category, list_all_answers_per_category, category_names):
+#     category_counts = list(map(len, list_all_answers_per_category))
+#
+#     fig, ax = plt.subplots(figsize=(8.5, 11))
+#     ax.set_title("Default")
+#
+#     for one_name, one_category_and_their_answers, count in zip(category_names, answer_to_count_per_category, category_counts):
+#         # note that max ignores '' if that was a thing
+#         responses_as_numbers, min, max = convert_into_numbers(one_category_and_their_answers)
+#         y_axis = sum(responses_as_numbers) / len(responses_as_numbers)
+#         x_axis = one_name
+#         ax.plot(x_axis, y_axis, 'o-')
+#
+#     plt.savefig('results_at_BYU/' + focus_var + '/bar_graph_' + question + '.pdf')
