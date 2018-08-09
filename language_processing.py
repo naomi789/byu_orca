@@ -1,4 +1,8 @@
 import logging
+import nltk
+import string
+from nltk.corpus import stopwords
+from operator import itemgetter
 from collections import defaultdict
 from list_constants import professor_names, staff_names
 
@@ -65,3 +69,42 @@ def associate_with_professors(people, pos_neg_feedback):
         f.write('\n\n\n')
     f.close()
 
+
+def find_common_words(people):
+    words_to_counts = {}
+    for var in ['describe_positive_experience', 'describe_negative_experience', 'suggestion_improve_institution']:
+        for person in people:
+            answer = getattr(person, var)
+            words_to_counts = update_words_counts(words_to_counts, answer)
+        print_common_words(words_to_counts, var)
+        words_to_counts = {}
+
+
+def print_common_words(words_to_counts, pos_neg_sug):
+    f = open('results_at_BYU/overall/' + pos_neg_sug + '_common_words.txt', 'w')
+    for key, value in sorted(words_to_counts.items(), key=itemgetter(1), reverse=True):
+        if value >= 5:
+            f.write(key + ': ' + str(value) + '\n')
+        else:
+            f.close()
+            return
+    f.close()
+
+
+def update_words_counts(words_to_counts, response):
+    nltk.download('stopwords')
+    set(stopwords.words('english'))
+    stop_words = set(stopwords.words('english'))
+
+    translator = str.maketrans('', '', string.punctuation)
+
+    paragraph = response.split()
+    filtered_paragraph = [w.lower().translate(translator) for w in paragraph if w.lower().translate(translator) not in stop_words]  #
+
+    for word in filtered_paragraph:
+        if words_to_counts.__contains__(word):
+            words_to_counts[word] += 1
+        else:
+            words_to_counts[word] = 1
+
+    return words_to_counts

@@ -2,7 +2,7 @@ from collections import namedtuple
 import csv
 from itertools import zip_longest
 import matplotlib.pyplot as plt
-from language_processing import graph_string, long_text
+from language_processing import graph_string, long_text, find_common_words
 from answer_type import mult_choice, graph_num, compare_confidence_GPA, time_confidence
 from graph_func import call_respective_graphing_functions, filter_and_graph, pie_chart
 from constants import BYU_question_shorthand, BYU_question_string
@@ -83,6 +83,9 @@ def assorted_special_graphs(people):
     # print out the stats of who responded v. who was invited to take the survey
     response_rate(people)
 
+    # see how common different words are in free response
+    find_common_words(people)
+
 
 def response_rate(people):
     # these are magic numbers given to me by BYU
@@ -104,8 +107,8 @@ def response_rate(people):
     total_invited = female + male
     total_participated = responses_male + responses_female + responses_other_gender
     f.write(str(total_invited) + ' students were invited to take this survey, ' + str(
-        total_participated) + ' took it (' + str((total_participated/total_invited)*100) + '%\n)')
-    f.write('Breaking this response rate down into further categories: \n')
+        total_participated) + ' took it (' + str((total_participated/total_invited)*100) + '%)\n')
+    f.write('responses//those invited to take it (response rates for particular categories): \n')
     f.write('Female students: ' + str(100*responses_female / female) + '\n')
     f.write('Male students: ' + str(100*responses_male / male) + '\n')
     f.write('Other/Prefer not to say: [none were registered with non-binary/other genders]\n')
