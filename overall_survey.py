@@ -234,6 +234,8 @@ def pick_graphing_style(people):
                 list_all_answers_per_category, answer_to_count_per_category = filter_and_graph(question, answer_type,
                                                                                                people, focus_var,
                                                                                                category_names)
+                if question == 'major_cons':
+                    temp = 42
                 call_respective_graphing_functions(question, focus_var, answer_type, list_all_answers_per_category,
                                                    answer_to_count_per_category, category_names)
 

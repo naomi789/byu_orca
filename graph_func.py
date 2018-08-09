@@ -11,7 +11,7 @@ from collections import Counter
 
 
 def filter_and_graph(question, options, people, focus_var, category_names):
-    if question == 'confidence_graduate_gpa':
+    if question == 'major_cons':
         temp = 23
     num_categories = len(category_names)
     categorized_responses = np.empty([num_categories, 0]).tolist()
@@ -25,23 +25,23 @@ def filter_and_graph(question, options, people, focus_var, category_names):
         focus_var_person = getattr(person, focus_var)
         if not focus_var_person:
             continue
-        value = getattr(person, question)
+        value = [val.strip() for val in getattr(person, question).split(',')]
 
         if focus_var == 'university_major':
             if focus_var_person == 'Computer Science':
                 # this means likert responses can't be 'none of the above'
                 if not skip_response(value, answer_type):
-                    categorized_responses[0].append(value)
+                    categorized_responses[0].extend(value)
             else:
                 if not skip_response(value, answer_type):
-                    categorized_responses[1].append(value)
+                    categorized_responses[1].extend(value)
 
         else:  # elif focus_var == "university_graduation_year":
             for category in zip(category_names, categorized_responses):
                 if focus_var_person == category[0]:
                     # this means likert responses can't be 'none of the above'
                     if not skip_response(value, answer_type):
-                        category[1].append(value)
+                        category[1].extend(value)
 
     graphable_options = values(categorized_responses, options)
 
