@@ -102,6 +102,7 @@ def response_rate(people):
     responses_female, responses_male, responses_other_gender = gender_responses(people)
     responses_CS_major, responses_CS_minor, responses_other_program = program_responses(people)
     responses_doctorate, responses_master, responses_other, responses_undergrad = degree_responses(people)
+    responses_freshmen, responses_sophomores, responses_juniors, responses_seniors = gradu_date_responses(people)
 
     f = open('results_at_BYU/overall/response_rate.txt', 'w')
     total_invited = female + male
@@ -109,16 +110,42 @@ def response_rate(people):
     f.write(str(total_invited) + ' students were invited to take this survey, ' + str(
         total_participated) + ' took it (' + str((total_participated/total_invited)*100) + '%)\n')
     f.write('responses//those invited to take it (response rates for particular categories): \n')
-    f.write('Female students: ' + str(100*responses_female / female) + '\n')
-    f.write('Male students: ' + str(100*responses_male / male) + '\n')
+    f.write('Female students: ' + str(100*responses_female / female) + '%\n')
+    f.write('Male students: ' + str(100*responses_male / male) + '%\n')
     f.write('Other/Prefer not to say: [none were registered with non-binary/other genders]\n')
-    f.write('CS majors: ' + str(100*responses_CS_major / CS_major) + '\n')
-    f.write('CS minors: ' + str(100*responses_CS_minor / CS_minor) + '\n')
-    f.write('Non-CS-major, non-CS-minor students: ' + str(100*responses_other_program / other_program) + '\n')
-    f.write('Undergraduates: ' + str(100*responses_undergrad/undergraduate) + '\n')
-    f.write('Masters: ' + str(100*responses_master / master) + '\n')
-    f.write('PhD: ' + str(100*responses_doctorate / doctorate) + '\n')
+    f.write('CS majors: ' + str(100*responses_CS_major / CS_major) + '%\n')
+    f.write('CS minors: ' + str(100*responses_CS_minor / CS_minor) + '%\n')
+    f.write('Non-CS-major, non-CS-minor students: ' + str(100*responses_other_program / other_program) + '%\n')
+    f.write('Undergraduates: ' + str(100*responses_undergrad/undergraduate) + '%\n')
+    f.write('Masters: ' + str(100*responses_master / master) + '%\n')
+    f.write('PhD: ' + str(100*responses_doctorate / doctorate) + '%\n')
+    f.write('Freshmen: ' + str(responses_freshmen) + 'responses\n')
+    f.write('Sophomores: ' + str(responses_sophomores) + 'responses\n')
+    f.write('Juniors: ' + str(responses_juniors) + 'responses\n')
+    f.write('Seniors: ' + str(responses_seniors) + 'responses\n')
     f.close()
+
+def gradu_date_responses(people):
+    responses_freshmen = 0
+    responses_sophomores = 0
+    responses_juniors = 0
+    responses_seniors = 0
+    for person in people:
+        gradu_year = getattr(person, 'university_graduation_year')
+        if gradu_year == '2021 or later':
+            responses_freshmen += 1
+        elif gradu_year == '2020':
+            responses_sophomores += 1
+        elif gradu_year == '2019':
+            responses_juniors += 1
+        elif gradu_year == '2018':
+            responses_seniors += 1
+        elif gradu_year == '':
+            pass
+        else:
+            assert(False)
+
+    return responses_freshmen, responses_sophomores, responses_juniors, responses_seniors
 
 
 def degree_responses(people):
