@@ -92,7 +92,7 @@ def print_common_words(words_to_counts, pos_neg_sug):
 
 
 def update_words_counts(words_to_counts, response):
-    nltk.download('stopwords')
+    # nltk.download('stopwords')
     set(stopwords.words('english'))
     stop_words = set(stopwords.words('english'))
 

@@ -265,13 +265,14 @@ less_comfortable = ['I DO feel comfortable asking questions in my CS course(s)',
 list_question_answer_types = ['responsibilities', 'professor_encouragement', 'meetings_clubs', 'percentage',
                               'scholarships', 'yes_no', 'involvement', 'appearance_comments', 'sexism_response',
                               'student_groups_standards', 'majors_minors', 'graduation_year', 'extracurriculars',
-                              'encouragement', 'barriers', 'more_comfortable', 'less_comfortable', '']
+                              'encouragement', 'barriers', 'more_comfortable', 'less_comfortable', 'increase_comfort',
+                              'decrease_comfort', 'miss_class', 'participate_decrease', '']
+# from above, TODO, not sure if 'miss_class', 'participate_decrease' should really be in list...
 
 professor_names = ['brent adams', 'cory barker', 'mark clement', 'jacob crandall', 'casey deccio', 'parris egbert',
                    'ryan farrell', 'kelly flanagan', 'christophe giraud-carrier', 'michael goodrich', 'seth holladay',
                    'frank jones', 'michael jones', 'mike jones', 'tony martinez', 'eric mercer', 'bryan morse',
-                   'dennis ng',
-                   'ken rodham', 'paul roper', 'kent seamons', 'kevin seppi', 'quinn snell', 'dan ventura',
+                   'dennis ng', 'ken rodham', 'paul roper', 'kent seamons', 'kevin seppi', 'quinn snell', 'dan ventura',
                    'sean warnick', 'david wingate', 'scott woodfield', 'daniel zappala']
 
 staff_names = ['gordon billings', 'jennifer bonnett', 'lynette nelson', 'erin rowan', 'greg corlett', 'klark walker',
@@ -546,6 +547,35 @@ consent_current = ['Yes I am over 18 and agree to participate in this study.', '
 
 consent_future = ['Yes - please enter your email address here', 'No']
 
+miss_class = ['Physical or mental health issues (flu/cold/depression/anxiety/etc)', 'Work commitments',
+              'Family commitments', 'Other commitments (club events/religious activities/etc)',
+              'To study or do homework for that CS class', 'To study or do homework for other courses',
+              'Class is too hard/confusing', 'Class is too easy/boring',
+              'On accident (I overslept, lost track of time, was running late, etc)',
+              'Time of day/day of week (I hate Monday 8am classes, etc)', 'I don\'t like the subject of the class',
+              'I don\'t like the professor/the way they teach/the environment or culture of the class']
+
+increase_comfort = ['Feeling like I am on a similar academic level to my peers', 'Feeling like I won’t be judged',
+                    'Knowing my peers in the class', 'Not knowing my peers in the class/feeling anonymous',
+                    'Peers asking more questions', 'Having a good grade in the class',
+                    'Feeling like the professor wants students to ask questions',
+                    'Knowing the professor', 'Larger class size/more students', 'Smaller class size/fewer students']
+
+decrease_comfort = ['I DO feel comfortable asking questions in my CS course(s)', 'Larger class size/more students',
+                    'Smaller class size/fewer students', 'Knowing my peers in the class',
+                    'Not knowing my peers in the class/feeling anonymous',
+                    'I’m worried the professor won’t answer my question (at all/clearly/succinctly/correctly/etc)',
+                    'I don’t think the professor wants me to ask questions', 'I’m worried it’s a dumb question',
+                    'I’m worried someone else already asked the question', 'I think I ask too many questions',
+                    'If other students don’t ask questions', 'I feel like I can figure out the answer own my own',
+                    'I don’t want to take time out of class']
+
+participate_decrease = ['I already participate enough/too much', 'The CS class is too large/has too many students',
+                        'The CS class is too small/has too few students', 'I don’t know my peers in the class',
+                        'I do know my peers in the class', 'I don’t have questions to ask',
+                        'I am not prepared for class/don’t have anything to add', 'I am not called on',
+                        'I am worried my answer is wrong/comment is irrelevant/etc']
+
 do_not_graph = [consent_current, consent_future]
 
 answer_dict_switcher = {
@@ -574,4 +604,8 @@ answer_dict_switcher = {
     'sexism_response': sexism_response,
     'student_groups_standards': student_groups_standards,
     'frequency_absent': frequency_absent,
+    'miss_class': miss_class,
+    'increase_comfort': increase_comfort,
+    'decrease_comfort': decrease_comfort,
+    'participate_decrease': participate_decrease,
 }
