@@ -116,10 +116,10 @@ def response_rate(people):
     f.write('Undergraduates: ' + str(100*responses_undergrad/undergraduate) + '%\n')
     f.write('Masters: ' + str(100*responses_master / master) + '%\n')
     f.write('PhD: ' + str(100*responses_doctorate / doctorate) + '%\n')
-    f.write('Freshmen: ' + str(responses_freshmen) + 'responses\n')
-    f.write('Sophomores: ' + str(responses_sophomores) + 'responses\n')
-    f.write('Juniors: ' + str(responses_juniors) + 'responses\n')
-    f.write('Seniors: ' + str(responses_seniors) + 'responses\n')
+    f.write('Freshmen: ' + str(responses_freshmen) + ' responses\n')
+    f.write('Sophomores: ' + str(responses_sophomores) + ' responses\n')
+    f.write('Juniors: ' + str(responses_juniors) + ' responses\n')
+    f.write('Seniors: ' + str(responses_seniors) + ' responses\n')
     f.close()
 
 def gradu_date_responses(people):
@@ -210,7 +210,6 @@ def calculate_one_chart(people, attribute):
 
 def pick_graphing_style(people):
     possible_focus_var = ['university_major', 'university_graduation_year', 'gender', 'university_program']
-    # TODO: add functionality for: 'major_and_gender', 'university_graduation_year_and_gender']  # maybe GPA, too?
     for focus_var in possible_focus_var:
         counter = 1
         for question in BYU_question_shorthand:
@@ -241,7 +240,7 @@ def pick_graphing_style(people):
                     # time_confidence(question, focus_var, answer_to_count_per_category, list_all_answers_per_category,
                     #                 category_names)
                     pass
-                    # TODO CHECK AND SEE HOW BAD THAT WAS
+                    # TODO CHECK AND SEE HOW BAD ME DELETING THAT WAS
                 # Women and Men Engineering Students: Anticipation of Family and Work Roles
                 if question in ['major_pros', 'major_cons']:
                     encouragement_or_barriers(question, focus_var, answer_to_count_per_category,

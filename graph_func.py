@@ -11,6 +11,8 @@ from collections import Counter
 
 
 def filter_and_graph(question, options, people, focus_var, category_names):
+    if question == 'department_appearance':
+        temp = 32
     num_categories = len(category_names)
     categorized_responses = np.empty([num_categories, 0]).tolist()
     answer_type = ques_ans[question]
@@ -23,6 +25,7 @@ def filter_and_graph(question, options, people, focus_var, category_names):
         focus_var_person = getattr(person, focus_var)
         if not focus_var_person:
             continue
+
         value = [val.strip() for val in getattr(person, question).split(',')]
 
         if focus_var == 'university_major':
@@ -41,7 +44,7 @@ def filter_and_graph(question, options, people, focus_var, category_names):
                     if not skip_response(value, answer_type):
                         category[1].extend(value)
 
-    graphable_options = values(categorized_responses, options) # THE BUG TODO this is sometimes having extra spaces
+    graphable_options = values(categorized_responses, options)  # TODO this is THE BUG sometimes having extra spaces
 
     # value = [val.strip() for val in getattr(person, question).split(',')]
     return categorized_responses, graphable_options
@@ -167,7 +170,6 @@ def likert_percents(question, focus_var, answer_to_count_per_category, category_
     title = f'question: {real_title}\n'
     categories = list(zip(category_counts, category_names))
 
-    # TODO: can I get these questions on the legend instead of in the title hashtag readability
     for category in categories:
         title += str(category[1]) + ' (' + str(category[0]) + ') '
     plt.suptitle(title)

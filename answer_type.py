@@ -71,11 +71,6 @@ def gender_graph_num_stats(question, focus_var, a, b, option_a, option_b):
     option_a.sort()
     option_b.sort()
 
-    # # todo: delete this it was just for debugging
-    # print('a: ' + a)
-    # print('b: ' + b)
-    # print('option_a: ' + str(option_a))
-    # print('option_b: ' + str(option_b))
     if len(option_a) < 1 or len(option_b) < 1:
         return  # because we can't compare the data
 

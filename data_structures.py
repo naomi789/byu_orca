@@ -34,23 +34,25 @@ ques_ans = {'duration_seconds': 'int', 'Location_Latitude': 'double', 'LocationL
             'participation_not_questions_frequency': 'frequency_class', 'participation_absent_why': 'miss_class',
             'participation_MORE_comfortable': 'increase_comfort', 'participation_LESS_comfortable': 'decrease_comfort',
             'participation_not_reasons': 'participate_decrease',
-            'participation_questions_ask_ignored': 'frequency_class_typo',
-            'participation_group_project_role': 'responsibilities', 'professors_ask_advice': 'frequency_typo',
-            'professors_encouraged_you': 'professor_encouragement', 'participation_TA_session': 'frequency_TA_typo',
+            'participation_questions_ask_ignored': 'frequency_class',  # _typo
+            'participation_group_project_role': 'responsibilities', 'professors_ask_advice': 'frequency',  # _typo
+            'professors_encouraged_you': 'professor_encouragement', 'participation_TA_session': 'frequency_TA',  # _typo
             'participation_TA_ask_questions': 'frequency_typo', 'participation_talk_peers': 'frequency',
             'courses_professors_engaging': 'agreement', 'professors_represent_diversity': 'agreement',
             'role_models_same_gender': 'agreement', 'participation_peers_help_you': 'frequency_typo',
             'participation_peers_you_serve': 'frequency_typo', 'participation_clubs': 'meetings_clubs',
             'participation_friends_CS_students': 'percentage', 'friends_CS_students_want_more': 'agreement',
             'scholarship': 'scholarships', 'extracurricular_plans_before_graduation': 'involvement',
-            'frequency_balance_career_parenthood': 'frequency', 'professors_declare_parent': 'frequency_typo',
-            'professors_declare_full_time': 'frequency_typo', 'department_sexist_you': 'certainty',
+            'frequency_balance_career_parenthood': 'frequency', 'professors_declare_parent': 'frequency', # _typo
+            'professors_declare_full_time': 'frequency',  # _typo
+            'department_sexist_you': 'certainty',
             'department_sexist_others': 'certainty', 'department_success_because_gender': 'certainty',
-            'department_appearance': 'frequency_typo', 'department_appearance_comments': 'appearance_comments',
+            'department_appearance': 'frequency',  # _typo
+            'department_appearance_comments': 'appearance_comments',
             'complaints_how': 'certainty', 'complaints_concequences': 'certainty',
             'complaints_concequences_fear': 'certainty', 'peer_mistreated_react': 'sexism_response',
-            'people_surprise_major': 'agreement', 'people_sexist_jokes_gender': 'frequency_typo',
-            'highest_standard': 'student_groups_standards', 'peer_sexism_ignoring_suggestion': 'frequency_typo',
+            'people_surprise_major': 'agreement', 'people_sexist_jokes_gender': 'frequency',  # _typo
+            'highest_standard': 'student_groups_standards', 'peer_sexism_ignoring_suggestion': 'frequency',  # _typo
             'friends_other_gender': 'agreement', 'intelligence_fixed': 'agreement',
             'intelligence_malleable': 'agreement',
             'failure_lazy': 'agreement', 'failure_environment': 'agreement', 'failure_ability': 'agreement',
