@@ -11,8 +11,6 @@ from collections import Counter
 
 
 def filter_and_graph(question, options, people, focus_var, category_names):
-    if question == 'major_cons':
-        temp = 23
     num_categories = len(category_names)
     categorized_responses = np.empty([num_categories, 0]).tolist()
     answer_type = ques_ans[question]
@@ -43,8 +41,9 @@ def filter_and_graph(question, options, people, focus_var, category_names):
                     if not skip_response(value, answer_type):
                         category[1].extend(value)
 
-    graphable_options = values(categorized_responses, options)
+    graphable_options = values(categorized_responses, options) # THE BUG TODO this is sometimes having extra spaces
 
+    # value = [val.strip() for val in getattr(person, question).split(',')]
     return categorized_responses, graphable_options
 
 
@@ -175,9 +174,12 @@ def likert_percents(question, focus_var, answer_to_count_per_category, category_
 
     ind = [x for x, _ in enumerate(answer_to_count_per_category)]
 
+    temp = answer_to_count_per_category[1].keys()
     possible_responses = answer_to_count_per_category[0].keys()
     for category in answer_to_count_per_category:
-        assert (category.keys() == possible_responses)
+        if not category.keys() == possible_responses:
+            temp = 32
+        assert(category.keys() == possible_responses)
 
     all_bars = []
 
@@ -340,7 +342,6 @@ def pie_chart(question, choice_to_answer):
         sum_answers += int(choice_to_answer[val])
 
     axes.set_title(question)
-    print(type(choice_to_answer))
     keys = choice_to_answer.keys()
     values = choice_to_answer.values()
 

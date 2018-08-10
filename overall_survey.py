@@ -23,6 +23,10 @@ def run_overall(file_name):
         return list(csv.reader(file, delimiter=','))
 
 
+def parse_overall_data(data):
+    return list(map(lambda line: Person(*line), data))
+
+
 def ques_to_question():
     if len(BYU_question_shorthand) is not len(BYU_question_string):
         logging.critical(str(len(BYU_question_shorthand)) + str(BYU_question_shorthand))
@@ -31,10 +35,6 @@ def ques_to_question():
         exit(1)
     else:
         return dict(zip_longest(BYU_question_shorthand, BYU_question_string[:len(BYU_question_shorthand)]))
-
-
-def parse_overall_data(data):
-    return list(map(lambda line: Person(*line), data))
 
 
 def encouragement_or_barriers(question, focus_var, answer_to_count_per_category, list_all_answers_per_category,
@@ -234,8 +234,6 @@ def pick_graphing_style(people):
                 list_all_answers_per_category, answer_to_count_per_category = filter_and_graph(question, answer_type,
                                                                                                people, focus_var,
                                                                                                category_names)
-                if question == 'major_cons':
-                    temp = 42
                 call_respective_graphing_functions(question, focus_var, answer_type, list_all_answers_per_category,
                                                    answer_to_count_per_category, category_names)
 
@@ -264,9 +262,8 @@ people = parse_overall_data(data[2:])  # deletes the question text and shorthand
 # for short, long in zip(BYU_question_shorthand, BYU_question_string):
 #     short_to_long[short] = long
 
+# the one that actually does stuff
+pick_graphing_style(people)
 
 # does other graphs
 assorted_special_graphs(people)
-
-# the one that actually does stuff
-pick_graphing_style(people)
