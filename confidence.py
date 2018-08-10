@@ -13,7 +13,7 @@ def one_source(file, tuple_for_results):
 
     processed = list(map(lambda line: tuple_for_results(*line), data))
     answer = []
-    for person in processed:  #  filters out all responses where there is no gender
+    for person in processed:  # filters out all responses where there is no gender
         if getattr(person, 'gender') is not '':
             answer.append(person)
             #  save the 'identifier' as a key with person as a value

@@ -43,7 +43,7 @@ ques_ans = {'duration_seconds': 'int', 'Location_Latitude': 'double', 'LocationL
             'participation_peers_you_serve': 'frequency_typo', 'participation_clubs': 'meetings_clubs',
             'participation_friends_CS_students': 'percentage', 'friends_CS_students_want_more': 'agreement',
             'scholarship': 'scholarships', 'extracurricular_plans_before_graduation': 'involvement',
-            'frequency_balance_career_parenthood': 'frequency', 'professors_declare_parent': 'frequency', # _typo
+            'frequency_balance_career_parenthood': 'frequency', 'professors_declare_parent': 'frequency',  # _typo
             'professors_declare_full_time': 'frequency',  # _typo
             'department_sexist_you': 'certainty',
             'department_sexist_others': 'certainty', 'department_success_because_gender': 'certainty',
@@ -134,7 +134,6 @@ short_to_long = {'duration_seconds': 'How long between opening and submitting su
                  'describe_positive_experience': 'Are there any positive experiences or interactions that you had with members of the CS department that you would like to share?',
                  'describe_negative_experience': 'Are there any negative experiences or interactions that you had with members of the CS department that you would like to share?',
                  'suggestion_improve_institution': "What one change would you most like to see implemented to improve students' experiences at this institution?"}
-
 
 majors_minors = ['Computer Science', 'Computer Engineering', 'Information Systems', 'Information Technology',
                  'Electrical Engineering', 'Civil Engineering', 'Mechanical Engineering', 'Statistics', 'Mathematics',
@@ -309,7 +308,8 @@ BYU_question_shorthand = ['duration_seconds', 'Location_Latitude', 'LocationLong
                           'university_major', 'university_minor', 'university_courses_fall',
                           'university_graduation_year', 'university_gpa', 'university_gpa_TEXT',
                           'received_internship_offer', 'extracurriculars', 'major_pros', 'major_pros_TEXT',
-                          'major_cons', 'major_cons_TEXT', 'confidence_graduate_gpa', 'confidence_prepared_courses','confidence_percentile',
+                          'major_cons', 'major_cons_TEXT', 'confidence_graduate_gpa', 'confidence_prepared_courses',
+                          'confidence_percentile',
                           'participation_questions_comfortable_NONCS', 'participation_absent_frequency',
                           'participation_questions_ask_frequency', 'participation_questions_comfortable',
                           'participation_not_questions_frequency', 'participation_absent_why',
@@ -415,7 +415,8 @@ question_string = ["duration_seconds", "Location_Latitude", "LocationLongitude",
                    "Are there any negative experiences or interactions that you had with members of the CS department that you would like to share?",
                    "What one change would you most like to see implemented that would improve the educational experience at this institution?"]
 
-BYU_question_string = ['How long between opening and submitting survey?', 'latitude', 'longitude', 'Please read the entire text above before selecting an answer below.',
+BYU_question_string = ['How long between opening and submitting survey?', 'latitude', 'longitude',
+                       'Please read the entire text above before selecting an answer below.',
                        'Are you willing to participate more in this study of students at BYU? - Selected Choice',
                        'Are you willing to participate more in this study of students at BYU? - Yes - please enter your email address here - Text',
                        'What gender do you identify with? - Selected Choice',
@@ -439,7 +440,8 @@ BYU_question_string = ['How long between opening and submitting survey?', 'latit
                        'How comfortable are you asking questions in your non-CS courses?',
                        'How often are you absent from your CS class(es)?',
                        'On average how often do you ask questions in CS courses?',
-                       'How comfortable are you asking questions in your CS courses?', 'Aside from asking questions how often do you participate (answer questions/talk in discussions/etc) in CS courses?',
+                       'How comfortable are you asking questions in your CS courses?',
+                       'Aside from asking questions how often do you participate (answer questions/talk in discussions/etc) in CS courses?',
                        'When you miss a CS class what is most often the reason why? (only select one)',
                        'What helps you feel MORE COMFORTABLE asking questions in your CS course(s)? (select all that apply)',
                        'When do you feel LESS COMFORTABLE asking questions in your CS course(s)? (select all that apply)',
@@ -500,7 +502,6 @@ frequency = ['Never', 'Once or twice a semester', 'Once a month', 'Once a week',
 
 frequency_typo = ['Never', 'Once or twice a semester', 'Once a month', 'Once a week ', 'Daily', '']
 
-
 frequency_TA = ['Never my classes do not have help session', 'Never I don\'t go to help sessions',
                 'Once or twice a semester',
                 'Once a month',
@@ -509,11 +510,11 @@ frequency_TA = ['Never my classes do not have help session', 'Never I don\'t go 
                 '']
 
 frequency_TA_typo = ['Never my classes do not have help session', 'Never I don\'t go to help sessions',
-                'Once or twice a semester',
-                'Once a month',
-                'Once a week ',
-                'Daily',
-                '']
+                     'Once or twice a semester',
+                     'Once a month',
+                     'Once a week ',
+                     'Daily',
+                     '']
 
 frequency_class_typo = ['Never', 'Once or twice a semester', 'Once a month', 'Once a week ', 'Daily', '']
 
@@ -540,36 +541,37 @@ long_colors = ['palevioletred', 'navy', 'm', 'royalblue', 'g', 'purple', 'seagre
                'salmon', 'dodgerblue', 'mediumvioletred', 'aqua', 'firebrick', 'mediumaquamarine', 'goldenrod',
                'darkred', 'sandybrown', 'grey', 'silver', 'orange', 'coral']
 
-consent_current = ['Yes I am over 18 and agree to participate in this study.', 'No I am under 18', 'No I do not consent to participate in this study']
+consent_current = ['Yes I am over 18 and agree to participate in this study.', 'No I am under 18',
+                   'No I do not consent to participate in this study']
 
 consent_future = ['Yes - please enter your email address here', 'No']
 
 do_not_graph = [consent_current, consent_future]
 
 answer_dict_switcher = {
-        'agreement': agreement,
-        'frequency': frequency,
-        'frequency_typo': frequency_typo,
-        'frequency_TA': frequency_TA,
-        'frequency_TA_typo': frequency_TA_typo,
-        'frequency_class': frequency_class,
-        'frequency_class_typo': frequency_class_typo,
-        'comfort': comfort,
-        'certainty': certainty,
-        'majors_minors': majors_minors,
-        'graduation_year': graduation_year,
-        'extracurriculars': extracurriculars,
-        'encouragement': encouragement,
-        'barriers': barriers,
-        'responsibilities': responsibilities,
-        'professor_encouragement': professor_encouragement,
-        'meetings_clubs': meetings_clubs,
-        'percentage': percentage,
-        'scholarships': scholarships,
-        'yes_no': yes_no,
-        'involvement': involvement,
-        'appearance_comments': appearance_comments,
-        'sexism_response': sexism_response,
-        'student_groups_standards': student_groups_standards,
-        'frequency_absent': frequency_absent,
-    }
+    'agreement': agreement,
+    'frequency': frequency,
+    'frequency_typo': frequency_typo,
+    'frequency_TA': frequency_TA,
+    'frequency_TA_typo': frequency_TA_typo,
+    'frequency_class': frequency_class,
+    'frequency_class_typo': frequency_class_typo,
+    'comfort': comfort,
+    'certainty': certainty,
+    'majors_minors': majors_minors,
+    'graduation_year': graduation_year,
+    'extracurriculars': extracurriculars,
+    'encouragement': encouragement,
+    'barriers': barriers,
+    'responsibilities': responsibilities,
+    'professor_encouragement': professor_encouragement,
+    'meetings_clubs': meetings_clubs,
+    'percentage': percentage,
+    'scholarships': scholarships,
+    'yes_no': yes_no,
+    'involvement': involvement,
+    'appearance_comments': appearance_comments,
+    'sexism_response': sexism_response,
+    'student_groups_standards': student_groups_standards,
+    'frequency_absent': frequency_absent,
+}

@@ -5,7 +5,8 @@ import matplotlib.pyplot as plt
 from language_processing import graph_string, long_text, find_common_words
 from answer_type import mult_choice, graph_num, compare_confidence_GPA
 from graph_func import call_respective_graphing_functions, filter_and_graph, pie_chart
-from data_structures import BYU_question_shorthand, BYU_question_string, likert_question_answer_types, list_question_answer_types, confidence_measurement, \
+from data_structures import BYU_question_shorthand, BYU_question_string, likert_question_answer_types, \
+    list_question_answer_types, confidence_measurement, \
     long_feedback, race
 from language_processing import associate_with_professors
 import os
@@ -105,22 +106,23 @@ def response_rate(people):
     total_invited = female + male
     total_participated = responses_male + responses_female + responses_other_gender
     f.write(str(total_invited) + ' students were invited to take this survey, ' + str(
-        total_participated) + ' took it (' + str((total_participated/total_invited)*100) + '%)\n')
+        total_participated) + ' took it (' + str((total_participated / total_invited) * 100) + '%)\n')
     f.write('responses//those invited to take it (response rates for particular categories): \n')
-    f.write('Female students: ' + str(100*responses_female / female) + '%\n')
-    f.write('Male students: ' + str(100*responses_male / male) + '%\n')
+    f.write('Female students: ' + str(100 * responses_female / female) + '%\n')
+    f.write('Male students: ' + str(100 * responses_male / male) + '%\n')
     f.write('Other/Prefer not to say: [none were registered with non-binary/other genders]\n')
-    f.write('CS majors: ' + str(100*responses_CS_major / CS_major) + '%\n')
-    f.write('CS minors: ' + str(100*responses_CS_minor / CS_minor) + '%\n')
-    f.write('Non-CS-major, non-CS-minor students: ' + str(100*responses_other_program / other_program) + '%\n')
-    f.write('Undergraduates: ' + str(100*responses_undergrad/undergraduate) + '%\n')
-    f.write('Masters: ' + str(100*responses_master / master) + '%\n')
-    f.write('PhD: ' + str(100*responses_doctorate / doctorate) + '%\n')
+    f.write('CS majors: ' + str(100 * responses_CS_major / CS_major) + '%\n')
+    f.write('CS minors: ' + str(100 * responses_CS_minor / CS_minor) + '%\n')
+    f.write('Non-CS-major, non-CS-minor students: ' + str(100 * responses_other_program / other_program) + '%\n')
+    f.write('Undergraduates: ' + str(100 * responses_undergrad / undergraduate) + '%\n')
+    f.write('Masters: ' + str(100 * responses_master / master) + '%\n')
+    f.write('PhD: ' + str(100 * responses_doctorate / doctorate) + '%\n')
     f.write('Freshmen: ' + str(responses_freshmen) + ' responses\n')
     f.write('Sophomores: ' + str(responses_sophomores) + ' responses\n')
     f.write('Juniors: ' + str(responses_juniors) + ' responses\n')
     f.write('Seniors: ' + str(responses_seniors) + ' responses\n')
     f.close()
+
 
 def gradu_date_responses(people):
     responses_freshmen = 0
@@ -140,7 +142,7 @@ def gradu_date_responses(people):
         elif gradu_year == '':
             pass
         else:
-            assert(False)
+            assert (False)
 
     return responses_freshmen, responses_sophomores, responses_juniors, responses_seniors
 
@@ -177,7 +179,7 @@ def gender_responses(people):
         elif this_person == 'Male':
             responses_male += 1
         else:
-            responses_other_gender += 1 
+            responses_other_gender += 1
     return responses_female, responses_male, responses_other_gender
 
 

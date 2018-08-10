@@ -95,11 +95,13 @@ def gender_graph_num_stats(question, focus_var, a, b, option_a, option_b):
     f.close()
     # make_box_and_whisker(question, option_a, option_b, focus_var, a, b)
 
+
 def mult_choice(focus_var):
     if focus_var == 'gender':
         categories = ['Male', 'Female']
     elif focus_var == 'university_program':
-        categories = ['Undergraduate', 'Masters', 'PhD', 'Not currently pursuing a degree']  # ['Undergraduate', 'Not undergrads']
+        categories = ['Undergraduate', 'Masters', 'PhD',
+                      'Not currently pursuing a degree']  # ['Undergraduate', 'Not undergrads']
     elif focus_var == 'university_major':
         categories = ['Computer Science', 'Not CS majors']
     elif focus_var == 'university_graduation_year':
@@ -162,7 +164,6 @@ def compare_confidence_GPA(people, focus_var):
         x, y = map(list, zip(*option_a))
         make_box_and_whisker(category + ' GPA', x, focus_var, categories)
         make_box_and_whisker(category + ' percentile', y, focus_var, categories)
-
 
 # def time_confidence(question, focus_var, answer_to_count_per_category, list_all_answers_per_category, category_names):
 #     category_counts = list(map(len, list_all_answers_per_category))

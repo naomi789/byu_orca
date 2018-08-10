@@ -8,8 +8,6 @@ import logging
 from collections import Counter
 
 
-
-
 def filter_and_graph(question, options, people, focus_var, category_names):
     if question == 'department_appearance':
         temp = 32
@@ -181,7 +179,7 @@ def likert_percents(question, focus_var, answer_to_count_per_category, category_
     for category in answer_to_count_per_category:
         if not category.keys() == possible_responses:
             temp = 32
-        assert(category.keys() == possible_responses)
+        assert (category.keys() == possible_responses)
 
     all_bars = []
 
