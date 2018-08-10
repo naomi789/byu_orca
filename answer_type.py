@@ -2,10 +2,8 @@ from collections import defaultdict
 from scipy.stats import mannwhitneyu
 import numpy as np
 import matplotlib.pyplot as plt
-from data_structures import ques_ans
-from constants import gender_colors
+from data_structures import ques_ans, gender_colors, staff_names, professor_names
 from graph_func import make_box_and_whisker, convert_into_numbers
-from list_constants import staff_names, professor_names
 import logging
 
 
@@ -73,11 +71,6 @@ def gender_graph_num_stats(question, focus_var, a, b, option_a, option_b):
     option_a.sort()
     option_b.sort()
 
-    # # todo: delete this it was just for debugging
-    # print('a: ' + a)
-    # print('b: ' + b)
-    # print('option_a: ' + str(option_a))
-    # print('option_b: ' + str(option_b))
     if len(option_a) < 1 or len(option_b) < 1:
         return  # because we can't compare the data
 
@@ -102,11 +95,13 @@ def gender_graph_num_stats(question, focus_var, a, b, option_a, option_b):
     f.close()
     # make_box_and_whisker(question, option_a, option_b, focus_var, a, b)
 
+
 def mult_choice(focus_var):
     if focus_var == 'gender':
         categories = ['Male', 'Female']
     elif focus_var == 'university_program':
-        categories = ['Undergraduate', 'Masters', 'PhD', 'Not currently pursuing a degree']  # ['Undergraduate', 'Not undergrads']
+        categories = ['Undergraduate', 'Masters', 'PhD',
+                      'Not currently pursuing a degree']  # ['Undergraduate', 'Not undergrads']
     elif focus_var == 'university_major':
         categories = ['Computer Science', 'Not CS majors']
     elif focus_var == 'university_graduation_year':
@@ -170,40 +165,17 @@ def compare_confidence_GPA(people, focus_var):
         make_box_and_whisker(category + ' GPA', x, focus_var, categories)
         make_box_and_whisker(category + ' percentile', y, focus_var, categories)
 
-
-def time_confidence(question, focus_var, answer_to_count_per_category, list_all_answers_per_category, category_names):
-    category_counts = list(map(len, list_all_answers_per_category))
-
-    fig, ax = plt.subplots(figsize=(8.5, 11))
-    ax.set_title("Default")
-
-    for one_name, one_category_and_their_answers, count in zip(category_names, answer_to_count_per_category, category_counts):
-        # note that max ignores '' if that was a thing
-        responses_as_numbers, min, max = convert_into_numbers(one_category_and_their_answers)
-        y_axis = sum(responses_as_numbers) / len(responses_as_numbers)
-        x_axis = one_name
-        ax.plot(x_axis, y_axis, 'o-')
-
-        # # inside for loop
-        # with cbook.get_sample_data('goog.npz') as datafile:
-        #     r = np.load(datafile)['price_data'].view(np.recarray)
-        # r = r[-30:]  # get the last 30 days
-        #
-        # x_axis = r.date.astype('O')
-        # y_axis = r.adj_close
-        # ax.plot(x_axis, y_axis, 'o-')
-        #
-        # # for loop ends
-
-
-
-    # fig.autofmt_xdate()
-    # next we'll write a custom formatter
-    # N = len(r)
-    # ind = np.arange(N)  # the evenly spaced plot indices
-
-    plt.savefig('results_at_BYU/' + focus_var + '/bar_graph_' + question + '.pdf')
-
-
-
-
+# def time_confidence(question, focus_var, answer_to_count_per_category, list_all_answers_per_category, category_names):
+#     category_counts = list(map(len, list_all_answers_per_category))
+#
+#     fig, ax = plt.subplots(figsize=(8.5, 11))
+#     ax.set_title("Default")
+#
+#     for one_name, one_category_and_their_answers, count in zip(category_names, answer_to_count_per_category, category_counts):
+#         # note that max ignores '' if that was a thing
+#         responses_as_numbers, min, max = convert_into_numbers(one_category_and_their_answers)
+#         y_axis = sum(responses_as_numbers) / len(responses_as_numbers)
+#         x_axis = one_name
+#         ax.plot(x_axis, y_axis, 'o-')
+#
+#     plt.savefig('results_at_BYU/' + focus_var + '/bar_graph_' + question + '.pdf')

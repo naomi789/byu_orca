@@ -3,17 +3,15 @@ import csv
 from itertools import zip_longest
 import matplotlib.pyplot as plt
 from language_processing import graph_string, long_text, find_common_words
-from answer_type import mult_choice, graph_num, compare_confidence_GPA, time_confidence
+from answer_type import mult_choice, graph_num, compare_confidence_GPA
 from graph_func import call_respective_graphing_functions, filter_and_graph, pie_chart
-from constants import BYU_question_shorthand, BYU_question_string
-from list_constants import likert_question_answer_types, list_question_answer_types, confidence_measurement, \
+from data_structures import BYU_question_shorthand, BYU_question_string, likert_question_answer_types, \
+    list_question_answer_types, confidence_measurement, \
     long_feedback, race
 from language_processing import associate_with_professors
-from collections import defaultdict
 import os
 from data_structures import ques_ans
 import logging
-from list_constants import degree_pursuing
 
 plt.style.use('seaborn-deep')
 
@@ -26,6 +24,10 @@ def run_overall(file_name):
         return list(csv.reader(file, delimiter=','))
 
 
+def parse_overall_data(data):
+    return list(map(lambda line: Person(*line), data))
+
+
 def ques_to_question():
     if len(BYU_question_shorthand) is not len(BYU_question_string):
         logging.critical(str(len(BYU_question_shorthand)) + str(BYU_question_shorthand))
@@ -34,10 +36,6 @@ def ques_to_question():
         exit(1)
     else:
         return dict(zip_longest(BYU_question_shorthand, BYU_question_string[:len(BYU_question_shorthand)]))
-
-
-def parse_overall_data(data):
-    return list(map(lambda line: Person(*line), data))
 
 
 def encouragement_or_barriers(question, focus_var, answer_to_count_per_category, list_all_answers_per_category,
@@ -108,22 +106,23 @@ def response_rate(people):
     total_invited = female + male
     total_participated = responses_male + responses_female + responses_other_gender
     f.write(str(total_invited) + ' students were invited to take this survey, ' + str(
-        total_participated) + ' took it (' + str((total_participated/total_invited)*100) + '%)\n')
+        total_participated) + ' took it (' + str((total_participated / total_invited) * 100) + '%)\n')
     f.write('responses//those invited to take it (response rates for particular categories): \n')
-    f.write('Female students: ' + str(100*responses_female / female) + '%\n')
-    f.write('Male students: ' + str(100*responses_male / male) + '%\n')
+    f.write('Female students: ' + str(100 * responses_female / female) + '%\n')
+    f.write('Male students: ' + str(100 * responses_male / male) + '%\n')
     f.write('Other/Prefer not to say: [none were registered with non-binary/other genders]\n')
-    f.write('CS majors: ' + str(100*responses_CS_major / CS_major) + '%\n')
-    f.write('CS minors: ' + str(100*responses_CS_minor / CS_minor) + '%\n')
-    f.write('Non-CS-major, non-CS-minor students: ' + str(100*responses_other_program / other_program) + '%\n')
-    f.write('Undergraduates: ' + str(100*responses_undergrad/undergraduate) + '%\n')
-    f.write('Masters: ' + str(100*responses_master / master) + '%\n')
-    f.write('PhD: ' + str(100*responses_doctorate / doctorate) + '%\n')
-    f.write('Freshmen: ' + str(responses_freshmen) + 'responses\n')
-    f.write('Sophomores: ' + str(responses_sophomores) + 'responses\n')
-    f.write('Juniors: ' + str(responses_juniors) + 'responses\n')
-    f.write('Seniors: ' + str(responses_seniors) + 'responses\n')
+    f.write('CS majors: ' + str(100 * responses_CS_major / CS_major) + '%\n')
+    f.write('CS minors: ' + str(100 * responses_CS_minor / CS_minor) + '%\n')
+    f.write('Non-CS-major, non-CS-minor students: ' + str(100 * responses_other_program / other_program) + '%\n')
+    f.write('Undergraduates: ' + str(100 * responses_undergrad / undergraduate) + '%\n')
+    f.write('Masters: ' + str(100 * responses_master / master) + '%\n')
+    f.write('PhD: ' + str(100 * responses_doctorate / doctorate) + '%\n')
+    f.write('Freshmen: ' + str(responses_freshmen) + ' responses\n')
+    f.write('Sophomores: ' + str(responses_sophomores) + ' responses\n')
+    f.write('Juniors: ' + str(responses_juniors) + ' responses\n')
+    f.write('Seniors: ' + str(responses_seniors) + ' responses\n')
     f.close()
+
 
 def gradu_date_responses(people):
     responses_freshmen = 0
@@ -143,7 +142,7 @@ def gradu_date_responses(people):
         elif gradu_year == '':
             pass
         else:
-            assert(False)
+            assert (False)
 
     return responses_freshmen, responses_sophomores, responses_juniors, responses_seniors
 
@@ -180,7 +179,7 @@ def gender_responses(people):
         elif this_person == 'Male':
             responses_male += 1
         else:
-            responses_other_gender += 1 
+            responses_other_gender += 1
     return responses_female, responses_male, responses_other_gender
 
 
@@ -213,7 +212,6 @@ def calculate_one_chart(people, attribute):
 
 def pick_graphing_style(people):
     possible_focus_var = ['university_major', 'university_graduation_year', 'gender', 'university_program']
-    # TODO: add functionality for: 'major_and_gender', 'university_graduation_year_and_gender']  # maybe GPA, too?
     for focus_var in possible_focus_var:
         counter = 1
         for question in BYU_question_shorthand:
@@ -241,9 +239,10 @@ def pick_graphing_style(people):
                                                    answer_to_count_per_category, category_names)
 
                 if question in confidence_measurement and focus_var == 'university_graduation_year':
-                    time_confidence(question, focus_var, answer_to_count_per_category, list_all_answers_per_category,
-                                    category_names)
-
+                    # time_confidence(question, focus_var, answer_to_count_per_category, list_all_answers_per_category,
+                    #                 category_names)
+                    pass
+                    # TODO CHECK AND SEE HOW BAD ME DELETING THAT WAS
                 # Women and Men Engineering Students: Anticipation of Family and Work Roles
                 if question in ['major_pros', 'major_cons']:
                     encouragement_or_barriers(question, focus_var, answer_to_count_per_category,
@@ -257,19 +256,15 @@ logging.basicConfig(level=logging.INFO)  # 'DEBUG', 'INFO', 'WARNING', 'ERROR', 
 data = run_overall('raw_overall_survey/overall_data_prepped_BYU.csv')  # ./fake_data/ORCA_overall_CS_edited.csv
 # ques_to_question = ques_to_question() # not using yet, but would be good to add to graphs, eventually
 
-data = data[2:]  # deletes the question text and shorthand from the dataset
-
-people = parse_overall_data(data)
+people = parse_overall_data(data[2:])  # deletes the question text and shorthand from the dataset
 
 # will not be needed again unless the questions change for UVA version
 # short_to_long = {}
 # for short, long in zip(BYU_question_shorthand, BYU_question_string):
 #     short_to_long[short] = long
-#
-# print(short_to_long)
-
-# does other graphs
-assorted_special_graphs(people)
 
 # the one that actually does stuff
 pick_graphing_style(people)
+
+# does other graphs
+assorted_special_graphs(people)
