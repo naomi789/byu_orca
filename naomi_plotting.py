@@ -78,8 +78,15 @@ def graph_data(df):
             cat2 = agg_t.columns.levels[1]
             counts = np.array([len(DF[(DF[GENDER]==x) & (DF['binary_CS']==y)]) for x in cat1 for y in cat2])
 
-            (agg_t / (counts)).plot.bar(stacked=False)
+            ax = (agg_t / (counts)).plot(kind='barh', stacked=False)
+
+            labels = [x[:30] for x in agg_t.index]
+            ax.set_yticklabels(labels)
+            # print(type(labels))
+            # print(labels)
             plt.title(question)
+            plt.tight_layout()
+
             plt.savefig(f'panda_BYU/{question}.png')
             # {var}/
             question_df.to_csv('practice_df.csv')
