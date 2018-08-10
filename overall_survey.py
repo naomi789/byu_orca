@@ -50,7 +50,7 @@ def encouragement_or_barriers(question, focus_var, answer_to_count_per_category,
     sum_1 = category_counts[1]
 
     for cat_0_keys, cat_1_keys, in zip(answer_to_count_per_category[0], answer_to_count_per_category[1]):
-        logging.info((cat_0_keys + ', ' + str((answer_to_count_per_category[0][cat_0_keys] / sum_0)) + ', ' + str(
+        logging.info(cat_0_keys + ', ' + str((answer_to_count_per_category[0][cat_0_keys] / sum_0)) + ', ' + str(
             (answer_to_count_per_category[1][cat_1_keys] / sum_1)) + ',')
 
 
