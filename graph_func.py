@@ -177,8 +177,6 @@ def likert_percents(question, focus_var, answer_to_count_per_category, category_
     temp = answer_to_count_per_category[1].keys()
     possible_responses = answer_to_count_per_category[0].keys()
     for category in answer_to_count_per_category:
-        if not category.keys() == possible_responses:
-            temp = 32
         assert (category.keys() == possible_responses)
 
     all_bars = []

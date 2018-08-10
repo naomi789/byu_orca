@@ -215,7 +215,6 @@ def pick_graphing_style(people):
     for focus_var in possible_focus_var:
         counter = 1
         for question in BYU_question_shorthand:
-
             answer_type = ques_ans[question]
 
             logging.info('\nfocus_var: ' + focus_var + " question number: " + str(counter))
@@ -251,7 +250,7 @@ def pick_graphing_style(people):
 
 
 # if __name__ == "__main__":  # needed if I decide to include this file elsewhere
-logging.basicConfig(level=logging.WARNING)  # 'DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICIAL'
+logging.basicConfig(level=logging.INFO)  # 'DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICIAL'
 
 data = run_overall('raw_overall_survey/overall_data_prepped_BYU.csv')  # ./fake_data/ORCA_overall_CS_edited.csv
 # ques_to_question = ques_to_question() # not using yet, but would be good to add to graphs, eventually

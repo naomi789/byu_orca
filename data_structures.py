@@ -265,10 +265,9 @@ less_comfortable = ['I DO feel comfortable asking questions in my CS course(s)',
 list_question_answer_types = ['responsibilities', 'professor_encouragement', 'meetings_clubs', 'percentage',
                               'scholarships', 'yes_no', 'involvement', 'appearance_comments', 'sexism_response',
                               'student_groups_standards', 'majors_minors', 'graduation_year', 'extracurriculars',
-                              'encouragement', 'barriers', 'more_comfortable', 'less_comfortable',
-                              'participation_not_questions_frequency', 'participation_absent_why',
-                              'participation_MORE_comfortable', 'participation_LESS_comfortable',
-                              'participation_not_reasons', '']
+                              'encouragement', 'barriers', 'more_comfortable', 'less_comfortable', 'increase_comfort',
+                              'decrease_comfort', 'miss_class', 'participate_decrease', '']
+# from above, TODO, not sure if 'miss_class', 'participate_decrease' should really be in list...
 
 professor_names = ['brent adams', 'cory barker', 'mark clement', 'jacob crandall', 'casey deccio', 'parris egbert',
                    'ryan farrell', 'kelly flanagan', 'christophe giraud-carrier', 'michael goodrich', 'seth holladay',
