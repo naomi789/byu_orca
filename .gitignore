@@ -1,4 +1,6 @@
-/panda_BYU/*
+panda_BYU/*
+*.png
+*.pdf
 *.csv
 .idea/
 /results
