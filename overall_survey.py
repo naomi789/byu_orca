@@ -211,7 +211,7 @@ def calculate_one_chart(people, attribute):
 
 
 def pick_graphing_style(people):
-    possible_focus_var = ['university_major', 'university_graduation_year', 'gender', 'university_program']
+    possible_focus_var = ['gender', 'university_major', 'university_graduation_year', 'university_program']
     for focus_var in possible_focus_var:
         counter = 1
         for question in BYU_question_shorthand:
@@ -251,7 +251,7 @@ def pick_graphing_style(people):
 
 
 # if __name__ == "__main__":  # needed if I decide to include this file elsewhere
-logging.basicConfig(level=logging.INFO)  # 'DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICIAL'
+logging.basicConfig(level=logging.WARNING)  # 'DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICIAL'
 
 data = run_overall('raw_overall_survey/overall_data_prepped_BYU.csv')  # ./fake_data/ORCA_overall_CS_edited.csv
 # ques_to_question = ques_to_question() # not using yet, but would be good to add to graphs, eventually
