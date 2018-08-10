@@ -145,7 +145,7 @@ extracurriculars = ['JV/varsity or other sports', 'Thespian/acting clubs', 'Orch
                     'Robotics/computer or other STEM clubs', 'Speech/debate',
                     'Student government or political groups and clubs', 'Other', 'None', '']
 
-encouragement = ['Mother\'s encouragement', 'Father\'s encouragement', 'Other family member\'s encouragement',
+encouragement = ['Mother\'s encouragement', 'Father\'s encouragement', "Other family member's encouragement",
                  'Teacher\'s encouragement', 'Contact with or mentoring from a graduate',
                  'Lure of a high income', 'Scholarship/financial aid offered for the major',
                  'Desire to have a job that others respect', 'Desire to do something to contribute to society',

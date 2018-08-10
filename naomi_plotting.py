@@ -30,7 +30,9 @@ def get_question_df(df, question, keep_cols, get_answers=True):
             question_df[answer] = 0
             print(answer)
 
-    question_df.rename(columns={col: col.strip() for col in question_df.columns})
+    print({col: col.strip() for col in question_df.columns})
+    question_df.rename(columns={col: col.strip() for col in question_df.columns},
+                       inplace=True)
 
     return question_df, list(answers_set)
 
@@ -43,6 +45,12 @@ def graph_data(df):
 
         for question in TEMP_MANY_CHOICES:
             question_df, answers = get_question_df(df, question, keep_cols)
+
+            if question == MAJOR_PROS:
+                global THING
+                THING = question_df
+                global ANSWERS
+                ANSWERS = answers
 
 
             agg = question_df[keep_cols + answers].groupby(keep_cols).aggregate(sum)
