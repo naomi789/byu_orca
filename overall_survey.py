@@ -40,9 +40,9 @@ def ques_to_question():
 
 def encouragement_or_barriers(question, focus_var, answer_to_count_per_category, list_all_answers_per_category,
                               category_names):
-    print('question: ' + question)
-    print('focus var: ' + focus_var)
-    print('var, mean: ' + category_names[0] + ', mean: ' + category_names[1])
+    logging.info('question: ' + question)
+    logging.info('focus var: ' + focus_var)
+    logging.info('var, mean: ' + category_names[0] + ', mean: ' + category_names[1])
 
     category_counts = list(map(len, list_all_answers_per_category))
 
@@ -50,7 +50,7 @@ def encouragement_or_barriers(question, focus_var, answer_to_count_per_category,
     sum_1 = category_counts[1]
 
     for cat_0_keys, cat_1_keys, in zip(answer_to_count_per_category[0], answer_to_count_per_category[1]):
-        print(cat_0_keys + ', ' + str((answer_to_count_per_category[0][cat_0_keys] / sum_0)) + ', ' + str(
+        logging.info((cat_0_keys + ', ' + str((answer_to_count_per_category[0][cat_0_keys] / sum_0)) + ', ' + str(
             (answer_to_count_per_category[1][cat_1_keys] / sum_1)) + ',')
 
 

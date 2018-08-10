@@ -125,10 +125,8 @@ def compare_confidence_GPA(people, focus_var):
         x_gpa = getattr(person, 'university_gpa_TEXT')
 
         if x_gpa == '' or y_percentile == '':  # or x_gpa > 4:
-            # print(str(x_gpa) + ', ' + str(y_percentile))
             continue
         else:
-            # print(str(x_gpa) + ', ' + str(y_percentile))
             x_gpa = float(x_gpa)
             y_percentile = float(y_percentile)
 
