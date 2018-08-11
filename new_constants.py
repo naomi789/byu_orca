@@ -133,16 +133,16 @@ question_number_to_expected_answer = {
     'Q30': frequency,  # PROFESSORS_DECLARE_FULL_TIME
     'Q41': certainty,  # DEPARTMENT_SEXIST_YOU
     'Q42': certainty,  # DEPARTMENT_SEXIST_OTHERS
-    # Q35 # Has a member of the CS department (students, TAs, professors, etc)ever told you that you earned a good grade, got a job, internship, or scholarship offer because of your gender?
+    # Q35 # Has a member of the CS department (students, TAs, professors, etc) ever told you that you earned a good grade, got a job, internship, or scholarship offer because of your gender?
     'Q62': frequency,  # DEPARTMENT_APPEARANCE
-    'Q61': appearance_comments,  # DEPARTMENT_APPEARANCE_COMMENTS
+    'Q61': appearance_comments,  # DEPARTMENT_APPEARANCE_COMMENTS # TODO
     'Q38': certainty,  # COMPLAINTS_HOW
     'Q39': certainty,  # COMPLAINTS_CONCEQUENCES
     'Q40': certainty,  # COMPLAINTS_CONCEQUENCES_FEAR
     'Q51': sexism_response,  # PEER_MISTREATED_REACT
-    'Q60': agreement,  # PEOPLE_SURPRISE_MAJOR
+    'Q60': agreement,  # PEOPLE_SURPRISE_MAJOR # TODO
     'Q58': frequency,  # PEOPLE_SEXIST_JOKES_GENDER
-    'Q60': student_groups_standards,  # HIGHEST_STANDARD
+    'Q60': student_groups_standards,  # HIGHEST_STANDARD # TODO
     'Q61': frequency,  # PEER_SEXISM_IGNORING_SUGGESTION
     'Q56': agreement,  # FRIENDS_OTHER_GENDER
     'Q75': agreement,  # INTELLIGENCE_FIXED
