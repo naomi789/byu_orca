@@ -4,7 +4,7 @@ import numpy as np
 import os
 import sys
 from new_constants import *
-from data_structures import question_number_to_expected_answer
+# from data_structures import question_number_to_expected_answer
 
 
 def get_question_df(df, question, keep_cols, get_answers=True):
