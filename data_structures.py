@@ -579,13 +579,6 @@ participate_decrease = ['I already participate enough/too much', 'The CS class i
 do_not_graph = [consent_current, consent_future]
 
 
-question_number_to_expected_answer = {
-    'Q10': encouragement,  # MAJOR_PROS
-    'Q11': barriers,  # MAJOR_CONS
-    'Q68': agreement,  # CONFIDENCE_PREPARED_COURSES
-    'Q88': agreement,  # CONFIDENCE_PERCENTILE_PEERS
-}
-
 answer_dict_switcher = {
     'agreement': agreement,
     'frequency': frequency,
