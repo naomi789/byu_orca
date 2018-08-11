@@ -48,9 +48,7 @@ def many_option_graphing(df):
             DF = question_df
 
             if var == MAJOR:
-                # question_df['Computer Science'] = question_df[MAJOR]=='Computer Science'
                 question_df['binary_CS'] = ['CS' if x else 'non_CS' for x in question_df[MAJOR]=='Computer Science']
-
                 agg = question_df[keep_cols + ['binary_CS'] + answers].groupby([GENDER, 'binary_CS']).aggregate(sum)
             else:
                 agg = question_df[keep_cols + answers].groupby(keep_cols).aggregate(sum)
