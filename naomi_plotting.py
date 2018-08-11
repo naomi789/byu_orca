@@ -24,11 +24,9 @@ def get_question_df(df, question, keep_cols, get_answers=True):
 
     question_df = pd.concat([question_df, question_df[question].str.get_dummies(sep=',')], axis=1)
 
-    # TODO check and see if that works
     for answer in expected_answers:
         if answer not in answers_set:
             question_df[answer] = 0
-            print(answer)
 
         question_df.rename(columns={col: col.strip() for col in question_df.columns},
                        inplace=True)
@@ -36,39 +34,26 @@ def get_question_df(df, question, keep_cols, get_answers=True):
     return question_df, list(answers_set)
 
 
-def graph_data(df):
+def many_option_graphing(df):
     # this does all the '% of focus_var gave this answer'
     # in other words, these will all be bar graphs
     for var in FOCUS_VARS:
         print('var', var)
         keep_cols = [var,  GENDER]
 
-        for question in TEMP_MANY_CHOICES:
+        for question in MANY_CHOICES_QUESTIONS:
             print('question', question)
             question_df, answers = get_question_df(df, question, keep_cols)
 
-            global DF
             DF = question_df
-            global ANSWERS
-            ANSWERS = answers
-            global agg
-
-
-
 
             if var == MAJOR:
-                print(var)
                 # question_df['Computer Science'] = question_df[MAJOR]=='Computer Science'
                 question_df['binary_CS'] = ['CS' if x else 'non_CS' for x in question_df[MAJOR]=='Computer Science']
 
-                #question_df['non_CS'] = question_df['Computer Science'].replace({1:0, 0:1})
-                DF = question_df
                 agg = question_df[keep_cols + ['binary_CS'] + answers].groupby([GENDER, 'binary_CS']).aggregate(sum)
-
-
             else:
                 agg = question_df[keep_cols + answers].groupby(keep_cols).aggregate(sum)
-
 
             gender_options = ['Male', 'Female']
             CS = ['CS', 'non_CS']
@@ -82,20 +67,21 @@ def graph_data(df):
 
             labels = [x[:30] for x in agg_t.index]
             ax.set_yticklabels(labels)
-            # print(type(labels))
-            # print(labels)
+
             plt.title(question)
             plt.tight_layout()
 
-            plt.savefig(f'panda_BYU_results/{question}.png')
+            plt.savefig(f'panda_BYU_results/{var}/{question}.png')
             # {var}/
             question_df.to_csv('practice_df.csv')
 
+def one_option_graph():
     # these will all be STACKED bar graphs
     # for question in ONE_CHOICE_QUESTIONS:
+    pass
 
 
 df = pd.read_csv('raw_overall_survey/byu_for_pandas_strings_stephen_fixed.csv')
 df.dropna(subset=[RACE, GENDER, PROGRAM, MAJOR, GRAD_YEAR], inplace=True)  # tosses if participants didn't answer these
 df = df[(df[GENDER] == 'Male') | (df[GENDER] == 'Female')]
-graph_data(df)
+many_option_graphing(df)
