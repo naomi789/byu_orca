@@ -54,7 +54,7 @@ def graph_data(df):
             global agg
 
 
-            
+
 
             if var == MAJOR:
                 print(var)
@@ -65,8 +65,8 @@ def graph_data(df):
                 DF = question_df
                 agg = question_df[keep_cols + ['binary_CS'] + answers].groupby([GENDER, 'binary_CS']).aggregate(sum)
 
-            
-            else: 
+
+            else:
                 agg = question_df[keep_cols + answers].groupby(keep_cols).aggregate(sum)
 
 
@@ -87,7 +87,7 @@ def graph_data(df):
             plt.title(question)
             plt.tight_layout()
 
-            plt.savefig(f'panda_BYU/{question}.png')
+            plt.savefig(f'panda_BYU_results/{question}.png')
             # {var}/
             question_df.to_csv('practice_df.csv')
 
@@ -99,5 +99,3 @@ df = pd.read_csv('raw_overall_survey/byu_for_pandas_strings_stephen_fixed.csv')
 df.dropna(subset=[RACE, GENDER, PROGRAM, MAJOR, GRAD_YEAR], inplace=True)  # tosses if participants didn't answer these
 df = df[(df[GENDER] == 'Male') | (df[GENDER] == 'Female')]
 graph_data(df)
-
-
