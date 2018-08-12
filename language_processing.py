@@ -1,7 +1,7 @@
 import logging
-import nltk
+# import nltk
 import string
-from nltk.corpus import stopwords
+# from nltk.corpus import stopwords
 from operator import itemgetter
 from collections import defaultdict
 from data_structures import professor_names, staff_names
