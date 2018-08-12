@@ -106,13 +106,6 @@ def values(option_list, options):
     return count_per_value
 
 
-def sorted_answers(question_options):
-    answer = answer_dict_switcher.get(question_options, 'error')
-    if answer == 'error':
-        raise Exception('answer type is unknown in sorted_answers()\'s switcher')
-    return answer
-
-
 def bar_graph(question, focus_var, option_a, option_b, count_option_a_responses, count_option_b_responses, a, b):
     file_destination, x_values = get_file_location(question, focus_var, 'bar_graph')
 
