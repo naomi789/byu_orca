@@ -48,11 +48,13 @@ def sorted_answers(question_options):
 def many_option_graphing(df): # this does all the '% of focus_var gave this answer # all be bar graphs
     gender_options = ['Male', 'Female']
     for var in FOCUS_VARS:
-        print('var', var)
+        shorthand_var = ques_num_to_shorthand[var]
+        print('var', var, 'short', shorthand_var)
         keep_cols = [var,  GENDER]
 
         for question in MANY_CHOICES_QUESTIONS:
-            print('question', question)
+            shorthand_question = ques_num_to_shorthand[question]
+            print('question', question, 'short', shorthand_question)
             question_df, answers = get_question_df(df, question, keep_cols)
 
             DF = question_df
@@ -78,10 +80,10 @@ def many_option_graphing(df): # this does all the '% of focus_var gave this answ
 
             labels = [x[:40] for x in agg_t.index]
             ax.set_yticklabels(labels)
-
-            plt.title(question)
+            plt.xlim(0,1)
+            plt.title(shorthand_question)
             plt.tight_layout()
-            plt.savefig(f'panda_BYU_results/{ques_num_to_shorthand[var]}/{ques_num_to_shorthand[question]}.png')
+            plt.savefig(f'panda_BYU_results/{shorthand_var}/{shorthand_question}.png')
 
 
 def one_option_graph():
