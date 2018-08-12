@@ -409,3 +409,5 @@ ques_num_to_shorthand = {'Q70': 'CONSENT_CURRENT', 'Q89': 'CONSENT_FUTURE', 'Q89
                          'Q75': 'INTELLIGENCE_FIXED', 'Q76': 'INTELLIGENCE_MALLEABLE', 'Q77': 'FAILURE_LAZY',
                          'Q78': 'FAILURE_ENVIRONMENT', 'Q79': 'FAILURE_ABILITY', 'Q67': 'DESCRIBE_NEGATIVE_EXPERIENCE',
                          'Q54': 'SUGGESTION_IMPROVE_INSTITUTION'}
+
+
