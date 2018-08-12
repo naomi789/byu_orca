@@ -46,6 +46,13 @@ def sorted_answers(question_options):
 
 
 def many_option_graphing(df): # this does all the '% of focus_var gave this answer # all be bar graphs
+    # FOR DEBUGGING
+    global answer
+    global DF
+    global keep_cols
+    global agg
+    global before_df
+    global after_df
     gender_options = ['Male', 'Female']
     for var in FOCUS_VARS:
         shorthand_var = ques_num_to_shorthand[var]
@@ -57,17 +64,26 @@ def many_option_graphing(df): # this does all the '% of focus_var gave this answ
             print('question', question, 'short', shorthand_question)
             question_df, answers = get_question_df(df, question, keep_cols)
 
+
             DF = question_df
 
             if var == MAJOR:
                 question_df['binary_CS'] = ['CS' if x else 'non_CS' for x in question_df[MAJOR]=='Computer Science']
+                
                 agg = question_df[keep_cols + ['binary_CS'] + answers].groupby([GENDER, 'binary_CS']).aggregate(sum)
                 columns_for_var = 'binary_CS'
             else:
-                expected_answer_types = ques_ans[question]
-                possible_answers = sorted_answers(expected_answer_types)
-                agg = question_df[keep_cols + answers].groupby(keep_cols).aggregate(sum)
-                columns_for_var = 'idk' # TODO
+                expected_answer_types = question_number_to_expected_answer[question]
+                print('expected_answer_types', expected_answer_types)
+                # print()
+                # possible_answers = sorted_answers(expected_answer_types)
+                wanted_ones = keep_cols + expected_answer_types
+                # print('wanted_ones', wanted_ones)
+                agg = question_df[wanted_ones].groupby([wanted_ones]).aggregate(sum)
+
+
+
+                columns_for_var = expected_answer_types
 
             agg_t = agg.transpose()
             # CS = ['CS', 'non_CS']
