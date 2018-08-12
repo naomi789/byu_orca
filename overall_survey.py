@@ -54,36 +54,6 @@ def encouragement_or_barriers(question, focus_var, answer_to_count_per_category,
             (answer_to_count_per_category[1][cat_1_keys] / sum_1)) + ',')
 
 
-def assorted_special_graphs(people):
-    compare_confidence_GPA(people, 'gender')
-
-    for type_of_feedback in ['describe_positive_experience', 'describe_negative_experience']:
-        associate_with_professors(people, type_of_feedback)
-
-    # pie chart of races
-    var = 'race'
-    choice_to_answer = calculate_one_chart(people, var)
-    assert choice_to_answer
-    pie_chart(var, choice_to_answer)
-
-    # pie chart of what non-CS majors there were
-    var = 'university_major'
-    choice_to_answer = calculate_one_chart(people, var)
-    assert choice_to_answer
-    pie_chart(var, choice_to_answer)
-
-    # pie chart of what genders there were
-    var = 'gender'
-    choice_to_answer = calculate_one_chart(people, var)
-    assert choice_to_answer
-    pie_chart(var, choice_to_answer)
-
-    # print out the stats of who responded v. who was invited to take the survey
-    response_rate(people)
-
-    # see how common different words are in free response
-    find_common_words(people)
-
 
 def response_rate(people):
     # these are magic numbers given to me by BYU
@@ -249,21 +219,22 @@ def pick_graphing_style(people):
                                               category_names)
 
 
-# if __name__ == "__main__":  # needed if I decide to include this file elsewhere
-logging.basicConfig(level=logging.INFO)  # 'DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICIAL'
+def main():
+    # if __name__ == "__main__":  # needed if I decide to include this file elsewhere
+    logging.basicConfig(level=logging.INFO)  # 'DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICIAL'
 
-data = run_overall('raw_overall_survey/overall_data_prepped_BYU.csv')  # ./fake_data/ORCA_overall_CS_edited.csv
-# ques_to_question = ques_to_question() # not using yet, but would be good to add to graphs, eventually
+    data = run_overall('raw_overall_survey/overall_data_prepped_BYU.csv')  # ./fake_data/ORCA_overall_CS_edited.csv
+    # ques_to_question = ques_to_question() # not using yet, but would be good to add to graphs, eventually
 
-people = parse_overall_data(data[2:])  # deletes the question text and shorthand from the dataset
+    people = parse_overall_data(data[2:])  # deletes the question text and shorthand from the dataset
 
-# will not be needed again unless the questions change for UVA version
-# short_to_long = {}
-# for short, long in zip(BYU_question_shorthand, BYU_question_string):
-#     short_to_long[short] = long
+    # will not be needed again unless the questions change for UVA version
+    # short_to_long = {}
+    # for short, long in zip(BYU_question_shorthand, BYU_question_string):
+    #     short_to_long[short] = long
 
-# the one that actually does stuff
-pick_graphing_style(people)
+    # the one that actually does stuff
+    pick_graphing_style(people)
 
-# does other graphs
-assorted_special_graphs(people)
+    # does other graphs
+    assorted_special_graphs(people)
