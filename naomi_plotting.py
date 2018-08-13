@@ -45,58 +45,29 @@ def sorted_answers(question_options):
 
 
 
-def many_option_graphing(df): # this does all the '% of focus_var gave this answer # all be bar graphs
+def make_graphs(df, is_stacked, is_likert):
     # FOR DEBUGGING
-    global answer
-    global DF
     global keep_cols
     global agg
-    global before_df
     global after_df
     global counts
     global columns_for_var
-    global cat1, cat2
     global expected_answer_types
     gender_options = ['Male', 'Female']
-    for var in FOCUS_VARS:
-        shorthand_var = ques_num_to_shorthand[var]
-        print('var', var, 'short', shorthand_var)
-        keep_cols = [var,  GENDER]
+    for comparison_point in FOCUS_VARS:
+        shorthand_var = ques_num_to_shorthand[comparison_point]
+        print('comparison_point', comparison_point, 'short', shorthand_var)
+        keep_cols = [GENDER, comparison_point]
 
         for question in MANY_CHOICES_QUESTIONS:
             shorthand_question = ques_num_to_shorthand[question]
             print('question', question, 'short', shorthand_question)
+
             question_df, answers = get_question_df(df, question, keep_cols)
 
+            agg_t, counts, columns_for_var = filter_data(question_df, comparison_point, question, answers, keep_cols)
 
-            DF = question_df
-
-            if var == MAJOR:
-                continue
-                question_df['binary_CS'] = ['CS' if x else 'non_CS' for x in question_df[MAJOR]=='Computer Science']
-                agg = question_df[keep_cols + ['binary_CS'] + answers]
-                # print(agg)
-                agg = agg.groupby([GENDER, 'binary_CS'])
-                # print(agg)
-                before_df = agg
-                # print('agg', agg)
-                agg = agg.aggregate(sum)
-                columns_for_var = 'binary_CS'
-
-            else:
-                expected_answer_types = question_number_to_expected_answer[question]
-                wanted_ones = keep_cols + expected_answer_types
-                agg = question_df[wanted_ones].groupby(keep_cols).aggregate(sum)
-
-                columns_for_var = var
-
-            agg_t = agg.transpose()
-            cat1 = agg_t.columns.levels[0]
-            cat2 = agg_t.columns.levels[1]
-            counts = np.array([len(DF[(DF[GENDER] == x) & (DF[columns_for_var] == y)]) for y in cat1 for x in cat2])
-
-
-            ax = (agg_t / (counts)).plot(kind='barh', stacked=False)
+            ax = (agg_t / (counts)).plot(kind='barh', stacked=is_stacked)
 
             labels = [x[:40] for x in agg_t.index]
             ax.set_yticklabels(labels)
@@ -107,12 +78,38 @@ def many_option_graphing(df): # this does all the '% of focus_var gave this answ
             plt.savefig(f'panda_BYU_results/{shorthand_var}/{shorthand_question}.png')
 
 
+def filter_data(question_df, comparison_point, question, answers, keep_cols):
+    global agg, agg_t
+    global cat1, cat2, counts
+
+    if comparison_point == MAJOR:
+        question_df['binary_CS'] = ['CS' if x else 'non_CS' for x in question_df[MAJOR] == 'Computer Science']
+        agg = question_df[keep_cols + ['binary_CS'] + answers]
+        agg = agg.groupby([GENDER, 'binary_CS']).aggregate(sum)
+        print(agg)
+        columns_for_var = 'binary_CS'
+
+    else:
+        expected_answer_types = question_number_to_expected_answer[question]
+        wanted_ones = keep_cols + expected_answer_types
+        agg = question_df[wanted_ones].groupby(keep_cols).aggregate(sum)
+        columns_for_var = comparison_point
+
+    agg_t = agg.transpose()
+    cat1 = agg_t.columns.levels[0]
+    cat2 = agg_t.columns.levels[1]
+    counts = np.array([len(question_df[(question_df[GENDER] == x) & (question_df[columns_for_var] == y)]) for x in cat1 for y in cat2])
+
+    # sys.exit()
+    return agg_t, counts, columns_for_var
+
+
 def one_option_graph():
     # these will all be STACKED bar graphs
     # for question in ONE_CHOICE_QUESTIONS:
     for var in FOCUS_VARS:
         print('var', var)
-        keep_cols = [var,  GENDER]
+        keep_cols = [GENDER, var]
 
         for question in MANY_CHOICES_QUESTIONS:
             print('question', question)
@@ -170,7 +167,7 @@ def main():
     df = pd.read_csv('raw_overall_survey/byu_for_pandas_strings_stephen_fixed.csv')
     df.dropna(subset=[RACE, GENDER, PROGRAM, MAJOR, GRAD_YEAR], inplace=True)  # tosses if participants didn't answer these
     df = df[(df[GENDER] == 'Male') | (df[GENDER] == 'Female')]
-    many_option_graphing(df)
+    make_graphs(df, False, False)
     # assorted_special_graphs(df)
 
 
