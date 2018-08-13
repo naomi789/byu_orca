@@ -69,20 +69,29 @@ def many_option_graphing(df): # this does all the '% of focus_var gave this answ
 
             if var == MAJOR:
                 question_df['binary_CS'] = ['CS' if x else 'non_CS' for x in question_df[MAJOR]=='Computer Science']
-                
-                agg = question_df[keep_cols + ['binary_CS'] + answers].groupby([GENDER, 'binary_CS']).aggregate(sum)
+                agg = question_df[keep_cols + ['binary_CS'] + answers]
+                # print(agg)
+                agg = agg.groupby([GENDER, 'binary_CS'])
+                # print(agg)
+                before_df = agg
+                # print('agg', agg)
+                agg = agg.aggregate(sum)
                 columns_for_var = 'binary_CS'
             else:
-                expected_answer_types = question_number_to_expected_answer[question]
-                print('expected_answer_types', expected_answer_types)
-                # print()
-                # possible_answers = sorted_answers(expected_answer_types)
-                wanted_ones = keep_cols + expected_answer_types
-                # print('wanted_ones', wanted_ones)
-                agg = question_df[wanted_ones].groupby([wanted_ones]).aggregate(sum)
+                expected_answers = question_number_to_expected_answer[question]
+                # print('expected_answer_types', expected_answer_types)
+                wanted_ones = keep_cols + expected_answers
+                agg = question_df[wanted_ones]
 
 
-
+                for option in expected_answers:
+                    question_df[option] = [1 if x == option for x in question_df[question]]
+                
+                print(agg)
+                agg = agg.groupby(wanted_ones)
+                print("okay")
+                # agg = agg.aggregate(sum)
+                print(agg)
                 columns_for_var = expected_answer_types
 
             agg_t = agg.transpose()
