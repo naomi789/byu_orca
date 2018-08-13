@@ -53,6 +53,10 @@ def many_option_graphing(df): # this does all the '% of focus_var gave this answ
     global agg
     global before_df
     global after_df
+    global counts
+    global columns_for_var
+    global cat1, cat2
+    global expected_answer_types
     gender_options = ['Male', 'Female']
     for var in FOCUS_VARS:
         shorthand_var = ques_num_to_shorthand[var]
@@ -68,6 +72,7 @@ def many_option_graphing(df): # this does all the '% of focus_var gave this answ
             DF = question_df
 
             if var == MAJOR:
+                continue
                 question_df['binary_CS'] = ['CS' if x else 'non_CS' for x in question_df[MAJOR]=='Computer Science']
                 agg = question_df[keep_cols + ['binary_CS'] + answers]
                 # print(agg)
@@ -77,37 +82,28 @@ def many_option_graphing(df): # this does all the '% of focus_var gave this answ
                 # print('agg', agg)
                 agg = agg.aggregate(sum)
                 columns_for_var = 'binary_CS'
+
             else:
-                expected_answers = question_number_to_expected_answer[question]
-                # print('expected_answer_types', expected_answer_types)
-                wanted_ones = keep_cols + expected_answers
-                agg = question_df[wanted_ones]
+                expected_answer_types = question_number_to_expected_answer[question]
+                wanted_ones = keep_cols + expected_answer_types
+                agg = question_df[wanted_ones].groupby(keep_cols).aggregate(sum)
 
-
-                for option in expected_answers:
-                    question_df[option] = [1 if x == option for x in question_df[question]]
-                
-                print(agg)
-                agg = agg.groupby(wanted_ones)
-                print("okay")
-                # agg = agg.aggregate(sum)
-                print(agg)
-                columns_for_var = expected_answer_types
+                columns_for_var = var
 
             agg_t = agg.transpose()
-            # CS = ['CS', 'non_CS']
             cat1 = agg_t.columns.levels[0]
             cat2 = agg_t.columns.levels[1]
-            counts = np.array([len(DF[(DF[GENDER] == x) & (DF[columns_for_var] == y)]) for x in cat1 for y in cat2])
+            counts = np.array([len(DF[(DF[GENDER] == x) & (DF[columns_for_var] == y)]) for y in cat1 for x in cat2])
 
 
             ax = (agg_t / (counts)).plot(kind='barh', stacked=False)
 
             labels = [x[:40] for x in agg_t.index]
             ax.set_yticklabels(labels)
-            plt.xlim(0,1)
+            plt.xlim(0, 1)
             plt.title(shorthand_question)
             plt.tight_layout()
+            os.makedirs(f'panda_BYU_results/{shorthand_var}', exist_ok=True)
             plt.savefig(f'panda_BYU_results/{shorthand_var}/{shorthand_question}.png')
 
 
