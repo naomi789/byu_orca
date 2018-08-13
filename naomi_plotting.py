@@ -59,11 +59,15 @@ def make_graphs(df, is_stacked, is_likert):
         print('comparison_point', comparison_point, 'short', shorthand_var)
         keep_cols = [GENDER, comparison_point]
 
-        for question in MANY_CHOICES_QUESTIONS:
+        for question in MANY_CHOICES_QUESTIONS + ONE_CHOICE_QUESTIONS:
             shorthand_question = ques_num_to_shorthand[question]
             print('question', question, 'short', shorthand_question)
 
             question_df, answers = get_question_df(df, question, keep_cols)
+
+            if is_likert:
+                pass
+                # delete all the options equal to "Unanswered"
 
             agg_t, counts, columns_for_var = filter_data(question_df, comparison_point, question, answers, keep_cols)
 
@@ -100,7 +104,6 @@ def filter_data(question_df, comparison_point, question, answers, keep_cols):
     cat2 = agg_t.columns.levels[1]
     counts = np.array([len(question_df[(question_df[GENDER] == x) & (question_df[columns_for_var] == y)]) for x in cat1 for y in cat2])
 
-    # sys.exit()
     return agg_t, counts, columns_for_var
 
 
