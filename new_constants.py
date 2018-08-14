@@ -70,6 +70,7 @@ DESCRIBE_NEGATIVE_EXPERIENCE = 'Q68'
 DESCRIBE_POSITIVE_EXPERIENCE = 'Q67'
 SUGGESTION_IMPROVE_INSTITUTION = 'Q54'
 
+# count of how many people were invited to take this survey
 FEMALE_COUNT = 427
 MALE_COUNT = 2163
 CS_MAJOR_COUNT= 1125
@@ -160,6 +161,8 @@ question_number_to_expected_answer = {
     'Q77': agreement,  # FAILURE_LAZY
     'Q78': agreement,  # FAILURE_ENVIRONMENT
     'Q79': agreement,  # FAILURE_ABILITY
+    'Q50': yes_no,  # RECEIVED_INTERNSHIP_OFFER
+    'Q7': byu_courses,  # UNIVERSITY_COURSES_FALL
 }
 
 answer_dict_switcher = {
