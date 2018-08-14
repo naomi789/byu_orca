@@ -8,6 +8,8 @@ from language_processing import *
 from graph_func import pie_chart
 from answer_type import compare_confidence_GPA
 from overall_survey import response_rate, calculate_one_chart
+import logging
+
 
 def get_question_df(df, question, keep_cols, get_answers=True):
     # find expected answer types
@@ -56,7 +58,7 @@ def make_graphs(df, is_stacked, is_likert):
     gender_options = ['Male', 'Female']
     for comparison_point in FOCUS_VARS:
         shorthand_var = ques_num_to_shorthand[comparison_point]
-        print('comparison_point', comparison_point, 'short', shorthand_var)
+        print('comparison_point ' + comparison_point +' short ' + shorthand_var)
         keep_cols = [GENDER, comparison_point]
 
         for question in MANY_CHOICES_QUESTIONS + ONE_CHOICE_QUESTIONS:
@@ -90,7 +92,6 @@ def filter_data(question_df, comparison_point, question, answers, keep_cols):
         question_df['binary_CS'] = ['CS' if x else 'non_CS' for x in question_df[MAJOR] == 'Computer Science']
         agg = question_df[keep_cols + ['binary_CS'] + answers]
         agg = agg.groupby([GENDER, 'binary_CS']).aggregate(sum)
-        print(agg)
         columns_for_var = 'binary_CS'
 
     else:
@@ -167,6 +168,7 @@ def assorted_special_graphs(df, people):
 
 
 def main():
+    logging.basicConfig(level=logging.INFO)  # 'DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICIAL'
     df = pd.read_csv('raw_overall_survey/use-this.csv')
     df.dropna(subset=[RACE, GENDER, PROGRAM, MAJOR, GRAD_YEAR], inplace=True)  # tosses if participants didn't answer these
     df = df[(df[GENDER] == 'Male') | (df[GENDER] == 'Female')]
