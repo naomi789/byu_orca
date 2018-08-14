@@ -47,29 +47,27 @@ def sorted_answers(question_options):
 
 
 
-def make_graphs(df, is_stacked, is_likert):
-    # FOR DEBUGGING
-    global keep_cols
-    global agg
-    global after_df
-    global counts
-    global columns_for_var
-    global expected_answer_types
+def make_graphs(df):
+    is_likert = False
+    is_stacked = False
+    is_vertical = False
     gender_options = ['Male', 'Female']
     for comparison_point in FOCUS_VARS:
         shorthand_var = ques_num_to_shorthand[comparison_point]
-        print('comparison_point ' + comparison_point +' short ' + shorthand_var)
+        print('COMPARISON POINT ' + comparison_point +' SHORT ' + shorthand_var)
         keep_cols = [GENDER, comparison_point]
 
         for question in MANY_CHOICES_QUESTIONS + ONE_CHOICE_QUESTIONS:
             shorthand_question = ques_num_to_shorthand[question]
-            print('question', question, 'short', shorthand_question)
+            print('question', question, 'short', shorthand_question, 'is likert', is_likert)
 
             question_df, answers = get_question_df(df, question, keep_cols)
+            if question in ONE_CHOICE_QUESTIONS:
+                is_likert = True
+                is_stacked = True
+                is_vertical = True
+                # TODO delete all the options equal to "Unanswered"
 
-            if is_likert:
-                pass
-                # delete all the options equal to "Unanswered"
 
             agg_t, counts, columns_for_var = filter_data(question_df, comparison_point, question, answers, keep_cols)
 
@@ -80,14 +78,17 @@ def make_graphs(df, is_stacked, is_likert):
             plt.xlim(0, 1)
             plt.title(shorthand_question)
             plt.tight_layout()
-            os.makedirs(f'panda_BYU_results/{shorthand_var}', exist_ok=True)
-            plt.savefig(f'panda_BYU_results/{shorthand_var}/{shorthand_question}.png')
+
+            if is_likert:
+                os.makedirs(f'panda_BYU_results/{shorthand_var}/likert_bar_graphs', exist_ok=True)
+                file_name = f'panda_BYU_results/{shorthand_var}/likert_bar_graphs/{shorthand_question}.png'
+            else:
+                os.makedirs(f'panda_BYU_results/{shorthand_var}/stacked_bar_graphs', exist_ok=True)
+                file_name = f'panda_BYU_results/{shorthand_var}/stacked_bar_graphs/{shorthand_question}.png'
+            plt.savefig(file_name)
 
 
 def filter_data(question_df, comparison_point, question, answers, keep_cols):
-    global agg, agg_t
-    global cat1, cat2, counts
-
     if comparison_point == MAJOR:
         question_df['binary_CS'] = ['CS' if x else 'non_CS' for x in question_df[MAJOR] == 'Computer Science']
         agg = question_df[keep_cols + ['binary_CS'] + answers]
@@ -107,18 +108,6 @@ def filter_data(question_df, comparison_point, question, answers, keep_cols):
 
     return agg_t, counts, columns_for_var
 
-
-def one_option_graph():
-    # these will all be STACKED bar graphs
-    # for question in ONE_CHOICE_QUESTIONS:
-    for var in FOCUS_VARS:
-        print('var', var)
-        keep_cols = [GENDER, var]
-
-        for question in MANY_CHOICES_QUESTIONS:
-            print('question', question)
-            question_df, answers = get_question_df(df, question, keep_cols)
-            DF = question_df
 
 def prep_for_pie(df, attribute):
     choice_to_answer = {}
@@ -172,7 +161,7 @@ def main():
     df = pd.read_csv('raw_overall_survey/use-this.csv')
     df.dropna(subset=[RACE, GENDER, PROGRAM, MAJOR, GRAD_YEAR], inplace=True)  # tosses if participants didn't answer these
     df = df[(df[GENDER] == 'Male') | (df[GENDER] == 'Female')]
-    make_graphs(df, False, False)
+    make_graphs(df)
     # assorted_special_graphs(df)
 
 
