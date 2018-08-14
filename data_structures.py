@@ -220,7 +220,7 @@ degree_pursuing = ['Undergraduate', 'Masters', 'PhD', 'Not currently pursuing a 
 age = ['18', '19', '20', '21', '22', '23', '24', '25', '26', '27', '28', '29', '30', '31-39', '40-49', '50-59',
        '60 or older', 'Prefer not to say']
 
-BYU_courses = ['CS 142', 'CS 224', 'CS 235', 'CS 236', 'CS 240', 'CS 252', 'CS 260', 'CS 312', 'CS 324', 'CS 340',
+byu_courses = ['CS 142', 'CS 224', 'CS 235', 'CS 236', 'CS 240', 'CS 252', 'CS 260', 'CS 312', 'CS 324', 'CS 340',
                'CS 404', 'Other 300 or 400 level courses', 'Other 500 or 600 level courses',
                'I will not take any CS courses Fall 2018']
 
