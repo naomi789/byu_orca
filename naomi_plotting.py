@@ -167,7 +167,7 @@ def assorted_special_graphs(df, people):
 
 
 def main():
-    df = pd.read_csv('raw_overall_survey/byu_for_pandas_strings_stephen_fixed.csv')
+    df = pd.read_csv('raw_overall_survey/use-this.csv')
     df.dropna(subset=[RACE, GENDER, PROGRAM, MAJOR, GRAD_YEAR], inplace=True)  # tosses if participants didn't answer these
     df = df[(df[GENDER] == 'Male') | (df[GENDER] == 'Female')]
     make_graphs(df, False, False)
