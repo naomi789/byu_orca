@@ -7,7 +7,8 @@ from new_constants import *
 from language_processing import *
 from graph_func import pie_chart
 from answer_type import compare_confidence_GPA
-from overall_survey import response_rate, calculate_one_chart
+from overall_survey import response_rate
+from other_constants import *
 import logging
 
 
@@ -48,30 +49,35 @@ def sorted_answers(question_options):
 
 
 def make_graphs(df):
-    is_likert = False
-    is_stacked = False
-    is_vertical = False
+    is_likert_stacked_vertical_transposed = False
+
     gender_options = ['Male', 'Female']
     for comparison_point in FOCUS_VARS:
         shorthand_var = ques_num_to_shorthand[comparison_point]
         print('COMPARISON POINT ' + comparison_point +' SHORT ' + shorthand_var)
         keep_cols = [GENDER, comparison_point]
 
-        for question in MANY_CHOICES_QUESTIONS + ONE_CHOICE_QUESTIONS:
+        for question in MANY_CHOICES_QUESTIONS:  # + ONE_CHOICE_QUESTIONS:
             shorthand_question = ques_num_to_shorthand[question]
-            print('question', question, 'short', shorthand_question, 'is likert', is_likert)
+            print('question', question, 'short', shorthand_question, 'is_likert_stacked_vertical_transposed', is_likert_stacked_vertical_transposed)
 
             question_df, answers = get_question_df(df, question, keep_cols)
             if question in ONE_CHOICE_QUESTIONS:
-                is_likert = True
-                is_stacked = True
-                is_vertical = True
+                is_likert_stacked_vertical_transposed = True
                 # TODO delete all the options equal to "Unanswered"
 
 
             agg_t, counts, columns_for_var = filter_data(question_df, comparison_point, question, answers, keep_cols)
 
-            ax = (agg_t / (counts)).plot(kind='barh', stacked=is_stacked)
+            transposed = agg_t / counts
+
+            if is_likert_stacked_vertical_transposed:
+                # sometimes we throw and error here, like when: Q46 aka PARTICIPATION_GROUP_PROJECT_ROLE
+                ax = transposed.transpose().plot(kind='barh', stacked=is_likert_stacked_vertical_transposed)
+            else:
+                ax = transposed.plot(kind='barh', stacked=is_likert_stacked_vertical_transposed)
+
+            # ax = (agg_t / (counts)).plot(kind='barh', stacked=is_likert_stacked_vertical_transposed)
 
             labels = [x[:40] for x in agg_t.index]
             ax.set_yticklabels(labels)
@@ -79,7 +85,7 @@ def make_graphs(df):
             plt.title(shorthand_question)
             plt.tight_layout()
 
-            if is_likert:
+            if is_likert_stacked_vertical_transposed:
                 os.makedirs(f'panda_BYU_results/{shorthand_var}/likert_bar_graphs', exist_ok=True)
                 file_name = f'panda_BYU_results/{shorthand_var}/likert_bar_graphs/{shorthand_question}.png'
             else:
