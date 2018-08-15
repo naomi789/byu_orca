@@ -225,15 +225,14 @@ def assorted_special_graphs(df):
     plt.savefig(f'panda_BYU_results/{title}.png')
     plt.clf()
 
-    # see how common different words are in free response
+    # see how common different words are in free response; which professors' names come up more
     split_on_var = GENDER
     for pos_neg_sug in TEXT_ANSWERS:
         find_common_words(df, pos_neg_sug, split_on_var)
+        associate_with_professors(df, pos_neg_sug)
+
 
     # compare_confidence_GPA(people, 'gender')
-    #
-    # for type_of_feedback in ['describe_positive_experience', 'describe_negative_experience']:
-    #     associate_with_professors(people, type_of_feedback)
 
 
 
