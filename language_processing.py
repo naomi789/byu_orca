@@ -62,7 +62,7 @@ def associate_with_professors(df, pos_neg_sug):
 
     for name in name_to_comment.keys():
         f.write(f'\nname: {name} {pos_neg_sug}: {name_to_comment[name].__len__()}')
-    f.write('\n')
+    f.write('\n\n')
 
     for name in name_to_comment.keys():
         f.write(f'name: {name}\n')
