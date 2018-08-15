@@ -188,6 +188,29 @@ def response_rate_calculator(df, num_responses):
 
 def assorted_special_graphs(df):
     global stuff
+    # histogram of ages
+    title = 'ages'
+    clean_ages = pd.to_numeric(df[AGE], errors='coerce')
+    stuff = clean_ages
+    stuff = stuff.value_counts()
+    stuff.dropna().plot.bar(y='AGE')
+        # (bins=30) # , range=('18', '67'))
+
+    # plt.axis('equal')
+    # plt.ylim(ymin=0)
+
+    plt.title(title)
+    plt.savefig(f'panda_BYU_results/{title}.png')
+    plt.clf()
+
+    # histogram of GPA
+    title = 'GPA'
+    clean_GPA = pd.to_numeric(df[GPA], errors='coerce')
+    clean_GPA.dropna().hist(bins=50)
+    plt.title(title)
+    plt.savefig(f'panda_BYU_results/{title}.png')
+    plt.clf()
+
     # TODO: wouldn't it be interesting if I made the actual one on the same sheet, to better compare
     # pie chart of races
     title = 'race'
@@ -235,25 +258,6 @@ def assorted_special_graphs(df):
         find_common_words(df, pos_neg_sug, split_on_var)
         associate_with_professors(df, pos_neg_sug)
 
-    # histogram of ages
-    title = 'ages'
-    sorted = df[AGE].sort_values().value_counts()
-    print(sorted)
-    df[AGE].hist()
-    # plot(kind='pie', autopct='%.1f%%',)
-    plt.axis('equal')
-    plt.ylim(ymin=0)
-    plt.title(title)
-    plt.savefig(f'panda_BYU_results/{title}.png')
-    plt.clf()
-
-    # histogram of GPA
-    title = 'GPA'
-    clean_GPA = pd.to_numeric(df[GPA], errors='coerce')
-    clean_GPA.dropna().hist(bins=30)
-    plt.title(title)
-    plt.savefig(f'panda_BYU_results/{title}.png')
-    plt.clf()
 
     # compare_confidence_GPA(people, 'gender')
 
