@@ -54,6 +54,8 @@ def make_graphs(df):
 
         for question in MANY_CHOICES_QUESTIONS:  # + ONE_CHOICE_QUESTIONS:
             shorthand_question = ques_num_to_shorthand[question]
+            if shorthand_question == 'PARTICIPATION_GROUP_PROJECT_ROLE':
+                temp = 32
             print('question', question, 'short', shorthand_question, 'is_likert_stacked_vertical_transposed',
                   is_likert_stacked_vertical_transposed)
 
@@ -66,13 +68,13 @@ def make_graphs(df):
 
             transposed = agg_t / counts
 
-            # if is_likert_stacked_vertical_transposed:
-            #     # sometimes we throw and error here, like when: Q46 aka PARTICIPATION_GROUP_PROJECT_ROLE
-            #     ax = transposed.transpose().plot(kind='barh', stacked=is_likert_stacked_vertical_transposed)
-            # else:
-            #     ax = transposed.plot(kind='barh', stacked=is_likert_stacked_vertical_transposed)
+            if is_likert_stacked_vertical_transposed:
+                # sometimes we throw and error here, like when: Q46 aka PARTICIPATION_GROUP_PROJECT_ROLE
+                ax = transposed.transpose().plot(kind='barh', stacked=is_likert_stacked_vertical_transposed)
+            else:
+                ax = transposed.plot(kind='barh', stacked=is_likert_stacked_vertical_transposed)
 
-            ax = transposed.plot(kind='barh', stacked=is_likert_stacked_vertical_transposed)
+            # ax = transposed.plot(kind='barh', stacked=is_likert_stacked_vertical_transposed)
 
             # ax = (agg_t / (counts)).plot(kind='barh', stacked=is_likert_stacked_vertical_transposed)
 
@@ -80,7 +82,7 @@ def make_graphs(df):
             ax.set_yticklabels(labels)
             plt.xlim(0, 1)
             plt.title(shorthand_question)
-            plt.tight_layout()
+            # plt.tight_layout()
 
             if is_likert_stacked_vertical_transposed:
                 os.makedirs(f'panda_BYU_results/{shorthand_var}/likert_bar_graphs', exist_ok=True)
@@ -184,6 +186,7 @@ def response_rate_calculator(df, num_responses):
 
 
 def new_num_histogram(df, title, var):
+    # TODO trash the data for people who said their GPA > 4
     cleaned = pd.to_numeric(df[var], errors='coerce')
     cleaned.dropna().hist(bins=50)
     plt.title(title)
@@ -194,15 +197,15 @@ def new_num_histogram(df, title, var):
 
 def assorted_special_graphs(df):
     # histogram of ages
-    title = 'ages'
-    df = df.sort_values(AGE)
-    clean_ages = pd.to_numeric(df[AGE], errors='coerce')
-    clean_ages = clean_ages.sort_values(AGE)
-    clean_ages = clean_ages.value_counts()
-    clean_ages.dropna().plot.bar(y='AGE')
-    plt.title(title)
-    plt.savefig(f'panda_BYU_results/overall/{title}.png')
-    plt.clf()
+    # title = 'ages'
+    # df = df.sort_values(AGE)
+    # clean_ages = pd.to_numeric(df[AGE], errors='coerce')
+    # clean_ages = clean_ages.sort_values(AGE)
+    # clean_ages = clean_ages.value_counts()
+    # clean_ages.dropna().plot.bar(y='AGE')
+    # plt.title(title)
+    # plt.savefig(f'panda_BYU_results/overall/{title}.png')
+    # plt.clf()
 
     # histogram of GPA
     title = 'GPA'
@@ -266,7 +269,8 @@ def main():
     # print out the stats of who responded v. who was invited to take the survey
     response_rate_calculator(df, num_responses)
 
-    # make_graphs(df)
+    make_graphs(df)
+
     assorted_special_graphs(df)
 
 
