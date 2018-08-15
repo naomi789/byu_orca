@@ -6,6 +6,8 @@ from operator import itemgetter
 from collections import defaultdict
 from data_structures import professor_names, staff_names
 from new_constants import ques_num_to_shorthand
+import os
+
 
 def graph_string(question, people):
     logging.info("graph string")
@@ -37,36 +39,43 @@ def long_text(question, people):
     f.close()
 
 
-def associate_with_professors(people, pos_neg_feedback):
-    f = open('results_at_BYU/strings/file_name' + pos_neg_feedback + '.txt', 'w', encoding='utf-8')
+def associate_with_professors(df, pos_neg_sug):
+    f = open(f'panda_BYU_results/strings/professors_{ques_num_to_shorthand[pos_neg_sug]}.txt', 'w', encoding='utf-8')
 
     all_names = staff_names + professor_names + [first.split(' ', 1)[0] for first in staff_names] + [
         first.split(' ', 1)[0] for first in professor_names] + [last.split(' ', 1)[1] for last in staff_names] + [
                     last.split(' ', 1)[1] for last in professor_names]
 
-    name_to_comment = defaultdict(list)
-    for person in people:
-        if pos_neg_feedback == 'describe_positive_experience':
-            comment = getattr(person, 'describe_positive_experience').lower()
-        elif pos_neg_feedback == 'describe_negative_experience':
-            comment = getattr(person, 'describe_negative_experience').lower()
+    existing_comments = df.dropna(subset=[pos_neg_sug])
+    existing_comments = existing_comments[pos_neg_sug]
+    existing_comments = existing_comments.str.lower()
+    # TODO: make all comments lowercase
 
+    name_to_comment = defaultdict(list)
+    for comment in existing_comments:
+        if comment == 'This wasn\'t a huge deal, but Professor Woodfield always pretty condescending. I never wanted to ask questions in the class because he made students feel stupid for not knowing the answers. One time I remember someone asked a question and instead of answering the question he asked the class to raise their hands if they remember him already saying the answer to that question earlier. Some people raised their hands so he never answered the question and moved on. I get that it can be frustrating as a teacher to answer the same questions over and over again, but sometimes you miss something, or just need something explained again that you don\'t understand. He also always treated the girls in the class differently and would say things like "how would you teach this to your wives" and other things that made the girls feel different and less intelligent.':
+            temp = 23
         for name in all_names:
-            # prevents 'running' from matching with dr. ng and 'frankly' with frank
+            if name == 'woodfield':
+                temp = 32
+
+
+
+            # prevents 'running' from matching with dr. ng and 'frankly' from matching with frank
             # except, this also looses 'seppi.' or typo'd names like 'dr.barker '
-            if ' ' + name + ' ' in comment:
+            if (' ' + name + ' ' in comment) or (name + ',' in comment) or (name + '.' in comment):
                 no_new_lines = comment.replace('\n', ' ')
                 name_to_comment[name].append(no_new_lines.replace(name, name.upper()))
 
-    for name in name_to_comment.keys():
-        f.write('\nname: ' + name +' ' + pos_neg_feedback + ': ' + str(name_to_comment[name].__len__()))
 
+    for name in name_to_comment.keys():
+        f.write(f'\nname: {name} {pos_neg_sug}: {name_to_comment[name].__len__()}')
     f.write('\n')
 
     for name in name_to_comment.keys():
-        f.write('name: ' + name + '\n')
+        f.write(f'name: {name}\n')
         for value in name_to_comment[name]:
-            f.write('comment: ' + value + '\n\n')
+            f.write(f'comment: {value}\n\n')
         f.write('\n\n\n')
     f.close()
 
@@ -82,7 +91,8 @@ def find_common_words(df, pos_neg_sug, split_on_var):
 
 
 def print_common_words(words_to_counts, pos_neg_sug):
-    f = open(f'panda_BYU_results/{ques_num_to_shorthand[pos_neg_sug]}.txt', 'w')
+    os.makedirs(f'panda_BYU_results/strings/', exist_ok=True)
+    f = open(f'panda_BYU_results/strings/{ques_num_to_shorthand[pos_neg_sug]}.txt', 'w')
     for key, value in sorted(words_to_counts.items(), key=itemgetter(1), reverse=True):
         if value >= 5:
             f.write(key + ': ' + str(value) + '\n')
