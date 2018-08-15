@@ -183,74 +183,58 @@ def response_rate_calculator(df, num_responses):
     f.close()
 
 
+def new_num_histogram(df, title, var):
+    cleaned = pd.to_numeric(df[var], errors='coerce')
+    cleaned.dropna().hist(bins=50)
+    plt.title(title)
+    plt.savefig(f'panda_BYU_results/overall/{title}.png')
+    plt.clf()
 
 
 
 def assorted_special_graphs(df):
-    global stuff
     # histogram of ages
     title = 'ages'
+    df = df.sort_values(AGE)
     clean_ages = pd.to_numeric(df[AGE], errors='coerce')
-    stuff = clean_ages
-    stuff = stuff.value_counts()
-    stuff.dropna().plot.bar(y='AGE')
-        # (bins=30) # , range=('18', '67'))
-
-    # plt.axis('equal')
-    # plt.ylim(ymin=0)
-
+    clean_ages = clean_ages.sort_values(AGE)
+    clean_ages = clean_ages.value_counts()
+    clean_ages.dropna().plot.bar(y='AGE')
     plt.title(title)
-    plt.savefig(f'panda_BYU_results/{title}.png')
+    plt.savefig(f'panda_BYU_results/overall/{title}.png')
     plt.clf()
 
     # histogram of GPA
     title = 'GPA'
-    clean_GPA = pd.to_numeric(df[GPA], errors='coerce')
-    clean_GPA.dropna().hist(bins=50)
-    plt.title(title)
-    plt.savefig(f'panda_BYU_results/{title}.png')
-    plt.clf()
+    var = GPA
+    new_num_histogram(df, title, var)
 
-    # TODO: wouldn't it be interesting if I made the actual one on the same sheet, to better compare
+
     # pie chart of races
     title = 'race'
-    df[RACE].value_counts().sort_values(ascending=False).plot(kind='pie', autopct='%.1f%%', )
-    plt.axis('equal')
-    plt.title(title)
-    plt.savefig(f'panda_BYU_results/{title}.png')
-    plt.clf()
+    var = RACE
+    new_pie_chart(df, title, var)
 
     # pie chart of what non-CS majors there were
     title = 'majors'
-    df[MAJOR].value_counts().sort_values(ascending=False).plot(kind='pie', autopct='%.1f%%', )
-    plt.axis('equal')
-    plt.title(title)
-    plt.savefig(f'panda_BYU_results/{title}.png')
-    plt.clf()
+    var = MAJOR
+    new_pie_chart(df, title, var)
 
     # pie chart of what non-CS majors there were
     title = 'minors'
-    df[MINOR].value_counts().sort_values(ascending=False).plot(kind='pie', autopct='%.1f%%', )
-    plt.axis('equal')
-    plt.title(title)
-    plt.savefig(f'panda_BYU_results/{title}.png')
-    plt.clf()
+    var = MINOR
+    new_pie_chart(df, title, var)
 
     # pie chart of what genders there were
     title = 'gender'
-    df[GENDER].value_counts().sort_values(ascending=False).plot(kind='pie', autopct='%.1f%%', )
-    plt.axis('equal')
-    plt.title(title)
-    plt.savefig(f'panda_BYU_results/{title}.png')
-    plt.clf()
+    var = GENDER
+    new_pie_chart(df, title, var)
 
     # pie chart of what PROGRAMS there were
     title = 'program'
-    df[PROGRAM].value_counts().sort_values(ascending=False).plot(kind='pie', autopct='%.1f%%', )
-    plt.axis('equal')
-    plt.title(title)
-    plt.savefig(f'panda_BYU_results/{title}.png')
-    plt.clf()
+    var = PROGRAM
+    new_pie_chart(df, title, var)
+
 
     # see how common different words are in free response; which professors' names come up more
     split_on_var = GENDER
@@ -260,6 +244,14 @@ def assorted_special_graphs(df):
 
 
     # compare_confidence_GPA(people, 'gender')
+
+def new_pie_chart(df, title, var):
+    # TODO: wouldn't it be interesting if I made the actual one on the same sheet, to better compare
+    df[var].value_counts().sort_values(ascending=False).plot(kind='pie', autopct='%.1f%%', )
+    plt.axis('equal')
+    plt.title(title)
+    plt.savefig(f'panda_BYU_results/overall/{title}.png')
+    plt.clf()
 
 
 def main():
