@@ -49,18 +49,10 @@ def associate_with_professors(df, pos_neg_sug):
     existing_comments = df.dropna(subset=[pos_neg_sug])
     existing_comments = existing_comments[pos_neg_sug]
     existing_comments = existing_comments.str.lower()
-    # TODO: make all comments lowercase
 
     name_to_comment = defaultdict(list)
     for comment in existing_comments:
-        if comment == 'This wasn\'t a huge deal, but Professor Woodfield always pretty condescending. I never wanted to ask questions in the class because he made students feel stupid for not knowing the answers. One time I remember someone asked a question and instead of answering the question he asked the class to raise their hands if they remember him already saying the answer to that question earlier. Some people raised their hands so he never answered the question and moved on. I get that it can be frustrating as a teacher to answer the same questions over and over again, but sometimes you miss something, or just need something explained again that you don\'t understand. He also always treated the girls in the class differently and would say things like "how would you teach this to your wives" and other things that made the girls feel different and less intelligent.':
-            temp = 23
         for name in all_names:
-            if name == 'woodfield':
-                temp = 32
-
-
-
             # prevents 'running' from matching with dr. ng and 'frankly' from matching with frank
             # except, this also looses 'seppi.' or typo'd names like 'dr.barker '
             if (' ' + name + ' ' in comment) or (name + ',' in comment) or (name + '.' in comment):
