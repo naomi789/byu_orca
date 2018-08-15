@@ -71,11 +71,13 @@ def make_graphs(df):
 
             transposed = agg_t / counts
 
-            if is_likert_stacked_vertical_transposed:
-                # sometimes we throw and error here, like when: Q46 aka PARTICIPATION_GROUP_PROJECT_ROLE
-                ax = transposed.transpose().plot(kind='barh', stacked=is_likert_stacked_vertical_transposed)
-            else:
-                ax = transposed.plot(kind='barh', stacked=is_likert_stacked_vertical_transposed)
+            # if is_likert_stacked_vertical_transposed:
+            #     # sometimes we throw and error here, like when: Q46 aka PARTICIPATION_GROUP_PROJECT_ROLE
+            #     ax = transposed.transpose().plot(kind='barh', stacked=is_likert_stacked_vertical_transposed)
+            # else:
+            #     ax = transposed.plot(kind='barh', stacked=is_likert_stacked_vertical_transposed)
+
+            ax = transposed.plot(kind='barh', stacked=is_likert_stacked_vertical_transposed)
 
             # ax = (agg_t / (counts)).plot(kind='barh', stacked=is_likert_stacked_vertical_transposed)
 
@@ -126,7 +128,79 @@ def prep_for_pie(df, attribute):
     return choice_to_answer
 
 
+def gender_response_calulator(df):
+    responses_female = df[GENDER].value_counts()['Female']
+    responses_male = df[GENDER].value_counts()['Male']
+    responses_other_gender = 0 # set at zero because there were five responses for prefer not/other/etc and... privacy
+    return responses_female, responses_male, responses_other_gender
+
+def program_response_calculator(df):
+    responses_CS_major = df[MAJOR].value_counts()['Computer Science']
+    responses_CS_minor = df[MINOR].value_counts()['Computer Science']
+    responses_other_program = df.shape[0] - responses_CS_major - responses_CS_minor
+    return responses_CS_major, responses_CS_minor, responses_other_program
+
+
+def degree_response_calculator(df):
+    responses_doctorate = df[PROGRAM].value_counts()['PhD']
+    responses_master = df[PROGRAM].value_counts()['Masters']
+    responses_undergrad = df[PROGRAM].value_counts()['Undergraduate']
+    responses_other = df[PROGRAM].value_counts()['Not currently pursuing a degree']
+    return responses_doctorate, responses_master, responses_other, responses_undergrad
+
+
+def gradu_date_response_calculator(df):
+    responses_freshmen = df[GRAD_YEAR].value_counts()['2021 or later']
+    responses_sophomores = df[GRAD_YEAR].value_counts()['2020']
+    responses_juniors = df[GRAD_YEAR].value_counts()['2019']
+    responses_seniors = df[GRAD_YEAR].value_counts()['2018']
+    return responses_freshmen, responses_sophomores, responses_juniors, responses_seniors
+
+
+def response_rate_calculator(df, num_responses):
+    # gender # major # minor # program
+    responses_female, responses_male, responses_other_gender = gender_response_calulator(df)
+    responses_CS_major, responses_CS_minor, responses_other_program = program_response_calculator(df)
+    responses_doctorate, responses_master, responses_other, responses_undergrad = degree_response_calculator(df)
+    responses_freshmen, responses_sophomores, responses_juniors, responses_seniors = gradu_date_response_calculator(df)
+
+
+    f = open('panda_BYU_results/response_rate.txt', 'w')
+    total_invited = FEMALE_COUNT + MALE_COUNT
+    total_participated = responses_male + responses_female + responses_other_gender
+
+    f.write('\nOVERALL: \n')
+    f.write(str(total_invited) + ' students were invited to take this survey, ' + '\n' +
+            str(num_responses) + ' students "responded" (ie, at least opened the survey)' + '\n' +
+            str(total_participated) + ' took it (' + str((total_participated / total_invited) * 100) + '%)\n')
+    f.write('responses//those invited to take it (response rates for particular categories): \n')
+    f.write('\nGENDER: \n')
+    f.write('Female students: ' + str(100 * responses_female / FEMALE_COUNT) + '%\n')
+    f.write('Male students: ' + str(100 * responses_male / MALE_COUNT) + '%\n')
+    f.write('Other/Prefer not to say: [none were registered with non-binary/other genders]\n')
+
+    f.write('\nMAJORS: \n')
+    f.write('CS majors: ' + str(100 * responses_CS_major / CS_MAJOR_COUNT) + '%\n')
+    f.write('CS minors: ' + str(100 * responses_CS_minor / CS_MINOR_COUNT) + '%\n')
+    f.write('Non-CS-major, non-CS-minor students: ' + str(100 * responses_other_program / OTHER_MAJOR_COUNT) + '%\n')
+
+    f.write('\nDEGREE: \n')
+    f.write('Undergraduates: ' + str(100 * responses_undergrad / UNDERGRADUATE_COUNT) + '%\n')
+    f.write('Masters: ' + str(100 * responses_master / MASTER_COUNT) + '%\n')
+    f.write('PhD: ' + str(100 * responses_doctorate / DOCTORATE_COUNT) + '%\n')
+
+    f.write('\nCLASS STANDING: \n')
+    f.write('Freshmen: ' + str(responses_freshmen) + ' responses\n')
+    f.write('Sophomores: ' + str(responses_sophomores) + ' responses\n')
+    f.write('Juniors: ' + str(responses_juniors) + ' responses\n')
+    f.write('Seniors: ' + str(responses_seniors) + ' responses\n')
+    f.close()
+
+
 def assorted_special_graphs(df, people):
+    # print out the stats of who responded v. who was invited to take the survey
+    response_rate_calculator(df)
+
     compare_confidence_GPA(people, 'gender')
 
     for type_of_feedback in ['describe_positive_experience', 'describe_negative_experience']:
@@ -150,9 +224,6 @@ def assorted_special_graphs(df, people):
     assert choice_to_answer
     pie_chart(var, choice_to_answer)
 
-    # print out the stats of who responded v. who was invited to take the survey
-    response_rate(people)
-
     # see how common different words are in free response
     find_common_words(people)
 
@@ -165,9 +236,12 @@ def assorted_special_graphs(df, people):
 def main():
     logging.basicConfig(level=logging.INFO)  # 'DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICIAL'
     df = pd.read_csv('raw_overall_survey/use-this.csv')
+    num_responses = df.shape[0]
     df.dropna(subset=[RACE, GENDER, PROGRAM, MAJOR, GRAD_YEAR], inplace=True)  # tosses if participants didn't answer these
     df = df[(df[GENDER] == 'Male') | (df[GENDER] == 'Female')]
-    make_graphs(df)
+    response_rate_calculator(df, num_responses)
+
+    # make_graphs(df)
     # assorted_special_graphs(df)
 
 
