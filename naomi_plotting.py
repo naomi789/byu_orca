@@ -184,6 +184,7 @@ def response_rate_calculator(df, num_responses):
 
 
 def assorted_special_graphs(df):
+    # TODO: wouldn't it be interesting if I made the actual one on the same sheet, to better compare
     # pie chart of races
     title = 'race'
     df[RACE].value_counts().sort_values(ascending=False).plot(kind='pie', autopct='%.1f%%',)
@@ -216,6 +217,14 @@ def assorted_special_graphs(df):
     plt.savefig(f'panda_BYU_results/{title}.png')
     plt.clf()
 
+    # pie chart of what PROGRAMS there were
+    title = 'program'
+    df[PROGRAM].value_counts().sort_values(ascending=False).plot(kind='pie', autopct='%.1f%%',)
+    plt.axis('equal')
+    plt.title(title)
+    plt.savefig(f'panda_BYU_results/{title}.png')
+    plt.clf()
+
     # see how common different words are in free response
     split_on_var = GENDER
     for pos_neg_sug in TEXT_ANSWERS:
@@ -230,6 +239,7 @@ def assorted_special_graphs(df):
 
 def main():
     logging.basicConfig(level=logging.INFO)  # 'DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICIAL'
+    nltk.download('stopwords')
     df = pd.read_csv('raw_overall_survey/use-this.csv')
     num_responses = df.shape[0]
     df.dropna(subset=[RACE, GENDER, PROGRAM, MAJOR, GRAD_YEAR], inplace=True)  # tosses if participants didn't answer these
