@@ -31,10 +31,9 @@ def get_question_df(df, question, keep_cols, get_answers=True):
             question_df[answer] = 0
 
         question_df.rename(columns={col: col.strip() for col in question_df.columns},
-                       inplace=True)
+                           inplace=True)
 
     return question_df, list(answers_set)
-
 
 
 def sorted_answers(question_options):
@@ -44,25 +43,24 @@ def sorted_answers(question_options):
     return answer
 
 
-
 def make_graphs(df):
     is_likert_stacked_vertical_transposed = False
 
     gender_options = ['Male', 'Female']
     for comparison_point in FOCUS_VARS:
         shorthand_var = ques_num_to_shorthand[comparison_point]
-        print('COMPARISON POINT ' + comparison_point +' SHORT ' + shorthand_var)
+        print('COMPARISON POINT ' + comparison_point + ' SHORT ' + shorthand_var)
         keep_cols = [GENDER, comparison_point]
 
         for question in MANY_CHOICES_QUESTIONS:  # + ONE_CHOICE_QUESTIONS:
             shorthand_question = ques_num_to_shorthand[question]
-            print('question', question, 'short', shorthand_question, 'is_likert_stacked_vertical_transposed', is_likert_stacked_vertical_transposed)
+            print('question', question, 'short', shorthand_question, 'is_likert_stacked_vertical_transposed',
+                  is_likert_stacked_vertical_transposed)
 
             question_df, answers = get_question_df(df, question, keep_cols)
             if question in ONE_CHOICE_QUESTIONS:
                 is_likert_stacked_vertical_transposed = True
                 # TODO delete all the options equal to "Unanswered"
-
 
             agg_t, counts, columns_for_var = filter_data(question_df, comparison_point, question, answers, keep_cols)
 
@@ -109,7 +107,9 @@ def filter_data(question_df, comparison_point, question, answers, keep_cols):
     agg_t = agg.transpose()
     cat1 = agg_t.columns.levels[0]
     cat2 = agg_t.columns.levels[1]
-    counts = np.array([len(question_df[(question_df[GENDER] == x) & (question_df[columns_for_var] == y)]) for x in cat1 for y in cat2])
+    counts = np.array(
+        [len(question_df[(question_df[GENDER] == x) & (question_df[columns_for_var] == y)]) for x in cat1 for y in
+         cat2])
 
     return agg_t, counts, columns_for_var
 
@@ -117,8 +117,9 @@ def filter_data(question_df, comparison_point, question, answers, keep_cols):
 def gender_response_calulator(df):
     responses_female = df[GENDER].value_counts()['Female']
     responses_male = df[GENDER].value_counts()['Male']
-    responses_other_gender = 0 # set at zero because there were five responses for prefer not/other/etc and... privacy
+    responses_other_gender = 0  # set at zero because there were five responses for prefer not/other/etc and... privacy
     return responses_female, responses_male, responses_other_gender
+
 
 def program_response_calculator(df):
     responses_CS_major = df[MAJOR].value_counts()['Computer Science']
@@ -149,7 +150,6 @@ def response_rate_calculator(df, num_responses):
     responses_CS_major, responses_CS_minor, responses_other_program = program_response_calculator(df)
     responses_doctorate, responses_master, responses_other, responses_undergrad = degree_response_calculator(df)
     responses_freshmen, responses_sophomores, responses_juniors, responses_seniors = gradu_date_response_calculator(df)
-
 
     f = open('panda_BYU_results/response_rate.txt', 'w')
     total_invited = FEMALE_COUNT + MALE_COUNT
@@ -183,11 +183,15 @@ def response_rate_calculator(df, num_responses):
     f.close()
 
 
+
+
+
 def assorted_special_graphs(df):
+    global stuff
     # TODO: wouldn't it be interesting if I made the actual one on the same sheet, to better compare
     # pie chart of races
     title = 'race'
-    df[RACE].value_counts().sort_values(ascending=False).plot(kind='pie', autopct='%.1f%%',)
+    df[RACE].value_counts().sort_values(ascending=False).plot(kind='pie', autopct='%.1f%%', )
     plt.axis('equal')
     plt.title(title)
     plt.savefig(f'panda_BYU_results/{title}.png')
@@ -195,7 +199,7 @@ def assorted_special_graphs(df):
 
     # pie chart of what non-CS majors there were
     title = 'majors'
-    df[MAJOR].value_counts().sort_values(ascending=False).plot(kind='pie', autopct='%.1f%%',)
+    df[MAJOR].value_counts().sort_values(ascending=False).plot(kind='pie', autopct='%.1f%%', )
     plt.axis('equal')
     plt.title(title)
     plt.savefig(f'panda_BYU_results/{title}.png')
@@ -203,7 +207,7 @@ def assorted_special_graphs(df):
 
     # pie chart of what non-CS majors there were
     title = 'minors'
-    df[MINOR].value_counts().sort_values(ascending=False).plot(kind='pie', autopct='%.1f%%',)
+    df[MINOR].value_counts().sort_values(ascending=False).plot(kind='pie', autopct='%.1f%%', )
     plt.axis('equal')
     plt.title(title)
     plt.savefig(f'panda_BYU_results/{title}.png')
@@ -211,7 +215,7 @@ def assorted_special_graphs(df):
 
     # pie chart of what genders there were
     title = 'gender'
-    df[GENDER].value_counts().sort_values(ascending=False).plot(kind='pie', autopct='%.1f%%',)
+    df[GENDER].value_counts().sort_values(ascending=False).plot(kind='pie', autopct='%.1f%%', )
     plt.axis('equal')
     plt.title(title)
     plt.savefig(f'panda_BYU_results/{title}.png')
@@ -219,7 +223,7 @@ def assorted_special_graphs(df):
 
     # pie chart of what PROGRAMS there were
     title = 'program'
-    df[PROGRAM].value_counts().sort_values(ascending=False).plot(kind='pie', autopct='%.1f%%',)
+    df[PROGRAM].value_counts().sort_values(ascending=False).plot(kind='pie', autopct='%.1f%%', )
     plt.axis('equal')
     plt.title(title)
     plt.savefig(f'panda_BYU_results/{title}.png')
@@ -231,9 +235,27 @@ def assorted_special_graphs(df):
         find_common_words(df, pos_neg_sug, split_on_var)
         associate_with_professors(df, pos_neg_sug)
 
+    # histogram of ages
+    title = 'ages'
+    sorted = df[AGE].sort_values().value_counts()
+    print(sorted)
+    df[AGE].hist()
+    # plot(kind='pie', autopct='%.1f%%',)
+    plt.axis('equal')
+    plt.ylim(ymin=0)
+    plt.title(title)
+    plt.savefig(f'panda_BYU_results/{title}.png')
+    plt.clf()
+
+    # histogram of GPA
+    title = 'GPA'
+    clean_GPA = pd.to_numeric(df[GPA], errors='coerce')
+    clean_GPA.dropna().hist(bins=30)
+    plt.title(title)
+    plt.savefig(f'panda_BYU_results/{title}.png')
+    plt.clf()
 
     # compare_confidence_GPA(people, 'gender')
-
 
 
 def main():
@@ -241,7 +263,8 @@ def main():
     nltk.download('stopwords')
     df = pd.read_csv('raw_overall_survey/use-this.csv')
     num_responses = df.shape[0]
-    df.dropna(subset=[RACE, GENDER, PROGRAM, MAJOR, GRAD_YEAR], inplace=True)  # tosses if participants didn't answer these
+    df.dropna(subset=[RACE, GENDER, PROGRAM, MAJOR, GRAD_YEAR],
+              inplace=True)  # tosses if participants didn't answer these
     df = df[(df[GENDER] == 'Male') | (df[GENDER] == 'Female')]
 
     # print out the stats of who responded v. who was invited to take the survey
