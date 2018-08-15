@@ -184,36 +184,48 @@ def response_rate_calculator(df, num_responses):
 
 
 def assorted_special_graphs(df):
+    # pie chart of races
+    title = 'race'
+    df[RACE].value_counts().sort_values(ascending=False).plot(kind='pie', autopct='%.1f%%',)
+    plt.axis('equal')
+    plt.title(title)
+    plt.savefig(f'panda_BYU_results/{title}.png')
+    plt.clf()
+
+    # pie chart of what non-CS majors there were
+    title = 'majors'
+    df[MAJOR].value_counts().sort_values(ascending=False).plot(kind='pie', autopct='%.1f%%',)
+    plt.axis('equal')
+    plt.title(title)
+    plt.savefig(f'panda_BYU_results/{title}.png')
+    plt.clf()
+
+    # pie chart of what non-CS majors there were
+    title = 'minors'
+    df[MINOR].value_counts().sort_values(ascending=False).plot(kind='pie', autopct='%.1f%%',)
+    plt.axis('equal')
+    plt.title(title)
+    plt.savefig(f'panda_BYU_results/{title}.png')
+    plt.clf()
+
+    # pie chart of what genders there were
+    title = 'gender'
+    df[GENDER].value_counts().sort_values(ascending=False).plot(kind='pie', autopct='%.1f%%',)
+    plt.axis('equal')
+    plt.title(title)
+    plt.savefig(f'panda_BYU_results/{title}.png')
+    plt.clf()
+
+    # see how common different words are in free response
+    split_on_var = GENDER
+    for pos_neg_sug in TEXT_ANSWERS:
+        find_common_words(df, pos_neg_sug, split_on_var)
+
     # compare_confidence_GPA(people, 'gender')
     #
     # for type_of_feedback in ['describe_positive_experience', 'describe_negative_experience']:
     #     associate_with_professors(people, type_of_feedback)
 
-    # textinfo='value+percent'
-    df[RACE].value_counts().sort_values(ascending=False).plot(kind='pie', autopct='%.1f%%',)
-    plt.axis('equal')
-    plt.show()
-
-    # # pie chart of races
-    # var = 'race'
-    # choice_to_answer = prep_for_pie(people, var)
-    # assert choice_to_answer
-    # pie_chart(var, choice_to_answer)
-    #
-    # # pie chart of what non-CS majors there were
-    # var = 'university_major'
-    # choice_to_answer = prep_for_pie(people, var)
-    # assert choice_to_answer
-    # pie_chart(var, choice_to_answer)
-    #
-    # # pie chart of what genders there were
-    # var = 'gender'
-    # choice_to_answer = prep_for_pie(people, var)
-    # assert choice_to_answer
-    # pie_chart(var, choice_to_answer)
-    #
-    # # see how common different words are in free response
-    # find_common_words(people)
 
 
 def main():
