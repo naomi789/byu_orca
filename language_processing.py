@@ -1,10 +1,11 @@
 import logging
-# import nltk
+import nltk
 import string
-# from nltk.corpus import stopwords
+from nltk.corpus import stopwords
 from operator import itemgetter
 from collections import defaultdict
 from data_structures import professor_names, staff_names
+from new_constants import ques_num_to_shorthand
 
 def graph_string(question, people):
     logging.info("graph string")
@@ -70,18 +71,18 @@ def associate_with_professors(people, pos_neg_feedback):
     f.close()
 
 
-def find_common_words(people):
+def find_common_words(df, pos_neg_sug, split_on_var):
+    existing_comments = df.dropna(subset=[pos_neg_sug])
+    existing_comments = existing_comments[pos_neg_sug]
+
     words_to_counts = {}
-    for var in ['describe_positive_experience', 'describe_negative_experience', 'suggestion_improve_institution']:
-        for person in people:
-            answer = getattr(person, var)
-            words_to_counts = update_words_counts(words_to_counts, answer)
-        print_common_words(words_to_counts, var)
-        words_to_counts = {}
+    for comment in existing_comments:
+        words_to_counts = update_words_counts(words_to_counts, comment)
+    print_common_words(words_to_counts, pos_neg_sug)
 
 
 def print_common_words(words_to_counts, pos_neg_sug):
-    f = open('results_at_BYU/overall/' + pos_neg_sug + '_common_words.txt', 'w')
+    f = open(f'panda_BYU_results/{ques_num_to_shorthand[pos_neg_sug]}.txt', 'w')
     for key, value in sorted(words_to_counts.items(), key=itemgetter(1), reverse=True):
         if value >= 5:
             f.write(key + ': ' + str(value) + '\n')
@@ -92,7 +93,6 @@ def print_common_words(words_to_counts, pos_neg_sug):
 
 
 def update_words_counts(words_to_counts, response):
-    # nltk.download('stopwords')
     set(stopwords.words('english'))
     stop_words = set(stopwords.words('english'))
 
