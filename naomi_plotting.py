@@ -2,12 +2,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
 import os
-import sys
-from new_constants import *
 from language_processing import *
 from graph_func import pie_chart
 from answer_type import compare_confidence_GPA
-from overall_survey import response_rate
 from other_constants import *
 import logging
 
@@ -117,17 +114,6 @@ def filter_data(question_df, comparison_point, question, answers, keep_cols):
     return agg_t, counts, columns_for_var
 
 
-def prep_for_pie(df, attribute):
-    choice_to_answer = {}
-    for person in people:
-        this_var = getattr(person, attribute)
-        if not choice_to_answer.keys().__contains__(this_var):
-            choice_to_answer[this_var] = 0
-        else:
-            choice_to_answer[this_var] += 1
-    return choice_to_answer
-
-
 def gender_response_calulator(df):
     responses_female = df[GENDER].value_counts()['Female']
     responses_male = df[GENDER].value_counts()['Male']
@@ -197,40 +183,37 @@ def response_rate_calculator(df, num_responses):
     f.close()
 
 
-def assorted_special_graphs(df, people):
-    # print out the stats of who responded v. who was invited to take the survey
-    response_rate_calculator(df)
+def assorted_special_graphs(df):
+    # compare_confidence_GPA(people, 'gender')
+    #
+    # for type_of_feedback in ['describe_positive_experience', 'describe_negative_experience']:
+    #     associate_with_professors(people, type_of_feedback)
 
-    compare_confidence_GPA(people, 'gender')
+    # textinfo='value+percent'
+    df[RACE].value_counts().sort_values(ascending=False).plot(kind='pie', autopct='%.1f%%',)
+    plt.axis('equal')
+    plt.show()
 
-    for type_of_feedback in ['describe_positive_experience', 'describe_negative_experience']:
-        associate_with_professors(people, type_of_feedback)
-
-    # pie chart of races
-    var = 'race'
-    choice_to_answer = prep_for_pie(people, var)
-    assert choice_to_answer
-    pie_chart(var, choice_to_answer)
-
-    # pie chart of what non-CS majors there were
-    var = 'university_major'
-    choice_to_answer = prep_for_pie(people, var)
-    assert choice_to_answer
-    pie_chart(var, choice_to_answer)
-
-    # pie chart of what genders there were
-    var = 'gender'
-    choice_to_answer = prep_for_pie(people, var)
-    assert choice_to_answer
-    pie_chart(var, choice_to_answer)
-
-    # see how common different words are in free response
-    find_common_words(people)
-
-
-
-
-
+    # # pie chart of races
+    # var = 'race'
+    # choice_to_answer = prep_for_pie(people, var)
+    # assert choice_to_answer
+    # pie_chart(var, choice_to_answer)
+    #
+    # # pie chart of what non-CS majors there were
+    # var = 'university_major'
+    # choice_to_answer = prep_for_pie(people, var)
+    # assert choice_to_answer
+    # pie_chart(var, choice_to_answer)
+    #
+    # # pie chart of what genders there were
+    # var = 'gender'
+    # choice_to_answer = prep_for_pie(people, var)
+    # assert choice_to_answer
+    # pie_chart(var, choice_to_answer)
+    #
+    # # see how common different words are in free response
+    # find_common_words(people)
 
 
 def main():
@@ -239,10 +222,12 @@ def main():
     num_responses = df.shape[0]
     df.dropna(subset=[RACE, GENDER, PROGRAM, MAJOR, GRAD_YEAR], inplace=True)  # tosses if participants didn't answer these
     df = df[(df[GENDER] == 'Male') | (df[GENDER] == 'Female')]
+
+    # print out the stats of who responded v. who was invited to take the survey
     response_rate_calculator(df, num_responses)
 
     # make_graphs(df)
-    # assorted_special_graphs(df)
+    assorted_special_graphs(df)
 
 
 main()
