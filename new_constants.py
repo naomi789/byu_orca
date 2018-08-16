@@ -58,8 +58,8 @@ COMPLAINTS_CONCEQUENCES_FEAR = 'Q40'
 PEER_MISTREATED_REACT = 'Q51'
 PEOPLE_SURPRISE_MAJOR = 'Q60'
 PEOPLE_SEXIST_JOKES_GENDER = 'Q58'
-HIGHEST_STANDARD = 'Q60'
-PEER_SEXISM_IGNORING_SUGGESTION = 'Q61'
+HIGHEST_STANDARD = 'Q160' # TODO NOTE
+PEER_SEXISM_IGNORING_SUGGESTION = 'Q161' # TODO NOTE
 FRIENDS_OTHER_GENDER = 'Q56'
 INTELLIGENCE_FIXED = 'Q75'
 INTELLIGENCE_MALLEABLE = 'Q76'
@@ -120,15 +120,15 @@ question_number_to_expected_answer = {
     'Q42': certainty,  # DEPARTMENT_SEXIST_OTHERS
     # Q35 # Has a member of the CS department (students, TAs, professors, etc) ever told you that you earned a good grade, got a job, internship, or scholarship offer because of your gender?
     'Q62': frequency,  # DEPARTMENT_APPEARANCE
-    'Q61': appearance_comments,  # DEPARTMENT_APPEARANCE_COMMENTS # TODO
+    'Q61': appearance_comments,  # DEPARTMENT_APPEARANCE_COMMENTS # because of this
     'Q38': certainty,  # COMPLAINTS_HOW
     'Q39': certainty,  # COMPLAINTS_CONCEQUENCES
     'Q40': certainty,  # COMPLAINTS_CONCEQUENCES_FEAR
     'Q51': sexism_response,  # PEER_MISTREATED_REACT
-    'Q60': agreement,  # PEOPLE_SURPRISE_MAJOR # TODO
+    'Q60': agreement,  # PEOPLE_SURPRISE_MAJOR # because of this
     'Q58': frequency,  # PEOPLE_SEXIST_JOKES_GENDER
-    'Q60': student_groups_standards,  # HIGHEST_STANDARD # TODO
-    'Q61': frequency,  # PEER_SEXISM_IGNORING_SUGGESTION  # TODO
+    'Q160': student_groups_standards,  # HIGHEST_STANDARD #  TODO IMPORTANT THIS WAS EDITED
+    'Q161': frequency,  # PEER_SEXISM_IGNORING_SUGGESTION  # TODO IMPORTANT THIS WAS EDITED
     'Q56': agreement,  # FRIENDS_OTHER_GENDER
     'Q75': agreement,  # INTELLIGENCE_FIXED
     'Q76': agreement,  # INTELLIGENCE_MALLEABLE
@@ -179,7 +179,7 @@ ques_num = [
     'Q50', 'Q8', 'Q10', 'Q10_21_TEXT', 'Q11', 'Q11_14_TEXT', 'Q68', 'Q88', 'Q93', 'Q86', 'Q84', 'Q16', 'Q15',
     'Q90', 'Q83', 'Q91', 'Q85', 'Q92', 'Q57', 'Q46', 'Q18', 'Q19', 'Q21', 'Q22', 'Q52', 'Q20', 'Q59', 'Q63',
     'Q26', 'Q25', 'Q27', 'Q28', 'Q82', 'Q48', 'Q9', 'Q32', 'Q31', 'Q30', 'Q41', 'Q42', 'Q35', 'Q62', 'Q61',
-    'Q38', 'Q39', 'Q40', 'Q51', 'Q60', 'Q58', 'Q60', 'Q61', 'Q56', 'Q75', 'Q76', 'Q77', 'Q78', 'Q79', 'Q68',
+    'Q38', 'Q39', 'Q40', 'Q51', 'Q60', 'Q58', 'Q160', 'Q161', 'Q56', 'Q75', 'Q76', 'Q77', 'Q78', 'Q79', 'Q68',
     'Q67', 'Q54']
 
 ques_text = ['Start Date', 'End Date', 'Response Type', 'IP Address', 'Progress', 'Duration (in seconds)', 'Finished',
@@ -273,73 +273,6 @@ ques_text = ['Start Date', 'End Date', 'Response Type', 'IP Address', 'Progress'
              'Are there any negative experiences or interactions that you had with members of the CS department that you would like to share?',
              "What one change would you most like to see implemented to improve students' experiences at this institution?"]
 
-ques_num_to_text = {
-    #                 'StartDate': 'Start Date', 'EndDate': 'End Date', 'Status': 'Response Type',
-    #                 'IPAddress': 'IP Address', 'Progress': 'Progress', 'Duration (in seconds)': 'Duration (in seconds)',
-    #                 'Finished': 'Finished', 'RecordedDate': 'Recorded Date', 'ResponseId': 'Response ID',
-    #                 'RecipientLastName': 'Recipient Last Name', 'RecipientFirstName': 'Recipient First Name',
-    #                 'RecipientEmail': 'Recipient Email', 'ExternalReference': 'External Data Reference',
-    #                 'LocationLatitude': 'Location Latitude', 'LocationLongitude': 'Location Longitude',
-    #                 'DistributionChannel': 'Distribution Channel', 'UserLanguage': 'User Language',
-    #                 'Q70': 'Please read the entire text above before selecting an answer below.',
-    #                 'Q89': 'Are you willing to participate more in this study of students at BYU? - Selected Choice',
-    #                 'Q89_1_TEXT': 'Are you willing to participate more in this study of students at BYU? - Yes - please enter your email address here - Text',
-    'Q3': 'What gender do you identify with? - Selected Choice',
-    'Q3_3_TEXT': 'What gender do you identify with? - Other - Text',
-    'Q81': 'What is your race/ethnicity (select all that apply)?', 'Q80': 'How old are you?',
-    'Q4': 'What degree are you currently pursuing?', 'Q5': 'What is your intended major?',
-    'Q6': 'What is your minor/secondary major?',
-    'Q7': 'What CS courses will you enroll in during the fall semester of 2018? (select all that apply)',
-    'Q73': 'When do you anticipate graduating?',
-    'Q74': 'What is your current GPA at this university? - Selected Choice',
-    'Q74_2_TEXT': 'What is your current GPA at this university? - My current overall GPA is: - Text',
-    'Q50': 'Have you ever been offered a CS-related internship?',
-    'Q8': 'What extracurriculars have you pursued in high school or college? (select all that apply)',
-    'Q10': 'What factors influenced your decision to pick your major? (select all that apply) - Selected Choice',
-    'Q10_21_TEXT': 'What factors influenced your decision to pick your major? (select all that apply) - Specific BYU courses or labs (list courses here please) - Text',
-    'Q11': 'What do you perceive as being a barrier to your completion of this major and your career in this field? (select all that apply) - Selected Choice',
-    'Q11_14_TEXT': 'What do you perceive as being a barrier to your completion of this major and your career in this field? (select all that apply) - Specific BYU courses or labs (list courses here please) - Text',
-    'Q68': ' etc) tell you that you should pursue a full-time career?',
-    'Q88': 'How much do you agree with the following statement: I am prepared for my CS course(s) next semester.',
-    'Q93': 'With respect to your peers in your major',
-    'Q86': ' what percentile would you rank yourself at? Please enter a number between 0 and 100.',
-    'Q84': 'How comfortable are you asking questions in your non-CS courses?',
-    'Q16': 'How often are you absent from your CS class(es)?',
-    'Q15': 'On average how often do you ask questions in CS courses?',
-    'Q90': 'How comfortable are you asking questions in your CS courses?',
-    'Q83': 'Aside from asking questions',
-    'Q91': ' how often do you participate (answer questions/talk in discussions/etc) in CS courses?',
-    'Q85': 'When you miss a CS class', 'Q92': ' what is most often the reason why? (only select one)',
-    'Q57': 'What helps you feel MORE COMFORTABLE asking questions in your CS course(s)? (select all that apply)',
-    'Q46': 'When do you feel LESS COMFORTABLE asking questions in your CS course(s)? (select all that apply)',
-    'Q18': 'Why do you not participate (aside from asking questions: answering questions/participating in discussions/etc) more in your CS course(s)?',
-    'Q19': 'How often do you raise your hand in a CS class but never get called on?',
-    'Q21': 'In group projects for CS courses which tasks do you typically take responsibility for? (select all that apply)',
-    'Q22': 'How often do you discuss your academic performance or career plans with a professor or faculty member? (during office hours or in other one-on-one situations)',
-    'Q52': 'Has as a CS professor ever invited you', 'Q20': ' personally',
-    'Q59': ' to consider any of the following? (select all that apply)',
-    'Q63': 'How often do you go to TA-led help sessions for CS courses?',
-    'Q26': 'How often to you visit the CS TAs to ask questions?',
-    'Q25': 'How often do you talk with other students (not TAs) while in the CS TA cubicals or CS labs?',
-    'Q27': 'How strongly do you agree with the statement: CS professors and CS courses are engaging.',
-    'Q28': 'How strongly do you agree with the statement: I feel that the CS professors adequately represent the diverse backgrounds',
-    'Q82': ' views', 'Q48': ' demographics', 'Q9': ' and perspectives of students in CS courses.',
-    'Q32': 'Do you feel like you have role models of the same gender as you who do CS?',
-    'Q31': 'How often have you asked another student (not a TA for the course) to help you understand CS course material?',
-    'Q30': 'How often have you mentored any students in the CS major or CS courses this semester? (assisted them with labs',
-    'Q41': ' homework', 'Q42': ' or given internship/job or graduate school advice)',
-    'Q35': 'Do you attend meetings/events for any of the following? (select all that apply)',
-    'Q62': 'What percentage of your friends are taking classes in the CS department?',
-    'Q61': 'How often do members of the CS department (students',
-    'Q38': 'Have you been the recipient of an academic scholarship? (select all that apply)',
-    'Q39': 'Which of the following have you done',
-    'Q40': ' or do you plan to do before you graduate? (select all that apply)',
-    'Q51': 'How often do members of the CS department (students',
-    'Q60': ' etc) ask you about your plans to balance a career and parenthood?', 'Q58': ' professors',
-    'Q56': ' TAs', 'Q75': ' professors',
-    'Q76': ' etc) tell you that you should be a stay-at-home parent?',
-    'Q77': 'How often do members of the CS department (students', 'Q78': ' TAs', 'Q79': ' professors',
-    'Q67': 'Do you feel like a member of the CS department (students', 'Q54': ' TAs'}
 
 question_shorthand = ['CONSENT_CURRENT', 'CONSENT_FUTURE', 'EMAIL', 'GENDER', 'GENDER_OTHER', 'RACE', 'AGE',
                       'UNIVERSITY_PROGRAM', 'UNIVERSITY_MAJOR', 'UNIVERSITY_MINOR', 'UNIVERSITY_COURSES_FALL',
@@ -393,7 +326,7 @@ ques_num_to_shorthand = {'Q70': 'CONSENT_CURRENT', 'Q89': 'CONSENT_FUTURE', 'Q89
                          'Q62': 'DEPARTMENT_APPEARANCE', 'Q61': 'PEER_SEXISM_IGNORING_SUGGESTION',
                          'Q38': 'COMPLAINTS_HOW', 'Q39': 'COMPLAINTS_CONCEQUENCES',
                          'Q40': 'COMPLAINTS_CONCEQUENCES_FEAR', 'Q51': 'PEER_MISTREATED_REACT',
-                         'Q60': 'HIGHEST_STANDARD', 'Q58': 'PEOPLE_SEXIST_JOKES_GENDER', 'Q56': 'FRIENDS_OTHER_GENDER',
+                         'Q160': 'HIGHEST_STANDARD', 'Q58': 'PEOPLE_SEXIST_JOKES_GENDER', 'Q56': 'FRIENDS_OTHER_GENDER',
                          'Q75': 'INTELLIGENCE_FIXED', 'Q76': 'INTELLIGENCE_MALLEABLE', 'Q77': 'FAILURE_LAZY',
                          'Q78': 'FAILURE_ENVIRONMENT', 'Q79': 'FAILURE_ABILITY', 'Q67': 'DESCRIBE_NEGATIVE_EXPERIENCE',
                          'Q54': 'SUGGESTION_IMPROVE_INSTITUTION'}
