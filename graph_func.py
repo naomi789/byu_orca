@@ -42,7 +42,7 @@ def filter_and_graph(question, options, people, focus_var, category_names):
                     if not skip_response(value, answer_type):
                         category[1].extend(value)
 
-    graphable_options = values(categorized_responses, options)  # TODO this is THE BUG sometimes having extra spaces
+    graphable_options = values(categorized_responses, options)
 
     # value = [val.strip() for val in getattr(person, question).split(',')]
     return categorized_responses, graphable_options
