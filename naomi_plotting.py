@@ -54,16 +54,14 @@ def make_graphs(df):
         keep_cols = [GENDER, comparison_point]
 
         for question in MANY_CHOICES_QUESTIONS + ONE_CHOICE_QUESTIONS:
-            shorthand_question = ques_num_to_shorthand[question]
-            if shorthand_question == 'PARTICIPATION_GROUP_PROJECT_ROLE':
-                temp = 32
-            print('question', question, 'short', shorthand_question, 'is_likert_stacked_vertical_transposed',
-                  is_likert_stacked_vertical_transposed)
-
             question_df, answers = get_question_df(df, question, keep_cols)
             if question in ONE_CHOICE_QUESTIONS:
                 is_likert_stacked_vertical_transposed = True
                 # TODO delete all the options equal to "Unanswered"
+
+            shorthand_question = ques_num_to_shorthand[question]
+            print('question', question, 'short', shorthand_question, 'is_likert_stacked_vertical_transposed',
+                  is_likert_stacked_vertical_transposed)
 
             agg_t, counts, columns_for_var = filter_data(question_df, comparison_point, question, answers, keep_cols)
 
@@ -78,11 +76,6 @@ def make_graphs(df):
                 ax = transposed.plot(kind='barh', stacked=is_likert_stacked_vertical_transposed)
                 labels = [x[:40] for x in agg_t.index]
                 counter_non += 1
-
-
-            # ax = transposed.plot(kind='barh', stacked=is_likert_stacked_vertical_transposed)
-
-            # ax = (agg_t / (counts)).plot(kind='barh', stacked=is_likert_stacked_vertical_transposed)
 
             ax.set_yticklabels(labels)
             plt.xlim(0, 1)
