@@ -58,7 +58,7 @@ def make_graphs(df):
             if question in ONE_CHOICE_QUESTIONS:
                 is_likert_stacked_vertical_transposed = True
                 # TODO delete all the options equal to "Unanswered"
-                # question_df = question_df[question_df.question != 'Unanswered']
+                question_df = question_df[question_df[question] != 'Unanswered']
                 # how do I say "only do this on column "question"
                 # https://chrisalbon.com/python/data_wrangling/pandas_dropping_column_and_rows/
                 # ctrl + f "Tina"
@@ -278,9 +278,10 @@ def main():
     # print out the stats of who responded v. who was invited to take the survey
     response_rate_calculator(df, num_responses)
 
+    assorted_special_graphs(df)
+
     make_graphs(df)
 
-    assorted_special_graphs(df)
 
 
 main()
