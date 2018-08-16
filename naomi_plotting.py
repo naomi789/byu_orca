@@ -45,14 +45,15 @@ def sorted_answers(question_options):
 
 def make_graphs(df):
     is_likert_stacked_vertical_transposed = False
-
+    counter_likert = 0
+    counter_non = 0
     gender_options = ['Male', 'Female']
     for comparison_point in FOCUS_VARS:
         shorthand_var = ques_num_to_shorthand[comparison_point]
         print('COMPARISON POINT ' + comparison_point + ' SHORT ' + shorthand_var)
         keep_cols = [GENDER, comparison_point]
 
-        for question in MANY_CHOICES_QUESTIONS:  # + ONE_CHOICE_QUESTIONS:
+        for question in MANY_CHOICES_QUESTIONS + ONE_CHOICE_QUESTIONS:
             shorthand_question = ques_num_to_shorthand[question]
             if shorthand_question == 'PARTICIPATION_GROUP_PROJECT_ROLE':
                 temp = 32
@@ -72,9 +73,11 @@ def make_graphs(df):
                 # sometimes we throw and error here, like when: Q46 aka PARTICIPATION_GROUP_PROJECT_ROLE
                 ax = transposed.transpose().plot(kind='barh', stacked=is_likert_stacked_vertical_transposed)
                 labels = [x[:40] for x in agg_t.transpose().index]
+                counter_likert += 1
             else:
                 ax = transposed.plot(kind='barh', stacked=is_likert_stacked_vertical_transposed)
                 labels = [x[:40] for x in agg_t.index]
+                counter_non += 1
 
 
             # ax = transposed.plot(kind='barh', stacked=is_likert_stacked_vertical_transposed)
@@ -93,6 +96,10 @@ def make_graphs(df):
                 os.makedirs(f'panda_BYU_results/{shorthand_var}/stacked_bar_graphs', exist_ok=True)
                 file_name = f'panda_BYU_results/{shorthand_var}/stacked_bar_graphs/{shorthand_question}.png'
             plt.savefig(file_name)
+
+    # for debugging purposes
+    print('counter_likert', counter_likert, 'len(ONE_CHOICE_QUESTIONS)', len(ONE_CHOICE_QUESTIONS))
+    print('counter_non', counter_non, 'len(MANY_CHOICES_QUESTIONS)', len(MANY_CHOICES_QUESTIONS))
 
 
 def filter_data(question_df, comparison_point, question, answers, keep_cols):
