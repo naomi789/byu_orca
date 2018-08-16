@@ -15,7 +15,7 @@ MAJOR_PROS = 'Q10'
 MAJOR_PROS_CLASS = 'Q10_21_TEXT	'
 MAJOR_CONS = 'Q11'
 MAJOR_CONS_CLASS = 'Q11_14_TEXT'
-CONFIDENCE_GRAD_GPA = 'Q68'
+CONFIDENCE_GRAD_GPA = 'Q68' # other bug
 CONFIDENCE_PREPARED_COURSES = 'Q88'
 CONFIDENCE_PERCENTILE_PEERS = 'Q93'
 COURSES_QUESTION_COMFORT = 'Q86'
@@ -66,8 +66,8 @@ INTELLIGENCE_MALLEABLE = 'Q76'
 FAILURE_LAZY = 'Q77'
 FAILURE_ENVIRONMENT = 'Q78'
 FAILURE_ABILITY = 'Q79'
-DESCRIBE_NEGATIVE_EXPERIENCE = 'Q67' # 'Q68'
-DESCRIBE_POSITIVE_EXPERIENCE = 'Q68' # 'Q67'
+DESCRIBE_NEGATIVE_EXPERIENCE = 'Q67'
+DESCRIBE_POSITIVE_EXPERIENCE = 'Q168'
 SUGGESTION_IMPROVE_INSTITUTION = 'Q54'
 UNIVERSITY_COURSES_FALL = 'Q7'
 
@@ -137,6 +137,7 @@ question_number_to_expected_answer = {
     'Q79': agreement,  # FAILURE_ABILITY
     'Q50': yes_no,  # RECEIVED_INTERNSHIP_OFFER
     'Q7': byu_courses,  # UNIVERSITY_COURSES_FALL
+    'Q68': agreement,  # CONFIDENCE_GRAD_GPA
 }
 
 answer_dict_switcher = {
@@ -179,7 +180,7 @@ ques_num = [
     'Q50', 'Q8', 'Q10', 'Q10_21_TEXT', 'Q11', 'Q11_14_TEXT', 'Q68', 'Q88', 'Q93', 'Q86', 'Q84', 'Q16', 'Q15',
     'Q90', 'Q83', 'Q91', 'Q85', 'Q92', 'Q57', 'Q46', 'Q18', 'Q19', 'Q21', 'Q22', 'Q52', 'Q20', 'Q59', 'Q63',
     'Q26', 'Q25', 'Q27', 'Q28', 'Q82', 'Q48', 'Q9', 'Q32', 'Q31', 'Q30', 'Q41', 'Q42', 'Q35', 'Q62', 'Q61',
-    'Q38', 'Q39', 'Q40', 'Q51', 'Q60', 'Q58', 'Q160', 'Q161', 'Q56', 'Q75', 'Q76', 'Q77', 'Q78', 'Q79', 'Q68',
+    'Q38', 'Q39', 'Q40', 'Q51', 'Q60', 'Q58', 'Q160', 'Q161', 'Q56', 'Q75', 'Q76', 'Q77', 'Q78', 'Q79', 'Q168',
     'Q67', 'Q54']
 
 ques_text = ['Start Date', 'End Date', 'Response Type', 'IP Address', 'Progress', 'Duration (in seconds)', 'Finished',
@@ -330,6 +331,6 @@ ques_num_to_shorthand = {'Q70': 'CONSENT_CURRENT', 'Q89': 'CONSENT_FUTURE', 'Q89
                          'Q160': 'HIGHEST_STANDARD', 'Q58': 'PEOPLE_SEXIST_JOKES_GENDER', 'Q56': 'FRIENDS_OTHER_GENDER',
                          'Q75': 'INTELLIGENCE_FIXED', 'Q76': 'INTELLIGENCE_MALLEABLE', 'Q77': 'FAILURE_LAZY',
                          'Q78': 'FAILURE_ENVIRONMENT', 'Q79': 'FAILURE_ABILITY', 'Q67': 'DESCRIBE_NEGATIVE_EXPERIENCE',
-                         'Q54': 'SUGGESTION_IMPROVE_INSTITUTION'}
+                         'Q54': 'SUGGESTION_IMPROVE_INSTITUTION', 'Q168': 'CONFIDENCE_GRAD_GPA'}
 
 
