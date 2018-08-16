@@ -58,6 +58,12 @@ def make_graphs(df):
             if question in ONE_CHOICE_QUESTIONS:
                 is_likert_stacked_vertical_transposed = True
                 # TODO delete all the options equal to "Unanswered"
+                # question_df = question_df[question_df.question != 'Unanswered']
+                # how do I say "only do this on column "question"
+                # https://chrisalbon.com/python/data_wrangling/pandas_dropping_column_and_rows/
+                # ctrl + f "Tina"
+            if question == CONFIDENCE_GRAD_GPA:
+                temp = 23
 
             shorthand_question = ques_num_to_shorthand[question]
             print('question', question, 'short', shorthand_question, 'is_likert_stacked_vertical_transposed',
@@ -77,10 +83,11 @@ def make_graphs(df):
                 labels = [x[:40] for x in agg_t.index]
                 counter_non += 1
 
+            # TODO: have the labels be in a logical order (same as above)
             ax.set_yticklabels(labels)
             plt.xlim(0, 1)
             plt.title(shorthand_question)
-            # plt.tight_layout()
+            # plt.tight_layout() # debug this...
 
             if is_likert_stacked_vertical_transposed:
                 os.makedirs(f'panda_BYU_results/{shorthand_var}/likert_bar_graphs', exist_ok=True)
@@ -90,9 +97,9 @@ def make_graphs(df):
                 file_name = f'panda_BYU_results/{shorthand_var}/stacked_bar_graphs/{shorthand_question}.png'
             plt.savefig(file_name)
 
-    # for debugging purposes
-    print('counter_likert', counter_likert, 'len(ONE_CHOICE_QUESTIONS)', len(ONE_CHOICE_QUESTIONS))
-    print('counter_non', counter_non, 'len(MANY_CHOICES_QUESTIONS)', len(MANY_CHOICES_QUESTIONS))
+        # for debugging purposes
+        print('counter_likert', counter_likert, 'len(ONE_CHOICE_QUESTIONS)', len(ONE_CHOICE_QUESTIONS))
+        print('counter_non', counter_non, 'len(MANY_CHOICES_QUESTIONS)', len(MANY_CHOICES_QUESTIONS))
 
 
 def filter_data(question_df, comparison_point, question, answers, keep_cols):
