@@ -71,14 +71,16 @@ def make_graphs(df):
             if is_likert_stacked_vertical_transposed:
                 # sometimes we throw and error here, like when: Q46 aka PARTICIPATION_GROUP_PROJECT_ROLE
                 ax = transposed.transpose().plot(kind='barh', stacked=is_likert_stacked_vertical_transposed)
+                labels = [x[:40] for x in agg_t.transpose().index]
             else:
                 ax = transposed.plot(kind='barh', stacked=is_likert_stacked_vertical_transposed)
+                labels = [x[:40] for x in agg_t.index]
+
 
             # ax = transposed.plot(kind='barh', stacked=is_likert_stacked_vertical_transposed)
 
             # ax = (agg_t / (counts)).plot(kind='barh', stacked=is_likert_stacked_vertical_transposed)
 
-            labels = [x[:40] for x in agg_t.index]
             ax.set_yticklabels(labels)
             plt.xlim(0, 1)
             plt.title(shorthand_question)
