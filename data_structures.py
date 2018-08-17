@@ -10,7 +10,7 @@ ques_ans = {'duration_seconds': 'int', 'Location_Latitude': 'double', 'LocationL
             'confidence_graduate_gpa': 'agreement', 'confidence_prepared_courses': 'agreement',
             'confidence_percentile': 'double', 'participation_questions_comfortable_NONCS': 'comfort',
             'participation_absent_frequency': 'frequency_absent',
-            'participation_questions_ask_frequency': 'frequency_class_typo',
+            'participation_questions_ask_frequency': 'frequency_class',  # _typo
             'participation_questions_comfortable': 'comfort',
             'participation_not_questions_frequency': 'frequency_class', 'participation_absent_why': 'miss_class',
             'participation_MORE_comfortable': 'increase_comfort', 'participation_LESS_comfortable': 'decrease_comfort',
