@@ -59,6 +59,79 @@ ques_ans = {'duration_seconds': 'int', 'Location_Latitude': 'double', 'LocationL
             'describe_positive_experience': 'string', 'describe_negative_experience': 'string',
             'suggestion_improve_institution': 'string'}
 
+ques_num_to_long = {'Q70': 'Please read the entire text above before selecting an answer below.',
+                    'Q89': 'Are you willing to participate more in this study of students at BYU? - Selected Choice',
+                    'Q89_1_TEXT': 'Are you willing to participate more in this study of students at BYU? - Yes - please enter your email address here - Text',
+                    'Q3': 'What gender do you identify with? - Selected Choice',
+                    'Q3_3_TEXT': 'What gender do you identify with? - Other - Text',
+                    'Q81': 'What is your race/ethnicity (select all that apply)?', 'Q80': 'How old are you?',
+                    'Q4': 'What degree are you currently pursuing?', 'Q5': 'What is your intended major?',
+                    'Q6': 'What is your minor/secondary major?',
+                    'Q7': 'What CS courses will you enroll in during the fall semester of 2018? (select all that apply)',
+                    'Q73': 'When do you anticipate graduating?',
+                    'Q74': 'What is your current GPA at this university? - Selected Choice',
+                    'Q74_2_TEXT': 'What is your current GPA at this university? - My current overall GPA is: - Text',
+                    'Q50': 'Have you ever been offered a CS-related internship?',
+                    'Q8': 'What extracurriculars have you pursued in high school or college? (select all that apply)',
+                    'Q10': 'What factors influenced your decision to pick your major? (select all that apply) - Selected Choice',
+                    'Q10_21_TEXT': 'What factors influenced your decision to pick your major? (select all that apply) - Specific BYU courses or labs (list courses here please) - Text',
+                    'Q11': 'What do you perceive as being a barrier to your completion of this major and your career in this field? (select all that apply) - Selected Choice',
+                    'Q11_14_TEXT': 'What do you perceive as being a barrier to your completion of this major and your career in this field? (select all that apply) - Specific BYU courses or labs (list courses here please) - Text',
+                    'Q68': 'How much do you agree with the following statement: I am confident in my ability to graduate with a 3.0 or higher major GPA (your major GPA does not include AP/IB credits or general education/GE classes).',
+                    'Q88': 'How much do you agree with the following statement: I am prepared for my CS course(s) next semester.',
+                    'Q93': 'With respect to your peers in your major what percentile would you rank yourself at? Please enter a number between 0 and 100.',
+                    'Q86': 'How comfortable are you asking questions in your non-CS courses?',
+                    'Q84': 'How often are you absent from your CS class(es)?',
+                    'Q16': 'On average how often do you ask questions in CS courses?',
+                    'Q15': 'How comfortable are you asking questions in your CS courses?',
+                    'Q90': 'Aside from asking questions, how often do you participate (answer questions/talk in discussions/etc) in CS courses?',
+                    'Q83': 'When you miss a CS class, what is most often the reason why? (only select one)',
+                    'Q91': 'What helps you feel MORE COMFORTABLE asking questions in your CS course(s)? (select all that apply)',
+                    'Q85': 'When do you feel LESS COMFORTABLE asking questions in your CS course(s)? (select all that apply)',
+                    'Q92': 'Why do you not participate (aside from asking questions: answering questions/participating in discussions/etc) more in your CS course(s)?',
+                    'Q57': 'How often do you raise your hand in a CS class but never get called on?',
+                    'Q46': 'In group projects for CS courses which tasks do you typically take responsibility for? (select all that apply)',
+                    'Q18': 'How often do you discuss your academic performance or career plans with a professor or faculty member? (during office hours or in other one-on-one situations)',
+                    'Q19': 'Has as a CS professor ever invited you, personally, to consider any of the following? (select all that apply)',
+                    'Q21': 'How often do you go to TA-led help sessions for CS courses?',
+                    'Q22': 'How often to you visit the CS TAs to ask questions?',
+                    'Q52': 'How often do you talk with other students (not TAs) while in the CS TA cubicals or CS labs?',
+                    'Q20': 'How strongly do you agree with the statement: CS professors and CS courses are engaging.',
+                    'Q59': 'How strongly do you agree with the statement: I feel that the CS professors adequately represent the diverse backgrounds, views, demographics, and perspectives of students in CS courses.',
+                    'Q63': 'Do you feel like you have role models of the same gender as you who do CS?',
+                    'Q26': 'How often have you asked another student (not a TA for the course) to help you understand CS course material?',
+                    'Q25': 'How often have you mentored any students in the CS major or CS courses this semester? (assisted them with labs, homework, or given internship/job or graduate school advice)',
+                    'Q27': 'Do you attend meetings/events for any of the following? (select all that apply)',
+                    'Q28': 'What percentage of your friends are taking classes in the CS department?',
+                    'Q82': 'How much do you agree with the following statement: I want to make more friends in the CS major.',
+                    'Q48': 'Have you been the recipient of an academic scholarship? (select all that apply)',
+                    'Q9': 'Which of the following have you done, or do you plan to do before you graduate? (select all that apply)',
+                    'Q32': 'How often do members of the CS department (students, TAs, professors, etc) ask you about your plans to balance a career and parenthood?',
+                    'Q31': 'How often do members of the CS department (students, TAs, professors, etc) tell you that you should be a stay-at-home parent?',
+                    'Q30': 'How often do members of the CS department (students, TAs, professors, etc) tell you that you should pursue a full-time career?',
+                    'Q41': 'Do you feel like a member of the CS department (students, TAs, professors, etc) has treated you differently than your peers of the opposite gender?',
+                    'Q42': 'Are you aware of CS classmates who believe they have been treated differently by members of the CS department (students, TAs, professors, etc) because of their gender?',
+                    'Q35': 'Has a member of the CS department (students, TAs, professors, etc)ever told you that you earned a good grade, got a job, internship, or scholarship offer because of your gender?',
+                    'Q62': 'How often do you get negative comments about your appearance or attire from members of the CS department (students, TAs, professors, etc)?',
+                    'Q61': 'If members of the CS department (students, TAs, professors, etc) make negative comments about your appearance, what do they comment about? (select all that apply)',
+                    'Q38': 'Do you know how to file complaints for being treated differently because of your gender in the CS department?',
+                    'Q39': 'Do you know what happens if a complaint is filed against a member of the CS department who is accused of being sexist?',
+                    'Q40': 'Would you personally be worried about retribution if you filed a complaint about someone treating you or a peer differently because of your/their gender?',
+                    'Q51': 'If you saw a peer treat someone differently because of their gender (through words, actions, etc), would you say or do something? (select all that apply)',
+                    'Q60': 'How much do you agree with the following statement:When you tell people what your major is, they often express surprise (You don\'t look/act like a ____ major", Why are you majoring in ____?)?',
+                    'Q58': 'How often do you hear people in the CS department make sexist remarks or jokes about your gender?',
+                    'Q160': 'Do you feel that some students are held to a higher standard than other students in the CS department? If so, please select all groups that apply.',
+                    'Q161': 'How often, within the CS department, do you make a suggestion that was not considered until another person makes the same suggestion?',
+                    'Q56': 'Do you feel like you can have non-romantic friends of the opposite gender?',
+                    'Q75': 'How strongly do you agree with the statement: Intelligence is a fixed trait; you are born with the talents that you have and nothing you do can change them.',
+                    'Q76': 'How strongly do you agree with the statement: Intelligence is a malleable quality, if you work hard and practice you will improve.',
+                    'Q77': 'How strongly do you agree with the statement: Failure or a lack of achievement is due to insufficient effort.',
+                    'Q78': 'How strongly do you agree with the statement: Failure or a lack of achievement is due to personal or environmental obstacles.',
+                    'Q79': 'How strongly do you agree with the statement: Failure or a lack of achievement is due to a lack of ability.',
+                    'Q168': 'Are there any positive experiences or interactions that you had with members of the CS department that you would like to share?',
+                    'Q67': 'Are there any negative experiences or interactions that you had with members of the CS department that you would like to share?',
+                    'Q54': "What one change would you most like to see implemented to improve students' experiences at this institution?"}
+
 short_to_long = {'duration_seconds': 'How long between opening and submitting survey?', 'Location_Latitude': 'latitude',
                  'LocationLongitude': 'longitude',
                  'consent_current': 'Please read the entire text above before selecting an answer below.',
@@ -137,13 +210,13 @@ short_to_long = {'duration_seconds': 'How long between opening and submitting su
 
 majors_minors = ['Computer Science', 'Computer Engineering', 'Information Systems', 'Information Technology',
                  'Electrical Engineering', 'Civil Engineering', 'Mechanical Engineering', 'Statistics', 'Mathematics',
-                 'ACME', 'Undeclared', 'Undeclared/none', 'Other', '']
+                 'ACME', 'Undeclared', 'Undeclared/none', 'Other']
 
-graduation_year = ['2018', '2019', '2020', '2021 or later', '']
+graduation_year = ['2018', '2019', '2020', '2021 or later']
 
 extracurriculars = ['JV/varsity or other sports', 'Thespian/acting clubs', 'Orchestra/band/choir/music',
                     'Robotics/computer or other STEM clubs', 'Speech/debate',
-                    'Student government or political groups and clubs', 'Other', 'None', '']
+                    'Student government or political groups and clubs', 'Other', 'None']
 
 encouragement = ['Mother\'s encouragement', 'Father\'s encouragement', "Other family member's encouragement",
                  'Teacher\'s encouragement', 'Contact with or mentoring from a graduate',
@@ -156,7 +229,7 @@ encouragement = ['Mother\'s encouragement', 'Father\'s encouragement', "Other fa
                  'Advancement opportunities', 'Career possibilities fit interests',
                  'Career possibilities will give freedom to make own decisions', 'Teaching quality',
                  'Mentoring or friendship from students', 'Participation in conference or event',
-                 'Specific BYU courses or labs (list courses here please)', 'None of the above', '']
+                 'Specific BYU courses or labs (list courses here please)', 'None of the above']
 
 barriers = ['There are no barriers', 'Coursework too difficult', 'The coursework is too removed from real problems',
             'Feeling as if I don\'t fit in', 'Need to balance parenting and career after having children',
@@ -171,12 +244,12 @@ responsibilities = [
     'Writing or creating materials (designed user interface/created poster or visual aid/wrote reports or essays/etc)',
     'Managerial (group leader/presentation/etc)',
     'Support tasks (schedule meetings/email professor/scribe or notetaker/other errands)',
-    'Technical (coding/math/etc)', '']
+    'Technical (coding/math/etc)']
 
 professor_encouragement = ['Join the computer science major', 'Continue in the CS major', 'Apply for a scholarship',
                            'Apply for internship', 'Apply for part-time/full-time job',
                            'Apply for a research position (either on or off campus)', 'Grad school',
-                           'Leadership position', '']
+                           'Leadership position']
 meetings_clubs = ['ACM (Association of Computing Machinery)',
                   'CS Colloquiums',
                   'YHacks (ethical hacking)',
@@ -185,22 +258,22 @@ meetings_clubs = ['ACM (Association of Computing Machinery)',
                   'WIT (Women in Technology)',
                   'Visiting companies\' tech talks',
                   'Dev Club (Developer\'s club)',
-                  'Visiting companies\' tech talks', '']
+                  'Visiting companies\' tech talks']
 
-percentage = ['0 - 20%', '21 - 40%', '41 - 60%', '61 - 80%', '81 - 100%', '']
+percentage = ['0 - 20%', '21 - 40%', '41 - 60%', '61 - 80%', '81 - 100%']
 
 scholarships = ['Minority based (race/gender/etc)',
                 'Academic path based (specific to your major/department/field/etc)',
                 'Need based (financial aid/FAFSA/pell grant/etc)', 'Other qualifications',
-                'I have never received a scholarship', '']
+                'I have never received a scholarship']
 
-yes_no = ['Yes', 'No', '']
+yes_no = ['Yes', 'No']
 
-involvement = ['Internship', 'Study abroad', 'Research', 'Capstone project', 'Leadership role in club or at work', '']
+involvement = ['Internship', 'Study abroad', 'Research', 'Capstone project', 'Leadership role in club or at work']
 
 appearance_comments = ['Too formal', 'Too casual', 'Workplace appropriateness/modesty',
                        'Facial hair or hair color/length/style', 'Body type or weight',
-                       'I never receive negative comments', '']
+                       'I never receive negative comments']
 
 sexism_response = ['I would say something during the event', 'I would speak to the victim after the event',
                    'I would speak to the perpetrator after the event', 'I would probably not say anything',
@@ -210,10 +283,10 @@ sexism_response = ['I would say something during the event', 'I would speak to t
                    '']
 
 student_groups_standards = ['Male students', 'Female students', 'Non-binary students',
-                            'All students are held to an equal standard', '']
+                            'All students are held to an equal standard']
 
 race = ['White', 'Hispanic or Latino', 'Asian/Pacific Islander', 'Black or African American',
-        'Native American or American Indian', 'Other', 'Prefer not to say', '']
+        'Native American or American Indian', 'Other', 'Prefer not to say']
 
 degree_pursuing = ['Undergraduate', 'Masters', 'PhD', 'Not currently pursuing a degree']
 
@@ -225,7 +298,7 @@ byu_courses = ['CS 142', 'CS 224', 'CS 235', 'CS 236', 'CS 240', 'CS 252', 'CS 2
                'I will not take any CS courses Fall 2018']
 
 frequency_absent = ['I never miss class', 'I miss class once or twice a semester', 'I miss once or twice a month',
-                    'I miss once a week', 'I go sometimes', 'I never go to class', '']
+                    'I miss once a week', 'I go sometimes', 'I never go to class']
 
 miss_class_reasons = ['Physical or mental health issues (flu/cold/depression/anxiety/etc)', 'Work commitments',
                       'Family commitments', 'Other commitments (club events/religious activities/etc)',
@@ -266,7 +339,7 @@ list_question_answer_types = ['responsibilities', 'professor_encouragement', 'me
                               'scholarships', 'yes_no', 'involvement', 'appearance_comments', 'sexism_response',
                               'student_groups_standards', 'majors_minors', 'graduation_year', 'extracurriculars',
                               'encouragement', 'barriers', 'more_comfortable', 'less_comfortable', 'increase_comfort',
-                              'decrease_comfort', 'miss_class', 'participate_decrease', '']
+                              'decrease_comfort', 'miss_class', 'participate_decrease']
 # from above, TODO, not sure if 'miss_class', 'participate_decrease' should really be in list...
 
 professor_names = ['brent adams', 'cory barker', 'mark clement', 'jacob crandall', 'casey deccio', 'parris egbert',
@@ -496,43 +569,38 @@ agreement = ['Strongly agree',
              'Neither agree nor disagree',
              'Somewhat disagree',
              'Disagree',
-             'Strongly disagree',
-             '']
+             'Strongly disagree']
 
-frequency = ['Never', 'Once or twice a semester', 'Once a month', 'Once a week', 'Daily', '']
+frequency = ['Never', 'Once or twice a semester', 'Once a month', 'Once a week', 'Daily']
 
-frequency_typo = ['Never', 'Once or twice a semester', 'Once a month', 'Once a week ', 'Daily', '']
+frequency_typo = ['Never', 'Once or twice a semester', 'Once a month', 'Once a week ', 'Daily']
 
 frequency_TA = ['Never my classes do not have help session', 'Never I don\'t go to help sessions',
                 'Once or twice a semester',
                 'Once a month',
                 'Once a week',
-                'Daily',
-                '']
+                'Daily']
 
 frequency_TA_typo = ['Never my classes do not have help session', 'Never I don\'t go to help sessions',
                      'Once or twice a semester',
                      'Once a month',
                      'Once a week ',
-                     'Daily',
-                     '']
+                     'Daily']
 
-frequency_class_typo = ['Never', 'Once or twice a semester', 'Once a month', 'Once a week ', 'Daily', '']
+frequency_class_typo = ['Never', 'Once or twice a semester', 'Once a month', 'Once a week ', 'Daily']
 
-frequency_class = ['Never', 'Once or twice a semester', 'Once a month', 'Once a week', 'Daily', '']
+frequency_class = ['Never', 'Once or twice a semester', 'Once a month', 'Once a week', 'Daily']
 
 comfort = ['Extremely comfortable', 'Moderately comfortable',
            'Slightly comfortable', 'Neither comfortable nor uncomfortable',
            'Slightly uncomfortable',
            'Moderately uncomfortable',
-           'Extremely uncomfortable',
-           '']
+           'Extremely uncomfortable']
 
 certainty = ['Definitely yes', 'Probably yes',
              'Might or might not',
              'Probably not',
-             'Definitely not',
-             '']
+             'Definitely not']
 
 color_options = ['red', 'orange', 'yellow', 'green', 'blue', 'purple', 'pink', 'black']
 
@@ -577,5 +645,3 @@ participate_decrease = ['I already participate enough/too much', 'The CS class i
                         'I am worried my answer is wrong/comment is irrelevant/etc']
 
 do_not_graph = [consent_current, consent_future]
-
-
