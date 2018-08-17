@@ -3,8 +3,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import os
 from language_processing import *
-from graph_func import pie_chart
-from answer_type import compare_confidence_GPA
 from other_constants import *
 import logging
 import sys
@@ -69,7 +67,11 @@ def make_graphs(df):
             transposed = agg_t / counts
 
             if is_likert_stacked_vertical_transposed:
-                correct_order =
+                question_options = ques_ans[shorthand_question.lower()]
+                print(question_options)
+
+                correct_order = answer_dict_switcher.get(question_options, 'error')
+
                 new_df = transposed.transpose()
                 ax = new_df[correct_order].plot(kind='barh', stacked=is_likert_stacked_vertical_transposed)
                 labels = [x[:40] for x in agg_t.transpose().index]
@@ -86,7 +88,8 @@ def make_graphs(df):
 
             ax.set_yticklabels(labels)
             plt.xlim(0, 1)
-            plt.title(shorthand_question)
+            real_title = '\n'.join(ques_num_to_long[question][i:i + 60] for i in range(0, len(ques_num_to_long[question]), 60))
+            plt.title(real_title)
             # plt.tight_layout() # debug this...
 
             if is_likert_stacked_vertical_transposed:
@@ -283,5 +286,6 @@ def main():
     make_graphs(df)
 
 
-
+print(len(question_shorthand ))
+print(len(ques_text))
 main()
