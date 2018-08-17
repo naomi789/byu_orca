@@ -7,6 +7,7 @@ from graph_func import pie_chart
 from answer_type import compare_confidence_GPA
 from other_constants import *
 import logging
+import sys
 
 
 def get_question_df(df, question, keep_cols, get_answers=True):
@@ -44,6 +45,7 @@ def sorted_answers(question_options):
 
 
 def make_graphs(df):
+    global temp
     is_likert_stacked_vertical_transposed = False
     counter_likert = 0
     counter_non = 0
@@ -57,33 +59,31 @@ def make_graphs(df):
             question_df, answers = get_question_df(df, question, keep_cols)
             if question in ONE_CHOICE_QUESTIONS:
                 is_likert_stacked_vertical_transposed = True
-                # TODO delete all the options equal to "Unanswered"
                 question_df = question_df[question_df[question] != 'Unanswered']
-                # how do I say "only do this on column "question"
-                # https://chrisalbon.com/python/data_wrangling/pandas_dropping_column_and_rows/
-                # ctrl + f "Tina"
-            if question == CONFIDENCE_GRAD_GPA:
-                temp = 23
 
             shorthand_question = ques_num_to_shorthand[question]
             print('question', question, 'short', shorthand_question, 'is_likert_stacked_vertical_transposed',
                   is_likert_stacked_vertical_transposed)
 
             agg_t, counts, columns_for_var = filter_data(question_df, comparison_point, question, answers, keep_cols)
-
             transposed = agg_t / counts
 
             if is_likert_stacked_vertical_transposed:
-                # sometimes we throw and error here, like when: Q46 aka PARTICIPATION_GROUP_PROJECT_ROLE
-                ax = transposed.transpose().plot(kind='barh', stacked=is_likert_stacked_vertical_transposed)
+                correct_order =
+                new_df = transposed.transpose()
+                ax = new_df[correct_order].plot(kind='barh', stacked=is_likert_stacked_vertical_transposed)
                 labels = [x[:40] for x in agg_t.transpose().index]
+                # if 'Unanswered' in labels: labels.remove('Unanswered')
+                # TODO fix that
                 counter_likert += 1
             else:
                 ax = transposed.plot(kind='barh', stacked=is_likert_stacked_vertical_transposed)
                 labels = [x[:40] for x in agg_t.index]
                 counter_non += 1
 
+
             # TODO: have the labels be in a logical order (same as above)
+
             ax.set_yticklabels(labels)
             plt.xlim(0, 1)
             plt.title(shorthand_question)
