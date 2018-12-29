@@ -51,7 +51,7 @@ dat$Q80 <- as.numeric(dat$Q80)
 dat$Q74_2_TEXT <- as.numeric(dat$Q74_2_TEXT)
 
 #Recode Likert Items to Numeric
-## Build a function to do thos
+## Build a function to do this
 recodeLikert <- function(x){
   ifelse(x=="Strongly disagree",1,
          ifelse(x=="Disagree",2,
@@ -68,7 +68,47 @@ likertItems <- colnames(dat)[colSums(dat=="Strongly disagree" |
 dat[,likertItems] <- sapply(dat[,likertItems],
                                recodeLikert)
 
+###################################################
+#-------------------Input-------------------------#
+###################################################
 
+# see pie charts of: gender Q3, race Q81, age Q80, degree Q4,
+# major Q5, minor Q6, fall CS courses Q7, graduateion year Q73,
+# histogram of: GPA Q74_2_TEXT
+# graph of: major pros Q10, major cons Q11
+
+###################################################
+#----------------Response Rate--------------------#
+###################################################
+
+# looking at response rate for various categories
+# undergrad/masters/PhD, major/minor, female/male
+
+###################################################
+#-----------------Analysis------------------------#
+###################################################
+
+# Analysis of Q50: "Have you ever been offered a CS-related internship?"
+# hypothesis: upperclassmen/older students/graduate students are more likely to say yes
+
+
+# Analysis of Q8: "What extracurriculars have you pursued in high school or college? (select all that apply)"
+# hypothesis: CS major women are more likely to say debate/sports than non CS major women
+
+# Analysis of Q10: "What factors influenced your decision to pick your major? (select all that apply)"
+# hypothesis
+
+# Analysis of Q
+# hypothesis
+
+# Analysis of Q
+# hypothesis
+
+# Analysis of Q
+# hypothesis
+
+# Analysis of Q
+# hypothesis
 
 # Analysis of Q88: "I am prepared for my CS course(s) next semester."
 modQ88 <- lm(Q88 ~ Q3, data=dat)
