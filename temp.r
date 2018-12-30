@@ -13,7 +13,10 @@ library(psych)
 #Read in data
 # dat <- read_excel("overall_survey.xlsx")
 #or
-dat <- read.csv("overall_survey.csv")
+# dat <- read.csv("overall_survey.csv")
+# Naomi replaced the above with the below:
+dat <- read.csv("overall_survey.csv", na.strings = "")
+# https://stackoverflow.com/questions/25594921/how-to-replace-blank-strings-with-na
 
 ###################################################
 #--------------Data Processing--------------------#
@@ -27,19 +30,25 @@ dat$Q3[which(dat$Q3 != "Male" &
           dat$Q3 != "Other")] <- NA
 
 #Make characters into factors
-dat$Q3 <- as.factor(dat$Q3)
-dat$Q4 <- as.factor(dat$Q4)
-dat$Q5 <- as.factor(dat$Q5)
-dat$Q6 <- as.factor(dat$Q6)
-dat$Q7 <- as.factor(dat$Q7)
-dat$Q73 <- as.ordered(dat$Q73)
-dat$Q81 <- as.factor(dat$Q81)
-dat$Q50 <- as.factor(dat$Q50)
-dat$Q8 <- as.factor(dat$Q8)
+dat$Q3 <- as.factor(dat$Q3) # gender
+dat$Q4 <- as.factor(dat$Q4) # degree (undergrad/masters/phd)
+dat$Q5 <- as.factor(dat$Q5) # major
+dat$Q6 <- as.factor(dat$Q6) # minor
+dat$Q7 <- as.factor(dat$Q7) # fall 2018 courses
+dat$Q73 <- as.ordered(dat$Q73) # graduation year
+dat$Q81 <- as.factor(dat$Q81) # race
+dat$Q50 <- as.factor(dat$Q50) # internship offer
+dat$Q8 <- as.factor(dat$Q8) # extracurriculars
+# Q74 = GPA
+# Q80 = age
 
+# TODO!!!
 #Separate Responses for Q8, Q10, and Q11
 # also questions: Q7, Q91, Q85, Q46, Q19, Q27, Q48, Q9, Q51, Q60,
 # dat$Q8
+# https://stackoverflow.com/questions/11622660/how-to-use-r-for-multiple-select-questions
+# https://stackoverflow.com/questions/11348391/tabulating-multiple-response-questions
+#
 
 #rescore for average age in range (REPORT THIS)
 dat$Q80 <- as.character(dat$Q80)
@@ -92,25 +101,52 @@ dat[,likertItems] <- sapply(dat[,likertItems],
 #-----------------Analysis------------------------#
 ###################################################
 
+###################################################
 # Analysis of Q50: "Have you ever been offered a CS-related internship?"
-# hypothesis: upperclassmen/older students/graduate students are more likely to say yes
+# hypothesis: CS majors/upperclassmen/older students/graduate students are more likely to say yes
+# Q50_gender <- apply(table(dat$Q50, dat$Q3), 2, function(x){x/sum(x)})
+
+# Q50_gender <- apply(table(dat$Q50, dat$Q3), 2, function(x){x/sum(x)})
+# barplot(Q50_gender,
+#        main = "Internships offers (by gender)",
+#        )
+
+# Q50_major <- apply(table(dat$Q50, dat$Q5), 2, function(x){x/sum(x)})
+# Q50_gradu <- apply(table(dat$Q50, dat$Q73), 2, function(x){x/sum(x)})
+# Q50_age <- apply(table(dat$Q50, dat$Q80), 2, function(x){x/sum(x)})
+# Q50_degree <- apply(table(dat$Q50, dat$Q4), 2, function(x){x/sum(x)})
 
 
+
+
+# modQ50 <- lm(Q50 ~ Q3, data=dat)
+# summary(modQ50)
+# boxplot(Q50 ~ Q3, data = dat,
+#         main = "Internship offer (gender)",
+#         col = "lightblue")
+# TukeyHSD(aov(modQ50))
+
+###################################################
 # Analysis of Q8: "What extracurriculars have you pursued in high school or college? (select all that apply)"
 # hypothesis: CS major women are more likely to say debate/sports than non CS major women. Men are more likely to say STEM than women.
+# boxplot(table(dat$Q8, dat$Q3, dat$Q5))
 
+###################################################
 # Analysis of Q10: "What factors influenced your decision to pick your major? (select all that apply)"
 # hypothesis: CS majors are more likely to say $$$. Women are more likely to say mom/dad/teacher support. Women are more likely to say contribute to society.
 
+###################################################
 # Analysis of Q11: "What do you perceive as being a barrier to your completion of this major and your career in
 # this field? (select all that apply)"
 # hypothesis: Men=no barriers. Women=not fitting in; parenting; relationships; ability to succeed. All?
 
+###################################################
 # Analysis of Q68: "How much do you agree with the following statement: I am confident in my ability to
 # graduate with a 3.0 or higher major GPA (your major GPA does not include AP/IB credits or
 # general education/GE classes)."
 # hypothesis: All say "strongly agree" (grade inflation since the paper that inspired me to ask this)
 
+###################################################
 # Analysis of Q88: "How much do you agree with the following statement: I am prepared for my CS course(s)
 # next semester."
 # hypothesis: Men=more confident. CS majors = more confident.
@@ -301,12 +337,22 @@ dat[,likertItems] <- sapply(dat[,likertItems],
 
 
 # Analysis of Q88: "I am prepared for my CS course(s) next semester."
-modQ88 <- lm(Q88 ~ Q3, data=dat)
-summary(modQ88)
-boxplot(Q88 ~ Q3, data = dat,
-        ylab = "Preparedness",
-        col = "lightblue")
-TukeyHSD(aov(modQ88))
+# hypothesis: women are less confident/feel less prepared. CS majors are more prepared
+# modQ88 <- lm(Q88 ~ Q3, data=dat)
+# summary(modQ88)
+# boxplot(Q88 ~ Q3, data = dat,
+#         main = "Preparedness by gender",
+#         ylab = "Preparedness",
+#         col = "lightblue")
+# TukeyHSD(aov(modQ88))
+
+# modQ88 <- lm(Q88 ~ Q5, data=dat)
+# summary(modQ88)
+# boxplot(Q88 ~ Q5, data = dat,
+#         main = "Preparedness by major",
+#         ylab = "Preparedness",
+#         col = "lightblue")
+# TukeyHSD(aov(modQ88))
 
 # p value
 # t value tells me how different it is (standardized estimate of how different my data is FROM ZERO, given change)
