@@ -1,4 +1,7 @@
-#Set working directory
+ More women say no, more non-CS majors say noQ51 If you saw a peer treat someone differently because of their gender (through words,
+# actions, etc), would you say or do something? (select all that apply) Men=more likely to report to department/professor/work. Women=talk to victim. Q60 How much do you agree with the following statement:When you tell people what your
+# major is, they often express surprise ("You don't look/act like a ____ major", "Why are you
+# majoring in ____?")? Women=more likely. CS majors = more likely. #Set working directory
 # setwd("~/Box Sync/Collaborations/Naomi")
 
 #load Libraries
@@ -221,113 +224,81 @@ dat[,likertItems] <- sapply(dat[,likertItems],
 
 # Analysis of Q41 Do you feel like a member of the CS department (students, TAs, professors, etc) has
 # treated you differently than your peers of the opposite gender?
-# hypothesis:
+# hypothesis: Interested in differences between gender, age, graduation date, under/master/phd status
 
 # Analysis of Q42 Are you aware of CS classmates who believe they have been treated differently by
 # members of the CS department (students, TAs, professors, etc) because of their gender?
-# hypothesis:
+# hypothesis: Interested in differences between gender, age, graduation date, under/master/phd status
 
 # Analysis of Q35 Has a member of the CS department (students, TAs, professors, etc)ever told you that you
 # earned a good grade, got a job, internship, or scholarship offer because of your gender?
-# hypothesis:
+# hypothesis: Probably mostly women (in CS?)
 
 # Analysis of Q62 How often do you get negative comments about your appearance or attire from members
 # of the CS department (students, TAs, professors, etc)?
-# hypothesis:
+# hypothesis: Most say "never". Of those who don't, split between men/women.
 
 # Analysis of Q61 If members of the CS department (students, TAs, professors, etc) make negative
 # comments about your appearance, what do they comment about? (select all that apply)
+# hypothesis: Most say "never". Men: facial hair. Women: formal/casual.
+
+# Analysis of Q38 Do you know how to file complaints for being treated differently because of your gender in
+# the CS department?
+# hypothesis: More women say no, more non-CS majors say no
+
+# Analysis of Q39 Do you know what happens if a complaint is filed against a member of the CS department
+# who is accused of being sexist?
+# hypothesis: More women say no, more non-CS majors say no
+
+# Analysis of Q40 Would you personally be worried about retribution if you filed a complaint about someone
+# treating you or a peer differently because of your/their gender?
+# hypothesis: More women say no, more non-CS majors say no
+
+# Analysis of Q51 If you saw a peer treat someone differently because of their gender (through words,
+# actions, etc), would you say or do something? (select all that apply)
+# hypothesis: women=more likely to speak to victim. Men=more likely to report to department/professor/boss.
+
+# # Analysis of Q60 How much do you agree with the following statement:When you tell people what your
+# major is, they often express surprise ("You don't look/act like a ____ major", "Why are you
+# majoring in ____?")?
+# hypothesis: more women, more CS majors say yes
+
+# Analysis of Q58 How often do you hear people in the CS department make sexist remarks or jokes about
+# your gender?
+# hypothesis: men hear more jokes/comments
+
+# Analysis of Q60 Do you feel that some students are held to a higher standard than other students in the CS
+# department? If so, please select all groups that apply.
+# hypothesis: women think men, men think women. non-CS majors say "all are equal"
+
+# Analysis of Q61 How often, within the CS department, do you make a suggestion that was not considered
+# until another person makes the same suggestion?
+# hypothesis: about the same for men/women, but upperclassmen feel more ignored?
+
+# Analysis of Q56 Do you feel like you can have non-romantic friends of the opposite gender?
+# hypothesis: not sure between gender/age/degree/major
+# mistake: I should've asked about marital/dating status, that certainly makes a difference...
+
+# Analysis of Q75 How strongly do you agree with the statement: Intelligence is a fixed trait; you are born with
+# the talents that you have and nothing you do can change them.
 # hypothesis:
 
-# Analysis of Q
+# Analysis of Q76 How strongly do you agree with the statement: Intelligence is a malleable quality, if you
+# work hard and practice you will improve.
 # hypothesis:
 
-# Analysis of Q
+# Analysis of Q77 How strongly do you agree with the statement: Failure or a lack of achievement is due to
+# insufficient effort.
 # hypothesis:
 
-# Analysis of Q
+# Analysis of Q78 How strongly do you agree with the statement: Failure or a lack of achievement is due to
+# personal or environmental obstacles.
 # hypothesis:
 
-# Analysis of Q
+# Analysis of Q79 How strongly do you agree with the statement: Failure or a lack of achievement is due to a
+# lack of ability.
 # hypothesis:
 
-# Analysis of Q
-# hypothesis:
-
-# Analysis of Q
-# hypothesis:
-
-# Analysis of Q
-# hypothesis:
-
-# Analysis of Q
-# hypothesis:
-
-# Analysis of Q
-# hypothesis:
-
-# Analysis of Q
-# hypothesis:
-
-# Analysis of Q
-# hypothesis:
-
-# Analysis of Q
-# hypothesis:
-
-# Analysis of Q
-# hypothesis:
-
-# Analysis of Q
-# hypothesis:
-
-# Analysis of Q
-# hypothesis:
-
-# Analysis of Q
-# hypothesis:
-
-# Analysis of Q
-# hypothesis:
-
-# Analysis of Q
-# hypothesis:
-
-# Analysis of Q
-# hypothesis:
-
-# Analysis of Q
-# hypothesis:
-
-# Analysis of Q
-# hypothesis:
-
-# Analysis of Q
-# hypothesis:
-
-# Analysis of Q
-# hypothesis:
-
-# Analysis of Q
-# hypothesis:
-
-# Analysis of Q
-# hypothesis:
-
-# Analysis of Q
-# hypothesis:
-
-# Analysis of Q
-# hypothesis:
-
-# Analysis of Q
-# hypothesis:
-
-# Analysis of Q
-# hypothesis:
-
-# Analysis of Q
-# hypothesis:
 
 # Analysis of Q88: "I am prepared for my CS course(s) next semester."
 modQ88 <- lm(Q88 ~ Q3, data=dat)
