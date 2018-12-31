@@ -270,6 +270,14 @@ dat[,likertItems] <- sapply(dat[,likertItems],
 # earned a good grade, got a job, internship, or scholarship offer because of your gender?
 # hypothesis: Probably mostly women (in CS?)
 
+modQ35 <- lm(Q35 ~ Q3, data=dat)
+summary(modQ88)
+boxplot(Q35 ~ Q3, data = dat,
+        main = "Told successful because of gender",
+        ylab = "Agreement",
+        col = "lightblue")
+TukeyHSD(aov(modQ35))
+
 # Analysis of Q62 How often do you get negative comments about your appearance or attire from members
 # of the CS department (students, TAs, professors, etc)?
 # hypothesis: Most say "never". Of those who don't, split between men/women.
