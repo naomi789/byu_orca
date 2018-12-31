@@ -1,7 +1,10 @@
- More women say no, more non-CS majors say noQ51 If you saw a peer treat someone differently because of their gender (through words,
-# actions, etc), would you say or do something? (select all that apply) Men=more likely to report to department/professor/work. Women=talk to victim. Q60 How much do you agree with the following statement:When you tell people what your
-# major is, they often express surprise ("You don't look/act like a ____ major", "Why are you
-# majoring in ____?")? Women=more likely. CS majors = more likely. #Set working directory
+# TODO:
+# How to get majors into two categories: CS and non CS? Or maybe five or six? 
+# How to separate "select all" answers? 
+#
+
+
+#Set working directory
 # setwd("~/Box Sync/Collaborations/Naomi")
 
 #load Libraries
