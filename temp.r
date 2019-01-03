@@ -314,9 +314,47 @@ TukeyHSD(aov(modQ35))
 # your gender?
 # hypothesis: men hear more jokes/comments
 
-# Analysis of Q60 Do you feel that some students are held to a higher standard than other students in the CS
+# Analysis of Q60.1 Do you feel that some students are held to a higher standard than other students in the CS
 # department? If so, please select all groups that apply.
 # hypothesis: women think men, men think women. non-CS majors say "all are equal"
+# also, what percentage say "all are held to the same standard"
+dat$Q60.1_Male <- as.integer(as.logical(grepl("Male",dat$Q60.1)))
+dat$Q60.1_Female <- as.integer(as.logical(grepl("Female",dat$Q60.1)))
+dat$Q60.1_All <- as.integer(as.logical(grepl("All",dat$Q60.1)))
+dat$Q60.1_NonBinary <- as.integer(as.logical(grepl("Non-binary",dat$Q60.1)))
+dat$Q60.1_NA <- as.integer(as.logical(is.na(dat$Q60.1)))
+
+sum(dat$Q60.1_Male[which(dat$Q60.1_NA==0)])/length(dat$Q60.1_Male[which(dat$Q60.1_NA==0)])
+sum(dat$Q60.1_Female[which(dat$Q60.1_NA==0)])/length(dat$Q60.1_Female[which(dat$Q60.1_NA==0)])
+sum(dat$Q60.1_All[which(dat$Q60.1_NA==0)])/length(dat$Q60.1_All[which(dat$Q60.1_NA==0)])
+sum(dat$Q60.1_NonBinary[which(dat$Q60.1_NA==0)])/length(dat$Q60.1_NonBinary[which(dat$Q60.1_NA==0)])
+
+table_Q60.1_Male <- table(dat$Q60.1_Male[which(dat$Q60.1_NA==0)],dat$Q3[which(dat$Q60.1_NA==0)])
+table_Q60.1_Male <- table_Q60.1_Male[,-3]
+table_Q60.1_Male/sum(colSums(table_Q60.1_Male))
+table_Q60.1_Male/sum(colSums(table_Q60.1_Male))
+
+chisq.test(table_Q60.1_Male)
+
+table_Q60.1_Female <- table(dat$Q60.1_Female[which(dat$Q60.1_NA==0)],dat$Q3[which(dat$Q60.1_NA==0)])
+table_Q60.1_Female <- table_Q60.1_Female[,-3]
+table_Q60.1_Female/sum(colSums(table_Q60.1_Female))
+chisq.test(table_Q60.1_Female)
+# women are X more likely to say they are held to a higher standard
+
+table_Q60.1_All <- table(dat$Q60.1_All[which(dat$Q60.1_NA==0)],dat$Q3[which(dat$Q60.1_NA==0)])
+table_Q60.1_All <- table_Q60.1_All[,-3]
+table_Q60.1_All/sum(colSums(table_Q60.1_All))
+chisq.test(table_Q60.1_All)
+
+table_Q60.1_NonBinary <- table(dat$Q60.1_NonBinary[which(dat$Q60.1_NA==0)],dat$Q3[which(dat$Q60.1_NA==0)])
+table_Q60.1_NonBinary <- table_Q60.1_NonBinary[,-3]
+table_Q60.1_NonBinary/sum(colSums(table_Q60.1_NonBinary))
+chisq.test(table_Q60.1_NonBinary)
+# percent of who said what (and I could split that into male and female)
+# report n (how many people gave that particular answer)
+# are men or women reporting this differently (their gender is in dat$Q3)
+
 
 # Analysis of Q61 How often, within the CS department, do you make a suggestion that was not considered
 # until another person makes the same suggestion?
