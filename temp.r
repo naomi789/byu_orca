@@ -1,6 +1,6 @@
 # TODO:
-# How to get majors into two categories: CS and non CS? Or maybe five or six? 
-# How to separate "select all" answers? 
+# How to get majors into two categories: CS and non CS? Or maybe five or six?
+# How to separate "select all" answers?
 #
 
 
@@ -332,25 +332,44 @@ sum(dat$Q60.1_NonBinary[which(dat$Q60.1_NA==0)])/length(dat$Q60.1_NonBinary[whic
 table_Q60.1_Male <- table(dat$Q60.1_Male[which(dat$Q60.1_NA==0)],dat$Q3[which(dat$Q60.1_NA==0)])
 table_Q60.1_Male <- table_Q60.1_Male[,-3]
 table_Q60.1_Male/sum(colSums(table_Q60.1_Male))
-table_Q60.1_Male/sum(colSums(table_Q60.1_Male))
+model_Q60.1_Male <- glm(dat$Q60.1_Male[which(dat$Q60.1_NA==0)]~dat$Q3[which(dat$Q60.1_NA==0)],family = "binomial")
+summary(model_Q60.1_Male) # look at the p value for male : 0.409 , not significant
+model_Q60.1_Male_Coefs <- coef(model_Q60.1_Male)
+FemaleProb_Male <- exp(coef(model_Q60.1_Male)[1])/(1+exp(coef(model_Q60.1_Male)[1])) # chance that women said Men are held to a higher standard
+MaleProb_Male <- exp(coef(model_Q60.1_Male)[1]+coef(model_Q60.1_Male)[2])/(1+exp(coef(model_Q60.1_Male)[1]+coef(model_Q60.1_Male)[2])) # probability that Men said Men are held to
 
-chisq.test(table_Q60.1_Male)
 
 table_Q60.1_Female <- table(dat$Q60.1_Female[which(dat$Q60.1_NA==0)],dat$Q3[which(dat$Q60.1_NA==0)])
 table_Q60.1_Female <- table_Q60.1_Female[,-3]
 table_Q60.1_Female/sum(colSums(table_Q60.1_Female))
-chisq.test(table_Q60.1_Female)
-# women are X more likely to say they are held to a higher standard
+model_Q60.1_Female <- glm(dat$Q60.1_Female[which(dat$Q60.1_NA==0)]~dat$Q3[which(dat$Q60.1_NA==0)],family = "binomial")
+summary(model_Q60.1_Female) # p value for women: .00207, significant
+model_Q60.1_Female_Coefs <- coef(model_Q60.1_Female)
+FemaleProb_Female <- exp(coef(model_Q60.1_Female)[1])/(1+exp(coef(model_Q60.1_Female)[1]))
+MaleProb_Female <- exp(coef(model_Q60.1_Female)[1]+coef(model_Q60.1_Female)[2])/(1+exp(coef(model_Q60.1_Female)[1]+coef(model_Q60.1_Female)[2]))
+
+# probability of a female saying female=held to higher standard ~3x higher (than male saying female)
 
 table_Q60.1_All <- table(dat$Q60.1_All[which(dat$Q60.1_NA==0)],dat$Q3[which(dat$Q60.1_NA==0)])
 table_Q60.1_All <- table_Q60.1_All[,-3]
 table_Q60.1_All/sum(colSums(table_Q60.1_All))
-chisq.test(table_Q60.1_All)
+model_Q60.1_All <- glm(dat$Q60.1_All[which(dat$Q60.1_NA==0)]~dat$Q3[which(dat$Q60.1_NA==0)],family = "binomial")
+summary(model_Q60.1_All) # p value .00195, significant
+model_Q60.1_Female_Coefs <- coef(model_Q60.1_Female)
+
+# probability is higher that men will say 'all held to same standard' AOT probability of a woman saying that
+FemaleProb_All <- exp(coef(model_Q60.1_All)[1])/(1+exp(coef(model_Q60.1_All)[1]))
+MaleProb_All <- exp(coef(model_Q60.1_All)[1]+coef(model_Q60.1_All)[2])/(1+exp(coef(model_Q60.1_All)[1]+coef(model_Q60.1_All)[2]))
+
 
 table_Q60.1_NonBinary <- table(dat$Q60.1_NonBinary[which(dat$Q60.1_NA==0)],dat$Q3[which(dat$Q60.1_NA==0)])
 table_Q60.1_NonBinary <- table_Q60.1_NonBinary[,-3]
 table_Q60.1_NonBinary/sum(colSums(table_Q60.1_NonBinary))
-chisq.test(table_Q60.1_NonBinary)
+model_Q60.1_NonBinary <- glm(dat$Q60.1_NonBinary[which(dat$Q60.1_NA==0)]~dat$Q3[which(dat$Q60.1_NA==0)],family = "binomial")
+summary(model_Q60.1_NonBinary) # this difference was NOT significant (women said 2% of time; men said 4% of the time)
+model_Q60.1_Female_Coefs <- coef(model_Q60.1_Female)
+FemaleProb_NonBinary <- exp(coef(model_Q60.1_NonBinary)[1])/(1+exp(coef(model_Q60.1_NonBinary)[1]))
+MaleProb_NonBinary <- exp(coef(model_Q60.1_NonBinary)[1]+coef(model_Q60.1_NonBinary)[2])/(1+exp(coef(model_Q60.1_NonBinary)[1]+coef(model_Q60.1_NonBinary)[2]))
 # percent of who said what (and I could split that into male and female)
 # report n (how many people gave that particular answer)
 # are men or women reporting this differently (their gender is in dat$Q3)
