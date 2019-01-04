@@ -40,3 +40,5 @@ freq.plot
 # see if men and women talk about different things
 
 # see what words are correlated with professors' names
+
+# also, how do I un-commit something that I shouldn't've committed??
