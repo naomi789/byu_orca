@@ -1,4 +1,5 @@
 # things that I added
+*.xlsx
 temp.py
 panda_BYU_results/*
 *.png
