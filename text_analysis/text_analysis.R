@@ -40,6 +40,9 @@ freq.plot <- ggplot(dtm.positive.df.freq.data, aes(reorder(word, freq), freq)) +
   xlab(NULL) + coord_flip() + ylab("Frequency")+
   theme(text = element_text(size = 10))
 freq.plot
+pdf()
+plot(freq.plot)
+dev.off()
 
 
 #################################
@@ -67,6 +70,10 @@ freq.plot <- ggplot(dtm.negative.df.freq.data, aes(reorder(word, freq), freq)) +
   xlab(NULL) + coord_flip() + ylab("Frequency")+
   theme(text = element_text(size = 10))
 freq.plot
+
+pdf()
+plot(freq.plot)
+dev.off()
 
 #################################
 ########## DESIRES DATA ######### 
