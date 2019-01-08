@@ -2,17 +2,17 @@ confidence.data <- read.csv("./../secret_byu_data/confidence/2019_01_06_partial.
 # there are 49 columns above
 answers.data <- confidence.data[,18:31]
 # confidence.df <- as.data.frame(as.matrix(confidence.data))
-
-
+colnames(answers.data)
+answers.data[,8] <- as.numeric(answers.data[,8])
 
 library(devtools)
 # install_github("hfgolino/EGA")
 library(qgraph)
 # head(confidence.data[,18:31])
 
-
-
-cor_confidence <- cor_auto(answers.data[,-28], ordinalLevelMax = 8)
+str(answers.data)
+answers.data <- answers.data[,c(-10,-11, -14)] # takes out binary data, strings
+cor_confidence <- cor_auto(answers.data, ordinalLevelMax = 8)
 qgraph(cor_confidence, directed=FALSE, layout = "spring")
 
 centrality_confidence <- centrality(cor_confidence)
