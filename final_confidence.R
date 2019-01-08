@@ -12,7 +12,7 @@ library(qgraph)
 
 
 
-cor_confidence <- cor_auto(confidence.data[,18:31], ordinalLevelMax = 8)
+cor_confidence <- cor_auto(answers.data[,-28], ordinalLevelMax = 8)
 qgraph(cor_confidence, directed=FALSE, layout = "spring")
 
 centrality_confidence <- centrality(cor_confidence)
@@ -20,7 +20,7 @@ centrality_confidence <- centrality(cor_confidence)
 
 library(EGA)
 ega.trump.ggm <- EGA(data.trump, model = "glasso")
-# 
+
 # library(NetworkToolbox)
 # scores.trump <- nams(data.trump, A = ega.trump.tmfg$network, comm = ega.trump.tmfg$wc,standardize = TRUE)
 # sentiment.trump <- analyzeSentiment(trump.df$text)
