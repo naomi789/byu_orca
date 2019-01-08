@@ -52,27 +52,3 @@ colnames(original.answers)
 answers.data <- original.answers[,c(-11,-14)] # this time I include gender
 ega.confidence.ggm <- EGA(answers.data, model = "glasso")
 # TODO (are we SURE that I couldn't include gender previously??)
-
-
-
-
-
-
-
-
-# library(NetworkToolbox)
-# scores.trump <- nams(data.trump, A = ega.trump.tmfg$network, comm = ega.trump.tmfg$wc,standardize = TRUE)
-# sentiment.trump <- analyzeSentiment(trump.df$text)
-# # colnames(sentiment.trump) # look at them
-# scores.sentiment.trump <- cbind(scores.trump$Standardized, sentiment.trump[,12:14], trump.df$created)
-# scores.sentiment.trump
-# # above = QUESTION 13
-# 
-# library(plotly)
-# cor_matrix <- cor_auto(scores.sentiment.trump)
-# # cor.terms <- cor_auto(dtm.data)
-# a <- list(showticklabels = TRUE, tickangle = -45)
-# plot.cor <- plot_ly(x = colnames(cor_matrix), y = colnames(cor_matrix),
-#                     z = cor_matrix, type = "heatmap") %>%
-#   layout(xaxis = a,  showlegend = FALSE, margin = list(l=100,b=100,r=100,u=100))
-# plot.cor
