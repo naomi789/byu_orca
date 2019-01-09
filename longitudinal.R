@@ -6,7 +6,7 @@ library(lavaan)
 # first week
 weeka <- read.csv("./../secret_byu_data/confidence/2018_09_26.csv", header = TRUE, stringsAsFactors = FALSE,na.strings = "")
 # weeka <- weeka[,c(2,12:13,19:28)]
-weeka <- weeka[,c(12, 25:28)]
+weeka <- weeka[,c(2, 12, 25:28)]
 
 # regular middle weeks
 weekb <- read.csv("./../secret_byu_data/confidence/2018_10_24.csv", header = TRUE, stringsAsFactors = FALSE,na.strings = "")
@@ -27,4 +27,4 @@ weekf <- weekf[,c(2,12,18:21)]
 # last week
 weekg <- read.csv("./../secret_byu_data/confidence/2019_01_06_partial.csv", header = TRUE, stringsAsFactors = FALSE,na.strings = "")
 # weekg <- weekg[,c(2,12,18:50)]
-weekg <- weekg[,c(12,23:26)]
+weekg <- weekg[,c(2, 12,23:26)]
