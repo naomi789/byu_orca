@@ -44,6 +44,15 @@ pdf()
 plot(freq.plot)
 dev.off()
 
+cor.terms <- cor_auto(dtm.positive.df)
+a <- list(showticklabels = TRUE, tickangle = -45)
+plot.cor <- plot_ly(x = colnames(cor.terms), y = colnames(cor.terms),
+                    z = cor.terms, type = "heatmap") %>%
+  layout(xaxis = a,  showlegend = FALSE, margin = list(l=100,b=100,r=100,u=100))
+plot.cor
+
+# visualize the words' relationships to each other
+plot(dtm, corThreshold = 0.2, weighting = TRUE, terms = Terms(dtm))
 
 #################################
 ######### NEGATIVE DATA ######### 
