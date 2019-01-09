@@ -3,6 +3,7 @@
 library(lavaan)
 library(ggplot2)
 library(data.table)
+library(semPlot)
 
 # read in the data
 # first week
@@ -81,10 +82,10 @@ weekData[,c("FutureSuccess","PostGradCSPlans",
                                                                          "BetterCSthanGE","BetterCSthanGrades")],
                                                              2,
                                                              function(x) as.numeric(x))
-# sPlot <- ggplot(weekData, aes(x=week, y=FutureSuccess, group=Email))+
-#   geom_line()
-# 
-# sPlot
+sPlot <- ggplot(weekData, aes(x=week, y=FutureSuccess, group=Email))+
+  geom_line()
+
+sPlot
 
 weekData.wide <- data.frame(dcast(setDT(weekData), Email ~ week, value.var = c("FutureSuccess","PostGradCSPlans",
                                                                                "BetterCSthanGE","BetterCSthanGrades")))
@@ -96,43 +97,145 @@ weekData.wide[which(weekData.wide$Email %in% weeka_original$RecipientEmail),"Maj
 weekData.wide[which(weekData.wide$Email %in% weekg_original$RecipientEmail),"MajorAtEnd"] <- weekg_original[which(weekData.wide$Email %in% weekg_original$RecipientEmail),29]
 weekData.wide[which(weekData.wide$Email %in% weekg_original$RecipientEmail),"Gender"] <- weekg_original[which(weekData.wide$Email %in% weekg_original$RecipientEmail),27]
 
+
 matplot(c(4,8,10,12,15,16,19),
+        # legend("top", colnames(weekData.wide$Gender), col=), 
         main="...successful in future computing activities",
         t(weekData.wide[,2:8]),type="l",
-        col=ifelse(weekData.wide$Gender==1,"blue",
-                   ifelse(weekData.wide$Gender==2,"red2",NA)),
+        col=ifelse(weekData.wide$Gender==1,"red2",
+                   ifelse(weekData.wide$Gender==2,"blue",NA)),
         ylab="Agreement, 1-7",
         xlab="Week")                                                           
-legend("topright",legend=c("male","female"),fill=c("blue","red"))                                                             
-
+legend("topright",legend=c("boy","girl"),fill=c("red","blue"))                                                             
 
 
 matplot(c(4,8,10,12,15,16,19),
         main="...after grad... CS pursue a career that inv",
         t(weekData.wide[,9:15]),type="l",
-        col=ifelse(weekData.wide$Gender==1,"blue",
-                   ifelse(weekData.wide$Gender==2,"red",NA)),
+        col=ifelse(weekData.wide$Gender==1,"red2",
+                   ifelse(weekData.wide$Gender==2,"blue",NA)),
         ylab="Likeliness, 1-7",
         xlab="Week") 
-legend("topright",legend=c("male","female"),fill=c("blue","red"))                                                             
 
 
 
 matplot(c(4,8,10,12,15,16,19),
         main="...better at CS courses than other courses...",
         t(weekData.wide[,16:22]),type="l",
-        col=ifelse(weekData.wide$Gender==1,"blue",
-                   ifelse(weekData.wide$Gender==2,"red",NA)),
+        col=ifelse(weekData.wide$Gender==1,"red2",
+                   ifelse(weekData.wide$Gender==2,"blue",NA)),
         ylab="Certainty, 1-5",
         xlab="Week") 
-legend("topright",legend=c("male","female"),fill=c("blue","red"))                                                             
 
 
 matplot(c(4,8,10,12,15,16,19),
         main="...better at CS than CS GRADES",
         t(weekData.wide[,23:29]),type="l",
-        col=ifelse(weekData.wide$Gender==1,"blue",
-                   ifelse(weekData.wide$Gender==2,"red",NA)),
+        col=ifelse(weekData.wide$Gender==1,"red2",
+                   ifelse(weekData.wide$Gender==2,"blue",NA)),
         ylab="Agreement, 1-7",
         xlab="Week") 
-legend("topright",legend=c("male","female"),fill=c("blue","red"))                                                             
+
+
+mod.FutureSuccess <-'
+#Make Latent Variables
+Intercept =~ 1*FutureSuccess_4 + 1*FutureSuccess_8 + 
+1*FutureSuccess_10 + 1*FutureSuccess_12 + 
+1*FutureSuccess_15 + 1*FutureSuccess_16 +
+1*FutureSuccess_19
+
+# SQUARES = variables 
+# CIRCLES = latent variables
+# latent variable is something that influences my data, but I didnt actually collect info on
+# we are forcing latent vars to be parameters
+# TRIANGLES = constants (are always equal to one)
+# single headed arrows = regression
+# double-headed arrows:
+# (if it goes from self to self, it is a variance) 
+# (if it goes to another, then it is a covariance, shows how much it changes together)
+# dotted line issomething that we set (we didnt allow model to estimate)
+
+
+
+
+
+Slope =~ 0*FutureSuccess_4 + 4*FutureSuccess_8 + 
+6*FutureSuccess_10 + 8*FutureSuccess_12 + 
+11*FutureSuccess_15 + 12*FutureSuccess_16 +
+15*FutureSuccess_19
+
+#Latent Variances and Covariances
+Intercept ~~ Intercept
+Slope ~~ Slope
+Intercept ~~ Slope
+
+#Latent Means
+Intercept ~ 1
+Slope ~ 1
+
+#Manifest Error
+FutureSuccess_4 ~~ FutureSuccess_4
+FutureSuccess_8 ~~ FutureSuccess_8
+FutureSuccess_10 ~~ FutureSuccess_10
+FutureSuccess_12 ~~ FutureSuccess_12
+FutureSuccess_15 ~~ FutureSuccess_15
+FutureSuccess_16 ~~ FutureSuccess_16
+FutureSuccess_19 ~~ FutureSuccess_19
+'
+
+mod.FutureSuccess.Run <- lavaan(mod.FutureSuccess, missing = "ML", data = weekData.wide)
+
+summary(mod.FutureSuccess.Run, fit.measures="TRUE")
+
+semPaths(mod.FutureSuccess.Run, whatLabels="est")
+
+
+
+
+mod.FutureSuccess.mod2 <-'
+#Make Latent Variables
+FinalsValue =~ -1*FutureSuccess_4 + -1*FutureSuccess_8 + 
+-1*FutureSuccess_10 + -1*FutureSuccess_12 + 
+-1*FutureSuccess_15 + -1*FutureSuccess_16 +
+1*FutureSuccess_19
+
+# Slope =~ 0*FutureSuccess_4 + 4*FutureSuccess_8 + 
+#          6*FutureSuccess_10 + 8*FutureSuccess_12 + 
+#          11*FutureSuccess_15 + 12*FutureSuccess_16 +
+#          15*FutureSuccess_19
+
+#Latent Variances and Covariances
+FinalsValue ~~ FinalsValue
+# Slope ~~ Slope
+# Intercept ~~ Slope
+
+#Latent Means
+FinalsValue ~ 1
+FutureSuccess_4 ~ 1
+FutureSuccess_8 ~ 1
+FutureSuccess_10 ~ 1
+FutureSuccess_12 ~ 1
+FutureSuccess_15 ~ 1
+FutureSuccess_16 ~ 1
+
+#Manifest Error
+FutureSuccess_4 ~~ FutureSuccess_4
+FutureSuccess_8 ~~ FutureSuccess_8
+FutureSuccess_10 ~~ FutureSuccess_10
+FutureSuccess_12 ~~ FutureSuccess_12
+FutureSuccess_15 ~~ FutureSuccess_15
+FutureSuccess_16 ~~ FutureSuccess_16
+FutureSuccess_19 ~~ FutureSuccess_19
+'
+
+mod.FutureSuccess.mod2.Run <- lavaan(mod.FutureSuccess.mod2, missing = "ML", data = weekData.wide)
+
+summary(mod.FutureSuccess.mod2.Run, fit.measures="TRUE")
+
+semPaths(mod.FutureSuccess.mod2.Run, whatLabels="est")                                                             
+
+
+
+
+
+
