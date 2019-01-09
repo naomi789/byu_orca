@@ -81,10 +81,10 @@ weekData[,c("FutureSuccess","PostGradCSPlans",
                                                                          "BetterCSthanGE","BetterCSthanGrades")],
                                                              2,
                                                              function(x) as.numeric(x))
-sPlot <- ggplot(weekData, aes(x=week, y=FutureSuccess, group=Email))+
-  geom_line()
-
-sPlot
+# sPlot <- ggplot(weekData, aes(x=week, y=FutureSuccess, group=Email))+
+#   geom_line()
+# 
+# sPlot
 
 weekData.wide <- data.frame(dcast(setDT(weekData), Email ~ week, value.var = c("FutureSuccess","PostGradCSPlans",
                                                                                "BetterCSthanGE","BetterCSthanGrades")))
@@ -99,35 +99,40 @@ weekData.wide[which(weekData.wide$Email %in% weekg_original$RecipientEmail),"Gen
 matplot(c(4,8,10,12,15,16,19),
         main="...successful in future computing activities",
         t(weekData.wide[,2:8]),type="l",
-        col=ifelse(weekData.wide$Gender==1,"red2",
-                   ifelse(weekData.wide$Gender==2,"blue",NA)),
+        col=ifelse(weekData.wide$Gender==1,"blue",
+                   ifelse(weekData.wide$Gender==2,"red2",NA)),
         ylab="Agreement, 1-7",
         xlab="Week")                                                           
+legend("topright",legend=c("male","female"),fill=c("blue","red"))                                                             
+
 
 
 matplot(c(4,8,10,12,15,16,19),
         main="...after grad... CS pursue a career that inv",
         t(weekData.wide[,9:15]),type="l",
-        col=ifelse(weekData.wide$Gender==1,"red2",
-                   ifelse(weekData.wide$Gender==2,"blue",NA)),
+        col=ifelse(weekData.wide$Gender==1,"blue",
+                   ifelse(weekData.wide$Gender==2,"red",NA)),
         ylab="Likeliness, 1-7",
         xlab="Week") 
+legend("topright",legend=c("male","female"),fill=c("blue","red"))                                                             
 
 
 
 matplot(c(4,8,10,12,15,16,19),
         main="...better at CS courses than other courses...",
         t(weekData.wide[,16:22]),type="l",
-        col=ifelse(weekData.wide$Gender==1,"red2",
-                   ifelse(weekData.wide$Gender==2,"blue",NA)),
+        col=ifelse(weekData.wide$Gender==1,"blue",
+                   ifelse(weekData.wide$Gender==2,"red",NA)),
         ylab="Certainty, 1-5",
         xlab="Week") 
+legend("topright",legend=c("male","female"),fill=c("blue","red"))                                                             
 
 
 matplot(c(4,8,10,12,15,16,19),
         main="...better at CS than CS GRADES",
         t(weekData.wide[,23:29]),type="l",
-        col=ifelse(weekData.wide$Gender==1,"red2",
-                   ifelse(weekData.wide$Gender==2,"blue",NA)),
+        col=ifelse(weekData.wide$Gender==1,"blue",
+                   ifelse(weekData.wide$Gender==2,"red",NA)),
         ylab="Agreement, 1-7",
         xlab="Week") 
+legend("topright",legend=c("male","female"),fill=c("blue","red"))                                                             
