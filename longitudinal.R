@@ -233,9 +233,10 @@ mod.FutureSuccess.mod2.Run <- lavaan(mod.FutureSuccess.mod2, missing = "ML", dat
 summary(mod.FutureSuccess.mod2.Run, fit.measures="TRUE")
 
 semPaths(mod.FutureSuccess.mod2.Run, whatLabels="est")                                                             
-
-
-
-
-
-
+                                                             
+                                                             
+                                                             
+                                                             
+                                                             
+                                                             
+                                                             
