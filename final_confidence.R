@@ -5,8 +5,9 @@ library(data.table)
 library(ggplot2)## v >= 1.9.6
 library(semPlot)
 
-setwd("C:/Users/Blood//Box Sync/Collaborations/Naomi/all_confidence_data")
-#setwd("~/Box Sync/Collaborations/Naomi/all_confidence_data")
+setwd("C:/Users/snjoh/Documents/secret_byu_data/confidence")
+# setwd("C:/Users/Blood//Box Sync/Collaborations/Naomi/all_confidence_data")
+# setwd("~/Box Sync/Collaborations/Naomi/all_confidence_data")
 
 
 # read in the data
@@ -32,7 +33,7 @@ weekf <- read.csv("2018_12_17.csv", header = TRUE, stringsAsFactors = FALSE,na.s
 weekf <- weekf[,c(2,12,18:21)]
 
 # last week
-weekg_original <- read.csv("2019_01_06_partial.csv", header = TRUE, stringsAsFactors = FALSE,na.strings = "")
+weekg_original <- read.csv("2019_01_06.csv", header = TRUE, stringsAsFactors = FALSE,na.strings = "")
 weekg <- weekg_original[,c(2,12,23:26)]
 weekg <- weekg_original[,c(2,12,23:26)] # 18-22 # 27 = gender # 29 is major # 31 and 32 = course and grade (respectively)
 
@@ -85,10 +86,19 @@ weekData[,c("FutureSuccess","PostGradCSPlans",
                                                                          "BetterCSthanGE","BetterCSthanGrades")],
                                                              2,
                                                              function(x) as.numeric(x))
-sPlot <- ggplot(weekData, aes(x=week, y=FutureSuccess, group=Email))+
+# Graph of all students' percieved future success
+future_success <- ggplot(weekData, aes(x=week, y=FutureSuccess, group=Email))+
   geom_line()
-
-sPlot
+future_success
+post_grad <- ggplot(weekData, aes(x=week, y=PostGradCSPlans, group=Email))+
+  geom_line()
+post_grad
+better_CS_than_GE <- ggplot(weekData, aes(x=week, y=BetterCSthanGE, group=Email))+
+  geom_line()
+better_CS_than_GE
+better_CS_than_grades <- ggplot(weekData, aes(x=week, y=BetterCSthanGrades, group=Email))+
+  geom_line()
+better_CS_than_grades
 
 weekData.wide <- data.frame(dcast(setDT(weekData), Email ~ week, value.var = c("FutureSuccess","PostGradCSPlans",
                                                                                "BetterCSthanGE","BetterCSthanGrades")))
@@ -131,98 +141,71 @@ sum(table(weekData.wide$Email[which(weekData.wide$CSSwitch=="Switch In")]))
 
 sum(table(weekData.wide$Email[which(weekData.wide$CSSwitch=="Switch Out")]))      
 
+########################################################################################
 #Plot by CS Switch
 matplot(c(4,8,10,12,15,16,19),
         main="...successful in future computing activities",
         t(weekData.wide[,2:8]),type="l",
-        col=ifelse(weekData.wide$CSSwitch == "Switch In","red2",
-                   ifelse(weekData.wide$CSSwitch == "Switch Out","blue",NA)),
+        col=ifelse(weekData.wide$CSSwitch == "Switch In","green",
+                   ifelse(weekData.wide$CSSwitch == "Switch Out","red2",NA)),
         ylab="FutureSuccess",
         xlab="Week")  
 
 matplot(c(4,8,10,12,15,16,19),
         main="...after grad... CS pursue a career that inv",
         t(weekData.wide[,9:15]),type="l",
-        col=ifelse(weekData.wide$CSSwitch == "Switch In","red2",
-                   ifelse(weekData.wide$CSSwitch == "Switch Out","blue",NA)),
+        col=ifelse(weekData.wide$CSSwitch == "Switch In","green",
+                   ifelse(weekData.wide$CSSwitch == "Switch Out","red2",NA)),
         ylab="FutureSuccess",
         xlab="Week")
 
 matplot(c(4,8,10,12,15,16,19),
         main="Better at CS than GE",
         t(weekData.wide[,16:22]),type="l",
-        col=ifelse(weekData.wide$CSSwitch == "Switch In","red2",
-                   ifelse(weekData.wide$CSSwitch == "Switch Out","blue",NA)),
+        col=ifelse(weekData.wide$CSSwitch == "Switch In","green",
+                   ifelse(weekData.wide$CSSwitch == "Switch Out","red2",NA)),
         ylab="FutureSuccess",
         xlab="Week")
 
 matplot(c(4,8,10,12,15,16,19),
         main="Im better at CS than My grades would say",
         t(weekData.wide[,23:29]),type="l",
-        col=ifelse(weekData.wide$CSSwitch == "Switch In","red2",
-                   ifelse(weekData.wide$CSSwitch == "Switch Out","blue",NA)),
+        col=ifelse(weekData.wide$CSSwitch == "Switch In","green",
+                   ifelse(weekData.wide$CSSwitch == "Switch Out","red2",NA)),
         ylab="FutureSuccess",
         xlab="Week")
 
-#Plot by CS Major
-matplot(c(4,8,10,12,15,16,19),
-        main="...successful in future computing activities",
-        t(weekData.wide[,2:8]),type="l",
-        col=ifelse(weekData.wide$CSMajor == 1,"red2","blue"),
-        ylab="FutureSuccess",
-        xlab="Week")  
-
-matplot(c(4,8,10,12,15,16,19),
-        main="...after grad... CS pursue a career that inv",
-        t(weekData.wide[,9:15]),type="l",
-        col=ifelse(weekData.wide$CSMajor == 1,"red2","blue"),
-        ylab="FutureSuccess",
-        xlab="Week")
-
-matplot(c(4,8,10,12,15,16,19),
-        main="Better at CS than GE",
-        t(weekData.wide[,16:22]),type="l",
-        col=ifelse(weekData.wide$CSMajor == 1,"red2","blue"),
-        ylab="FutureSuccess",
-        xlab="Week")
-
-matplot(c(4,8,10,12,15,16,19),
-        main="Im better at CS than My grades would say",
-        t(weekData.wide[,23:29]),type="l",
-        col=ifelse(weekData.wide$CSMajor == 1,"red2","blue"),
-        ylab="FutureSuccess",
-        xlab="Week")
-
+########################################################################################
 #Plot by grade
 matplot(c(4,8,10,12,15,16,19),
         main="...successful in future computing activities",
         t(weekData.wide[,2:8]),type="l",
-        col=ifelse(weekData.wide$Grade%in%c("A","A-","B+","B","B-"),"red2","blue"),
+        col=ifelse(weekData.wide$Grade%in%c("A","A-","B+","B","B-"),"green","red2"),
         ylab="FutureSuccess",
         xlab="Week")   
 
 matplot(c(4,8,10,12,15,16,19),
         main="...after grad... CS pursue a career that inv",
         t(weekData.wide[,9:15]),type="l",
-        col=ifelse(weekData.wide$Grade%in%c("A","A-","B+","B","B-"),"red2","blue"),
+        col=ifelse(weekData.wide$Grade%in%c("A","A-","B+","B","B-"),"green","red2"),
         ylab="FutureSuccess",
         xlab="Week")   
 
 matplot(c(4,8,10,12,15,16,19),
         main="Better at CS than GE",
         t(weekData.wide[,16:22]),type="l",
-        col=ifelse(weekData.wide$Grade%in%c("A","A-","B+","B","B-"),"red2","blue"),
+        col=ifelse(weekData.wide$Grade%in%c("A","A-","B+","B","B-"),"green","red2"),
         ylab="FutureSuccess",
         xlab="Week")   
 
 matplot(c(4,8,10,12,15,16,19),
         main="Im better at CS than My grades would say",
         t(weekData.wide[,23:29]),type="l",
-        col=ifelse(weekData.wide$Grade%in%c("A","A-","B+","B","B-"),"red2","blue"),
+        col=ifelse(weekData.wide$Grade%in%c("A","A-","B+","B","B-"),"green","red2"),
         ylab="FutureSuccess",
         xlab="Week")   
 
-
+########################################################################################
 #plot by gender
 matplot(c(4,8,10,12,15,16,19),
         main="...successful in future computing activities",
@@ -256,6 +239,7 @@ matplot(c(4,8,10,12,15,16,19),
         ylab="BetterCSthanGrades",
         xlab="Week") 
 
+########################################################################################
 #Plot by class
 matplot(c(4,8,10,12,15,16,19),
         main="...successful in future computing activities",
@@ -296,6 +280,41 @@ matplot(c(4,8,10,12,15,16,19),
                                  ifelse(weekData.wide$Class==240,"orange",NA)))),
         ylab="FutureSuccess",
         xlab="Week") 
+
+
+########################################################################################
+# Plot by CS Major
+matplot(c(4,8,10,12,15,16,19),
+        main="...successful in future computing activities",
+        t(weekData.wide[,2:8]),type="l",
+        col=ifelse(weekData.wide$CSMajor == 1,"green","blue"),
+        ylab="FutureSuccess",
+        xlab="Week")  
+
+matplot(c(4,8,10,12,15,16,19),
+        main="...after grad... CS pursue a career that inv",
+        t(weekData.wide[,9:15]),type="l",
+        col=ifelse(weekData.wide$CSMajor == 1,"green","blue"),
+        ylab="FutureSuccess",
+        xlab="Week")
+
+matplot(c(4,8,10,12,15,16,19),
+        main="Better at CS than GE",
+        t(weekData.wide[,16:22]),type="l",
+        col=ifelse(weekData.wide$CSMajor == 1,"green","blue"),
+        ylab="FutureSuccess",
+        xlab="Week")
+
+matplot(c(4,8,10,12,15,16,19),
+        main="Im better at CS than My grades would say",
+        t(weekData.wide[,23:29]),type="l",
+        col=ifelse(weekData.wide$CSMajor == 1,"green","blue"),
+        ylab="FutureSuccess",
+        xlab="Week")
+
+########################################################################################
+########################################################################################
+########################################################################################
 
 mod.FutureSuccess <-'
 #Make Latent Variables
