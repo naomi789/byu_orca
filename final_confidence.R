@@ -5,8 +5,8 @@ library(data.table)
 library(ggplot2)## v >= 1.9.6
 library(semPlot)
 
-# setwd("C:/Users/Blood//Box Sync/Collaborations/Naomi/all_confidence_data")
-# setwd("~/Box Sync/Collaborations/Naomi/all_confidence_data")
+setwd("C:/Users/Blood//Box Sync/Collaborations/Naomi/all_confidence_data")
+#setwd("~/Box Sync/Collaborations/Naomi/all_confidence_data")
 
 
 # read in the data
@@ -98,36 +98,6 @@ weekData.wide$MajorAtEnd <- NA
 weekData.wide$Gender <- NA 
 weekData.wide$Class <- NA
 weekData.wide$Grade <- NA
-weekData.wide$CSMajor <- NA
-
-weekData.wide[which(weekData.wide$Email %in% weeka_original$RecipientEmail),"MajorAtBegining"] <- weeka_original[which(weekData.wide$Email %in% weeka_original$RecipientEmail),22]
-weekData.wide[which(weekData.wide$Email %in% weekg_original$RecipientEmail),"MajorAtEnd"] <- weekg_original[which(weekData.wide$Email %in% weekg_original$RecipientEmail),29]
-weekData.wide[which(weekData.wide$Email %in% weekg_original$RecipientEmail),"Gender"] <- weekg_original[which(weekData.wide$Email %in% weekg_original$RecipientEmail),27]
-weekData.wide[which(weekData.wide$Email %in% weekg_original$RecipientEmail),"Class"] <- weekg_original[which(weekData.wide$Email %in% weekg_original$RecipientEmail),32]
-weekData.wide[which(weekData.wide$Email %in% weekg_original$RecipientEmail),"Grade"] <- weekg_original[which(weekData.wide$Email %in% weekg_original$RecipientEmail),33]
-weekData.wide[which(weekData.wide$Email %in% weekg_original$RecipientEmail),"CSMajor"] <- weekg_original[which(weekData.wide$Email %in% weekg_original$RecipientEmail),30]
-
-weekData.wide$Grade[weekData.wide$Grade==1] <- "A"
-weekData.wide$Grade[weekData.wide$Grade==2] <- "A-"
-weekData.wide$Grade[weekData.wide$Grade==3] <- "B+"
-weekData.wide$Grade[weekData.wide$Grade==4] <- "B"
-weekData.wide$Grade[weekData.wide$Grade==5] <- "B-"
-weekData.wide$Grade[weekData.wide$Grade==6] <- "C+"
-weekData.wide$Grade[weekData.wide$Grade==7] <- "C"
-weekData.wide$Grade[weekData.wide$Grade==8] <- "C-"
-weekData.wide$Grade[weekData.wide$Grade==9] <- "D+"
-weekData.wide$Grade[weekData.wide$Grade==10] <- "D"
-weekData.wide$Grade[weekData.wide$Grade==11] <- "D-"
-weekData.wide$Grade[weekData.wide$Grade==12] <- "E"
-weekData.wide$Grade[weekData.wide$Grade==13] <- "I"
-weekData.wide$Grade[weekData.wide$Grade==14] <- "W"
-
-
-weekData.wide$MajorAtBegining <- NA 
-weekData.wide$MajorAtEnd <- NA
-weekData.wide$Gender <- NA 
-weekData.wide$Class <- NA
-weekData.wide$Grade <- NA
 weekData.wide$CSSwitch <- NA
 
 
@@ -155,6 +125,11 @@ weekData.wide$Grade[weekData.wide$Grade==11] <- "D-"
 weekData.wide$Grade[weekData.wide$Grade==12] <- "E"
 weekData.wide$Grade[weekData.wide$Grade==13] <- "I"
 weekData.wide$Grade[weekData.wide$Grade==14] <- "W"
+
+#Number of people who switched in and out of CS
+sum(table(weekData.wide$Email[which(weekData.wide$CSSwitch=="Switch In")]))
+
+sum(table(weekData.wide$Email[which(weekData.wide$CSSwitch=="Switch Out")]))      
 
 #Plot by CS Switch
 matplot(c(4,8,10,12,15,16,19),
@@ -217,3 +192,261 @@ matplot(c(4,8,10,12,15,16,19),
         col=ifelse(weekData.wide$CSMajor == 1,"red2","blue"),
         ylab="FutureSuccess",
         xlab="Week")
+
+#Plot by grade
+matplot(c(4,8,10,12,15,16,19),
+        main="...successful in future computing activities",
+        t(weekData.wide[,2:8]),type="l",
+        col=ifelse(weekData.wide$Grade%in%c("A","A-","B+","B","B-"),"red2","blue"),
+        ylab="FutureSuccess",
+        xlab="Week")   
+
+matplot(c(4,8,10,12,15,16,19),
+        main="...after grad... CS pursue a career that inv",
+        t(weekData.wide[,9:15]),type="l",
+        col=ifelse(weekData.wide$Grade%in%c("A","A-","B+","B","B-"),"red2","blue"),
+        ylab="FutureSuccess",
+        xlab="Week")   
+
+matplot(c(4,8,10,12,15,16,19),
+        main="Better at CS than GE",
+        t(weekData.wide[,16:22]),type="l",
+        col=ifelse(weekData.wide$Grade%in%c("A","A-","B+","B","B-"),"red2","blue"),
+        ylab="FutureSuccess",
+        xlab="Week")   
+
+matplot(c(4,8,10,12,15,16,19),
+        main="Im better at CS than My grades would say",
+        t(weekData.wide[,23:29]),type="l",
+        col=ifelse(weekData.wide$Grade%in%c("A","A-","B+","B","B-"),"red2","blue"),
+        ylab="FutureSuccess",
+        xlab="Week")   
+
+
+#plot by gender
+matplot(c(4,8,10,12,15,16,19),
+        main="...successful in future computing activities",
+        t(weekData.wide[,2:8]),type="l",
+        col=ifelse(weekData.wide$Gender==1,"red2",
+                   ifelse(weekData.wide$Gender==2,"blue",NA)),
+        ylab="FutureSuccess",
+        xlab="Week")    
+
+matplot(c(4,8,10,12,15,16,19),
+        main="...after grad... CS pursue a career that inv",
+        t(weekData.wide[,9:15]),type="l",
+        col=ifelse(weekData.wide$Gender==1,"red2",
+                   ifelse(weekData.wide$Gender==2,"blue",NA)),
+        ylab="PostGradCSPlans",
+        xlab="Week") 
+
+matplot(c(4,8,10,12,15,16,19),
+        main="Better at CS than GE",
+        t(weekData.wide[,16:22]),type="l",
+        col=ifelse(weekData.wide$Gender==1,"red2",
+                   ifelse(weekData.wide$Gender==2,"blue",NA)),
+        ylab="BetterCSthanGE",
+        xlab="Week") 
+
+matplot(c(4,8,10,12,15,16,19),
+        main="Im better at CS than My grades would say",
+        t(weekData.wide[,23:29]),type="l",
+        col=ifelse(weekData.wide$Gender==1,"red2",
+                   ifelse(weekData.wide$Gender==2,"blue",NA)),
+        ylab="BetterCSthanGrades",
+        xlab="Week") 
+
+#Plot by class
+matplot(c(4,8,10,12,15,16,19),
+        main="...successful in future computing activities",
+        t(weekData.wide[,2:8]),type="l",
+        col=ifelse(weekData.wide$Class==142,"red2",
+                   ifelse(weekData.wide$Class==235,"blue",
+                          ifelse(weekData.wide$Class==236,"green",
+                                 ifelse(weekData.wide$Class==240,"orange",NA)))),
+        ylab="FutureSuccess",
+        xlab="Week") 
+
+matplot(c(4,8,10,12,15,16,19),
+        main="...after grad... CS pursue a career that inv",
+        t(weekData.wide[,9:15]),type="l",
+        col=ifelse(weekData.wide$Class==142,"red2",
+                   ifelse(weekData.wide$Class==235,"blue",
+                          ifelse(weekData.wide$Class==236,"green",
+                                 ifelse(weekData.wide$Class==240,"orange",NA)))),
+        ylab="FutureSuccess",
+        xlab="Week") 
+
+matplot(c(4,8,10,12,15,16,19),
+        main="Better at CS than GE",
+        t(weekData.wide[,16:22]),type="l",
+        col=ifelse(weekData.wide$Class==142,"red2",
+                   ifelse(weekData.wide$Class==235,"blue",
+                          ifelse(weekData.wide$Class==236,"green",
+                                 ifelse(weekData.wide$Class==240,"orange",NA)))),
+        ylab="FutureSuccess",
+        xlab="Week") 
+
+matplot(c(4,8,10,12,15,16,19),
+        main="Im better at CS than My grades would say",
+        t(weekData.wide[,23:29]),type="l",
+        col=ifelse(weekData.wide$Class==142,"red2",
+                   ifelse(weekData.wide$Class==235,"blue",
+                          ifelse(weekData.wide$Class==236,"green",
+                                 ifelse(weekData.wide$Class==240,"orange",NA)))),
+        ylab="FutureSuccess",
+        xlab="Week") 
+
+mod.FutureSuccess <-'
+#Make Latent Variables
+Intercept =~ 1*FutureSuccess_4 + 1*FutureSuccess_8 + 
+1*FutureSuccess_10 + 1*FutureSuccess_12 + 
+1*FutureSuccess_15 + 1*FutureSuccess_16 + 
+1*FutureSuccess_19
+
+Slope =~ 0*FutureSuccess_4 + 0*FutureSuccess_8 + 
+0*FutureSuccess_10 + 0*FutureSuccess_12 + 
+0*FutureSuccess_15 + 0*FutureSuccess_16 + 
+-1*FutureSuccess_19
+
+Intercept ~~ Slope
+Intercept ~~ Intercept
+Slope ~~ Slope
+
+Intercept ~ 1
+Slope ~ 1
+
+#Manifest Error
+FutureSuccess_4 ~~ FutureSuccess_4
+FutureSuccess_8 ~~ FutureSuccess_8
+FutureSuccess_10 ~~ FutureSuccess_10
+FutureSuccess_12 ~~ FutureSuccess_12
+FutureSuccess_15 ~~ FutureSuccess_15
+FutureSuccess_16 ~~ FutureSuccess_16
+#FutureSuccess_19 ~~ FutureSuccess_19
+'
+
+mod.FutureSuccess.Run <- lavaan(mod.FutureSuccess, missing = "ML", data = weekData.wide)
+
+summary(mod.FutureSuccess.Run, fit.measures="TRUE")
+
+semPaths(mod.FutureSuccess.Run, whatLabels="est")  
+
+
+mod.PostGradCSPlans <-'
+#Make Latent Variables
+Intercept =~ 1*PostGradCSPlans_4 + 1*PostGradCSPlans_8 + 
+1*PostGradCSPlans_10 + 1*PostGradCSPlans_12 + 
+1*PostGradCSPlans_15 + 1*PostGradCSPlans_16 + 
+1*PostGradCSPlans_19
+
+Slope =~ 0*PostGradCSPlans_4 + 0*PostGradCSPlans_8 + 
+0*PostGradCSPlans_10 + 0*PostGradCSPlans_12 + 
+0*PostGradCSPlans_15 + 0*PostGradCSPlans_16 + 
+-1*PostGradCSPlans_19
+
+Intercept ~~ Slope
+Intercept ~~ Intercept
+Slope ~~ Slope
+
+Intercept ~ 1
+Slope ~ 1
+
+#Manifest Error
+PostGradCSPlans_4 ~~ PostGradCSPlans_4
+PostGradCSPlans_8 ~~ PostGradCSPlans_8
+PostGradCSPlans_10 ~~ PostGradCSPlans_10
+PostGradCSPlans_12 ~~ PostGradCSPlans_12
+PostGradCSPlans_15 ~~ PostGradCSPlans_15
+PostGradCSPlans_16 ~~ PostGradCSPlans_16
+#PostGradCSPlans_19 ~~ PostGradCSPlans_19
+'
+
+mod.PostGradCSPlans.Run <- lavaan(mod.PostGradCSPlans, missing = "ML", data = weekData.wide)
+
+summary(mod.PostGradCSPlans.Run, fit.measures="TRUE")
+
+semPaths(mod.PostGradCSPlans.Run, whatLabels="est")  
+
+
+mod.BetterCSthanGE <-'
+#Make Latent Variables
+Intercept =~ 1*BetterCSthanGE_4 + 1*BetterCSthanGE_8 + 
+1*BetterCSthanGE_10 + 1*BetterCSthanGE_12 + 
+1*BetterCSthanGE_15 + 1*BetterCSthanGE_16 + 
+1*BetterCSthanGE_19
+
+Slope =~ 0*BetterCSthanGE_4 + 0*BetterCSthanGE_8 + 
+0*BetterCSthanGE_10 + 0*BetterCSthanGE_12 + 
+0*BetterCSthanGE_15 + 0*BetterCSthanGE_16 + 
+-1*BetterCSthanGE_19
+
+Intercept ~~ Slope
+Intercept ~~ Intercept
+Slope ~~ Slope
+
+Intercept ~ 1
+Slope ~ 1
+
+#Manifest Error
+BetterCSthanGE_4 ~~ BetterCSthanGE_4
+BetterCSthanGE_8 ~~ BetterCSthanGE_8
+BetterCSthanGE_10 ~~ BetterCSthanGE_10
+BetterCSthanGE_12 ~~ BetterCSthanGE_12
+BetterCSthanGE_15 ~~ BetterCSthanGE_15
+BetterCSthanGE_16 ~~ BetterCSthanGE_16
+#BetterCSthanGE_19 ~~ BetterCSthanGE_19
+'
+
+mod.BetterCSthanGE.Run <- lavaan(mod.BetterCSthanGE, missing = "ML", data = weekData.wide)
+
+summary(mod.BetterCSthanGE.Run, fit.measures="TRUE")
+
+semPaths(mod.BetterCSthanGE.Run, whatLabels="est")  
+
+
+
+
+
+mod.BetterCSthanGrades <-'
+#Make Latent Variables
+Intercept =~ 1*BetterCSthanGrades_4 + 1*BetterCSthanGrades_8 + 
+1*BetterCSthanGrades_10 + 1*BetterCSthanGrades_12 + 
+1*BetterCSthanGrades_15 + 1*BetterCSthanGrades_16 + 
+1*BetterCSthanGrades_19
+
+Slope =~ 0*BetterCSthanGrades_4 + 0*BetterCSthanGrades_8 + 
+0*BetterCSthanGrades_10 + 0*BetterCSthanGrades_12 + 
+0*BetterCSthanGrades_15 + 0*BetterCSthanGrades_16 + 
+-1*BetterCSthanGrades_19
+
+Intercept ~~ Slope
+Intercept ~~ Intercept
+Slope ~~ Slope
+
+Intercept ~ 1
+Slope ~ 1
+
+#Manifest Error
+BetterCSthanGrades_4 ~~ BetterCSthanGrades_4
+BetterCSthanGrades_8 ~~ BetterCSthanGrades_8
+BetterCSthanGrades_10 ~~ BetterCSthanGrades_10
+BetterCSthanGrades_12 ~~ BetterCSthanGrades_12
+BetterCSthanGrades_15 ~~ BetterCSthanGrades_15
+BetterCSthanGrades_16 ~~ BetterCSthanGrades_16
+#BetterCSthanGrades_19 ~~ BetterCSthanGrades_19
+'
+
+mod.BetterCSthanGrades.Run <- lavaan(mod.BetterCSthanGrades, missing = "ML", data = weekData.wide)
+
+summary(mod.BetterCSthanGrades.Run, fit.measures="TRUE")
+
+semPaths(mod.BetterCSthanGrades.Run, whatLabels="est")  
+
+
+
+
+
+
+
+
