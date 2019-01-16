@@ -122,6 +122,73 @@ weekData.wide$Grade[weekData.wide$Grade==12] <- "E"
 weekData.wide$Grade[weekData.wide$Grade==13] <- "I"
 weekData.wide$Grade[weekData.wide$Grade==14] <- "W"
 
+
+weekData.wide$MajorAtBegining <- NA 
+weekData.wide$MajorAtEnd <- NA
+weekData.wide$Gender <- NA 
+weekData.wide$Class <- NA
+weekData.wide$Grade <- NA
+weekData.wide$CSSwitch <- NA
+
+
+weekData.wide[which(weekData.wide$Email %in% weeka_original$RecipientEmail),"MajorAtBegining"] <- weeka_original[which(weekData.wide$Email %in% weeka_original$RecipientEmail),22]
+weekData.wide[which(weekData.wide$Email %in% weekg_original$RecipientEmail),"MajorAtEnd"] <- as.numeric(weekg_original[which(weekData.wide$Email %in% weekg_original$RecipientEmail),30])
+weekData.wide[which(weekData.wide$Email %in% weekg_original$RecipientEmail),"Gender"] <- weekg_original[which(weekData.wide$Email %in% weekg_original$RecipientEmail),27]
+weekData.wide[which(weekData.wide$Email %in% weekg_original$RecipientEmail),"Class"] <- weekg_original[which(weekData.wide$Email %in% weekg_original$RecipientEmail),32]
+weekData.wide[which(weekData.wide$Email %in% weekg_original$RecipientEmail),"Grade"] <- weekg_original[which(weekData.wide$Email %in% weekg_original$RecipientEmail),33]
+weekData.wide[,"CSSwitch"] <- ifelse(weekData.wide[,"MajorAtBegining"]=="Computer Science" & weekData.wide[,"MajorAtEnd"]==1,"No Switch CS",
+                                     ifelse(weekData.wide[,"MajorAtBegining"]=="Computer Science" & weekData.wide[,"MajorAtEnd"]!=1,"Switch Out",
+                                            ifelse(weekData.wide[,"MajorAtBegining"]!="Computer Science" & weekData.wide[,"MajorAtEnd"]==1,"Switch In",
+                                                   ifelse(weekData.wide[,"MajorAtBegining"]!="Computer Science" & weekData.wide[,"MajorAtEnd"]!=1,"No Switch nonCS",NA))))
+
+weekData.wide$Grade[weekData.wide$Grade==1] <- "A"
+weekData.wide$Grade[weekData.wide$Grade==2] <- "A-"
+weekData.wide$Grade[weekData.wide$Grade==3] <- "B+"
+weekData.wide$Grade[weekData.wide$Grade==4] <- "B"
+weekData.wide$Grade[weekData.wide$Grade==5] <- "B-"
+weekData.wide$Grade[weekData.wide$Grade==6] <- "C+"
+weekData.wide$Grade[weekData.wide$Grade==7] <- "C"
+weekData.wide$Grade[weekData.wide$Grade==8] <- "C-"
+weekData.wide$Grade[weekData.wide$Grade==9] <- "D+"
+weekData.wide$Grade[weekData.wide$Grade==10] <- "D"
+weekData.wide$Grade[weekData.wide$Grade==11] <- "D-"
+weekData.wide$Grade[weekData.wide$Grade==12] <- "E"
+weekData.wide$Grade[weekData.wide$Grade==13] <- "I"
+weekData.wide$Grade[weekData.wide$Grade==14] <- "W"
+
+#Plot by CS Switch
+matplot(c(4,8,10,12,15,16,19),
+        main="...successful in future computing activities",
+        t(weekData.wide[,2:8]),type="l",
+        col=ifelse(weekData.wide$CSSwitch == "Switch In","red2",
+                   ifelse(weekData.wide$CSSwitch == "Switch Out","blue",NA)),
+        ylab="FutureSuccess",
+        xlab="Week")  
+
+matplot(c(4,8,10,12,15,16,19),
+        main="...after grad... CS pursue a career that inv",
+        t(weekData.wide[,9:15]),type="l",
+        col=ifelse(weekData.wide$CSSwitch == "Switch In","red2",
+                   ifelse(weekData.wide$CSSwitch == "Switch Out","blue",NA)),
+        ylab="FutureSuccess",
+        xlab="Week")
+
+matplot(c(4,8,10,12,15,16,19),
+        main="Better at CS than GE",
+        t(weekData.wide[,16:22]),type="l",
+        col=ifelse(weekData.wide$CSSwitch == "Switch In","red2",
+                   ifelse(weekData.wide$CSSwitch == "Switch Out","blue",NA)),
+        ylab="FutureSuccess",
+        xlab="Week")
+
+matplot(c(4,8,10,12,15,16,19),
+        main="Im better at CS than My grades would say",
+        t(weekData.wide[,23:29]),type="l",
+        col=ifelse(weekData.wide$CSSwitch == "Switch In","red2",
+                   ifelse(weekData.wide$CSSwitch == "Switch Out","blue",NA)),
+        ylab="FutureSuccess",
+        xlab="Week")
+
 #Plot by CS Major
 matplot(c(4,8,10,12,15,16,19),
         main="...successful in future computing activities",
