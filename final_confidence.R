@@ -539,11 +539,3 @@ mod.BetterCSthanGrades.Run <- lavaan(mod.BetterCSthanGrades, missing = "ML", dat
 summary(mod.BetterCSthanGrades.Run, fit.measures="TRUE")
 
 semPaths(mod.BetterCSthanGrades.Run, whatLabels="est")  
-
-
-
-
-
-
-
-
