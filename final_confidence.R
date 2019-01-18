@@ -357,33 +357,38 @@ matplot(c(4,8,10,12,15,16,19),
 
 ########################################################################################
 # Plot by CS Major
+# green is CS and blue is non-CS
 matplot(c(4,8,10,12,15,16,19),
         main="...successful in future computing activities",
         t(weekData.wide[,2:8]),type="l",
-        col=ifelse(weekData.wide$CSMajor == 1,"green","blue"),
+        col=ifelse(weekData.wide$MajorAtEnd == 1,"green","blue"),
         ylab="FutureSuccess",
-        xlab="Week")  
+        xlab="Week",
+        lwd=2)    
 
 matplot(c(4,8,10,12,15,16,19),
         main="...after grad... CS pursue a career that inv",
         t(weekData.wide[,9:15]),type="l",
-        col=ifelse(weekData.wide$CSMajor == 1,"green","blue"),
+        col=ifelse(weekData.wide$MajorAtEnd == 1,"green","blue"),
         ylab="FutureSuccess",
-        xlab="Week")
+        xlab="Week",
+        lwd=2) 
 
 matplot(c(4,8,10,12,15,16,19),
         main="Better at CS than GE",
         t(weekData.wide[,16:22]),type="l",
-        col=ifelse(weekData.wide$CSMajor == 1,"green","blue"),
+        col=ifelse(weekData.wide$MajorAtEnd == 1,"green","blue"),
         ylab="FutureSuccess",
-        xlab="Week")
+        xlab="Week",
+        lwd=2) 
 
 matplot(c(4,8,10,12,15,16,19),
         main="Im better at CS than My grades would say",
         t(weekData.wide[,23:29]),type="l",
-        col=ifelse(weekData.wide$CSMajor == 1,"green","blue"),
+        col=ifelse(weekData.wide$MajorAtEnd == 1,"green","blue"),
         ylab="FutureSuccess",
-        xlab="Week")
+        xlab="Week",
+        lwd=2) 
 
 ########################################################################################
 ########################################################################################
