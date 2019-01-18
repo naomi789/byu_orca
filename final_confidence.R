@@ -97,7 +97,7 @@ weekData$EndDate <- as.Date(weekData$EndDate)
 
 weekData.wide <- data.frame(dcast(setDT(weekData), Email ~ week, value.var = c("FutureSuccess","PostGradCSPlans",
                                                                                "BetterCSthanGE","BetterCSthanGrades")))
-
+########################################################################################
 # Graph of all students' percieved future success
 future_success <- ggplot(weekData, aes(x=week, y=FutureSuccess, group=Email))+
   geom_line()
@@ -112,6 +112,7 @@ better_CS_than_grades <- ggplot(weekData, aes(x=week, y=BetterCSthanGrades, grou
   geom_line()
 better_CS_than_grades
 
+########################################################################################
 # WITH ACTUAL END DATES
 # Graph of all students' percieved future success
 EndDate_future_success <- ggplot(weekData, aes(x=EndDate, y=FutureSuccess, group=Email))+
@@ -129,6 +130,8 @@ EndDate_better_CS_than_GE
 EndDate_better_CS_than_grades <- ggplot(weekData, aes(x=EndDate, y=BetterCSthanGrades, group=Email))+
   geom_line()
 EndDate_better_CS_than_grades
+
+########################################################################################
 
 
 weekData.wide$MajorAtBegining <- NA 
@@ -163,6 +166,8 @@ weekData.wide$Grade[weekData.wide$Grade==11] <- "D-"
 weekData.wide$Grade[weekData.wide$Grade==12] <- "E"
 weekData.wide$Grade[weekData.wide$Grade==13] <- "I"
 weekData.wide$Grade[weekData.wide$Grade==14] <- "W"
+
+########################################################################################                          
 
 mat11 <- mean(colMeans(na.omit(weekData.wide[which(weekData.wide$Class==142),2:8])))
 mat12 <- mean(colMeans(na.omit(weekData.wide[which(weekData.wide$Class==235),2:8])))
@@ -201,6 +206,8 @@ barplot(classDat,
         xlab="Class",
         ylab="Average Score",
         ylim=c(0,10))
+
+########################################################################################
 
 #Number of people who switched in and out of CS
 sum(table(weekData.wide$Email[which(weekData.wide$CSSwitch=="Switch In")]))
