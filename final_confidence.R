@@ -1,5 +1,7 @@
 # Latent Growth Curve Models (LGCM) # use lavaan (pretty straightforward) 
 # https://www.youtube.com/watch?v=vrHaAdjC97A
+# https://pdfs.semanticscholar.org/f704/f45451442926fab8bc29577aad3c82f8104f.pdf
+
 library(lavaan)
 library(data.table)
 library(ggplot2)## v >= 1.9.6
@@ -88,10 +90,13 @@ weekData[,c("FutureSuccess","PostGradCSPlans",
                                                              function(x) as.numeric(x))
 weekData$EndDate <- as.Date(weekData$EndDate)
 
-sPlot <- ggplot(weekData, aes(x=EndDate, y=FutureSuccess, group=Email))+
-  geom_line()
+# sPlot <- ggplot(weekData, aes(x=EndDate, y=FutureSuccess, group=Email))+
+#   geom_line()
+# 
+# sPlot
 
-sPlot
+weekData.wide <- data.frame(dcast(setDT(weekData), Email ~ week, value.var = c("FutureSuccess","PostGradCSPlans",
+                                                                               "BetterCSthanGE","BetterCSthanGrades")))
 
 # Graph of all students' percieved future success
 future_success <- ggplot(weekData, aes(x=week, y=FutureSuccess, group=Email))+
@@ -107,8 +112,24 @@ better_CS_than_grades <- ggplot(weekData, aes(x=week, y=BetterCSthanGrades, grou
   geom_line()
 better_CS_than_grades
 
-weekData.wide <- data.frame(dcast(setDT(weekData), Email ~ week, value.var = c("FutureSuccess","PostGradCSPlans",
-                                                                               "BetterCSthanGE","BetterCSthanGrades")))
+# WITH ACTUAL END DATES
+# Graph of all students' percieved future success
+EndDate_future_success <- ggplot(weekData, aes(x=EndDate, y=FutureSuccess, group=Email))+
+  geom_line()
+EndDate_future_success
+
+EndDate_post_grad <- ggplot(weekData, aes(x=EndDate, y=PostGradCSPlans, group=Email))+
+  geom_line()
+EndDate_post_grad
+
+EndDate_better_CS_than_GE <- ggplot(weekData, aes(x=EndDate, y=BetterCSthanGE, group=Email))+
+  geom_line()
+EndDate_better_CS_than_GE
+
+EndDate_better_CS_than_grades <- ggplot(weekData, aes(x=EndDate, y=BetterCSthanGrades, group=Email))+
+  geom_line()
+EndDate_better_CS_than_grades
+
 
 weekData.wide$MajorAtBegining <- NA 
 weekData.wide$MajorAtEnd <- NA
@@ -142,6 +163,44 @@ weekData.wide$Grade[weekData.wide$Grade==11] <- "D-"
 weekData.wide$Grade[weekData.wide$Grade==12] <- "E"
 weekData.wide$Grade[weekData.wide$Grade==13] <- "I"
 weekData.wide$Grade[weekData.wide$Grade==14] <- "W"
+
+mat11 <- mean(colMeans(na.omit(weekData.wide[which(weekData.wide$Class==142),2:8])))
+mat12 <- mean(colMeans(na.omit(weekData.wide[which(weekData.wide$Class==235),2:8])))
+mat13 <- mean(colMeans(na.omit(weekData.wide[which(weekData.wide$Class==236),2:8])))
+mat14 <- mean(colMeans(na.omit(weekData.wide[which(weekData.wide$Class==240),2:8])))
+
+mat21 <- mean(colMeans(na.omit(weekData.wide[which(weekData.wide$Class==142),9:15])))
+mat22 <- mean(colMeans(na.omit(weekData.wide[which(weekData.wide$Class==235),9:15])))
+mat23 <- mean(colMeans(na.omit(weekData.wide[which(weekData.wide$Class==236),9:15])))
+mat24 <- mean(colMeans(na.omit(weekData.wide[which(weekData.wide$Class==240),9:15])))
+
+mat31 <- mean(colMeans(na.omit(weekData.wide[which(weekData.wide$Class==142),16:22])))
+mat32 <- mean(colMeans(na.omit(weekData.wide[which(weekData.wide$Class==235),16:22])))
+mat33 <- mean(colMeans(na.omit(weekData.wide[which(weekData.wide$Class==236),16:22])))
+mat34 <- mean(colMeans(na.omit(weekData.wide[which(weekData.wide$Class==240),16:22])))
+
+mat41 <- mean(colMeans(na.omit(weekData.wide[which(weekData.wide$Class==142),23:29])))
+mat42 <- mean(colMeans(na.omit(weekData.wide[which(weekData.wide$Class==235),23:29])))
+mat43 <- mean(colMeans(na.omit(weekData.wide[which(weekData.wide$Class==236),23:29])))
+mat44 <- mean(colMeans(na.omit(weekData.wide[which(weekData.wide$Class==240),23:29])))
+
+
+#Bar plot 
+classDat=matrix(c(mat11,mat21,mat31,mat41,
+                  mat12,mat22,mat32,mat42,
+                  mat13,mat23,mat33,mat43,
+                  mat14,mat24,mat34,mat44), nrow=4,ncol=4, byrow=TRUE)
+colnames(classDat)=c("142","235","236","240")
+rownames(classDat)=c("FutureSuccess","PostGradCSPlans","BetterCSthanGE", "BetterCSthanGrades")
+
+# Grouped barplot
+barplot(classDat, 
+        col=rainbow(4,alpha=.6) , 
+        beside=T, 
+        legend=rownames(classDat), 
+        xlab="Class",
+        ylab="Average Score",
+        ylim=c(0,10))
 
 #Number of people who switched in and out of CS
 sum(table(weekData.wide$Email[which(weekData.wide$CSSwitch=="Switch In")]))
