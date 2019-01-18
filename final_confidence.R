@@ -86,6 +86,13 @@ weekData[,c("FutureSuccess","PostGradCSPlans",
                                                                          "BetterCSthanGE","BetterCSthanGrades")],
                                                              2,
                                                              function(x) as.numeric(x))
+weekData$EndDate <- as.Date(weekData$EndDate)
+
+sPlot <- ggplot(weekData, aes(x=EndDate, y=FutureSuccess, group=Email))+
+  geom_line()
+
+sPlot
+
 # Graph of all students' percieved future success
 future_success <- ggplot(weekData, aes(x=week, y=FutureSuccess, group=Email))+
   geom_line()
